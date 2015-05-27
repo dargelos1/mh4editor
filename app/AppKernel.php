@@ -17,7 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
-            new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
+            //new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new MH4Editor\MH4EditorBundle\MH4EditorBundle(),
             new MH4Editor\DesignBundle\DesignBundle(),
         );
