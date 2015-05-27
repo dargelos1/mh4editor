@@ -1,3 +1,7 @@
+mh4_editor:
+    resource: "@MH4EditorBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

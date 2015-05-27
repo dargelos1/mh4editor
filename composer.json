@@ -20,7 +20,18 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~3.0,>=3.0.12",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+        "raulfraile/ladybug-bundle" : "dev-master",
+        "phpdocumentor/reflection-docblock" : "2.0.*@dev",
+        "jms/serializer" : "0.17.*@dev",
+        "leafo/lessphp" : "0.4.*@dev",
+        "leafo/scssphp": "dev-master",
+        "leafo/scssphp-compass": "dev-master",
+        "patchwork/jsqueeze": "2.0.*@dev",
+        "graylog2/gelf-php": "dev-master",
+        "raven/raven": "0.8.*@dev",
+        "doctrine/couchdb": "1.0.*@dev",
+        "ruflin/elastica": "1.4.*@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

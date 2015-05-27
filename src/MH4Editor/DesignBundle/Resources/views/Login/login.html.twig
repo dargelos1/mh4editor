@@ -1,0 +1,47 @@
+{% extends '::frontend.html.twig' %}
+
+{%block container %}
+<div class="container page-content">
+	<div class="grid">
+		<div class="row cells3">
+			<div class="cell"></div>
+			<div class="cell">
+				<h1>Login</h1>
+					<label>{%trans %}Username{%endtrans %}</label>
+					<div class="input-control text full-size" data-role="input">
+						<input type="text" >
+						<button class="button helper-button clear">
+							<span class="mif-cross"></span>
+						</button>
+					</div>
+
+					<label>{%trans %}Password{%endtrans %}</label>
+					<div class="input-control password full-size" data-role="input">
+						<input type="password" >
+						<button class="button helper-button reveal">
+							<span class="mif-looks"></span>
+						</button>
+					</div>
+
+					<button class="button rounded">Log in</button>
+
+					<button id="login-btn" class="button rounded float-right">Register</button>
+
+			</div>
+			<div class="cell"></div>
+		</div>
+	</div>
+</div>
+	
+{%endblock %}
+
+{%block javascripts%}
+	{{ parent() }}
+	<script type="text/javascript">
+
+	$("#login-btn")
+	.on('click',function(){
+		window.location.href="/register";
+	});
+	</script>
+{%endblock %}

@@ -1,0 +1,72 @@
+{% extends '::frontend.html.twig' %}
+
+{%block container %}
+<div class="container page-content">
+	<div class="grid">
+		<div class="row cells3">
+			<div class="cell"></div>
+			<div class="cell register-form hidden">
+				<h1>Register</h1>
+
+					<label>{%trans %}Username{%endtrans %}</label>
+					<div class="input-control text full-size" data-role="input">
+						<input type="text" >
+						<button class="button helper-button clear">
+							<span class="mif-cross"></span>
+						</button>
+					</div>
+
+					<label>{%trans %}E-mail{%endtrans %}</label>
+					<div class="input-control text full-size" data-role="input">
+						<input type="email" >
+						<button class="button helper-button clear">
+							<span class="mif-cross"></span>
+						</button>
+					</div>
+
+					<label>{%trans %}Password{%endtrans %}</label>
+					<div class="input-control password full-size" data-role="input">
+						<input type="password" >
+						<button class="button helper-button reveal">
+							<span class="mif-looks"></span>
+						</button>
+					</div>
+
+					<label>{%trans %}Confirm password{%endtrans %}</label>
+					<div class="input-control password full-size" data-role="input">
+						<input type="password" >
+						<button class="button helper-button reveal">
+							<span class="mif-looks"></span>
+						</button>
+					</div>
+
+					<label>{%trans %}MH4 User File{%endtrans %}</label>
+					<div class="input-control file full-size" data-role="input">
+						<input type="file" >
+						<button class="button">
+							<span class="mif-folder"></span>
+						</button>
+					</div>
+
+					<button id="login-btn" class="button rounded">Register</button>
+
+			</div>
+			<div class="cell"></div>
+		</div>
+	</div>
+</div>
+	
+{%endblock %}
+
+{%block javascripts%}
+	{{ parent() }}
+	<script type="text/javascript">
+
+	$(function(){
+		$("div.register-form")
+		.removeClass('hidden')
+		.addClass('show');
+
+	});
+	</script>
+{%endblock %}

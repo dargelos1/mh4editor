@@ -1,0 +1,4 @@
+services:
+#    mh4_editor.example:
+#        class: MH4Editor\MH4EditorBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
