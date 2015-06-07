@@ -1,6 +1,6 @@
 mh4_editor_homepage:
     path:    /
-    defaults: { _controller: MH4EditorBundle:Default:index }
+    defaults: { _controller: MH4EditorBundle:Home:index }
 
 mh4_login_frontend:
     path:    /login
@@ -9,3 +9,7 @@ mh4_login_frontend:
 m4h_register_frontend:
     path:    /register
     defaults: { _controller: MH4EditorBundle:Register:showForm }
+
+m4h_register_backend:
+    path:    /register/done
+    defaults: { _controller: MH4EditorBundle:Register:register }

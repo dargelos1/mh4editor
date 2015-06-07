@@ -9,6 +9,6 @@ class LoginController extends Controller
 {
     public function loginAction()
     {
-        return new Response("holaa");
+        return $this->render('DesignBundle:Login:login.html.twig');
     }
 }

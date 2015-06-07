@@ -4,9 +4,16 @@ namespace MH4Editor\MH4EditorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * @ORM\Entity
- * @ORM\Table(name="app_users")
+ * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
+ * @ORM\Table(name="users")
  */
 class User implements UserInterface, \Serializable
 {
@@ -18,24 +25,132 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=6)
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=6)
+     * @Assert\Regex(pattern="/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9])+/",message="Password must contain numeric and alphabetic characters.")
      * @ORM\Column(type="string", length=64)
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank
+     * @Assert\Email
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
+     */
+    private $mh4save_path;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+
+    private $temp;
+
+    /**
+     * @Assert\File(maxSize=81408, mimeTypes = "application/octet-stream")
+     */
+    private $mh4File;
+
+    public function setMh4File(UploadedFile $file = null){
+
+        $this->mh4File = $file;
+
+        if(isset($this->mh4save_path)){
+            $this->temp = $this->mh4save_path;
+            $this->mh4save_path = null;
+        }else{
+            $this->mh4save_path = "uploads/save_file/".$this->getUsername()."/".$file->getClientOriginalName();
+            //echo "HOLAA";die; <-- llega UploadedFile OK! Seguir mirando...
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload(){
+
+        if(null === $this->getMh4File()){
+
+            $filename = sha1(uniqid(mt_rand()),true);
+            $this->setMh4savePath($filename.'.'.$this->getMh4File()->guessExtension());
+        }
+    }
+
+    public function getMh4File(){
+        
+        return $this->mh4File;
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload(){
+
+        if(null === $this->getMh4File())
+            return;
+
+        $this->getMh4File()->move(
+            $this->getUploadRootDir(),
+            $this->getMh4File()->getClientOriginalName()
+        );
+
+        if(isset($this->temp)){
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+
+            $this->temp = null;
+        }
+
+        //$this->setMh4savePath($this->getMh4File()->getClientOriginalName());
+
+        $this->mh4File= null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload(){
+
+        $file = $this->getAbsolutePath();
+        if($file)
+            unlink($file);
+
+    }
+
+    public function getAbsolutePath(){
+
+        return null === $this->mh4save_path ? null : $this->getUploadRootDir().'/'.$this->mh4save_path;
+
+    }
+
+    public function getWebPath(){
+
+        return null === $this->mh4save_path ? null : $this->getUploadDir()."/".$this->mh4save_path;
+    }
+
+    public function getUploadRootDir(){
+
+        return __DIR__."/../../../../web/".$this->getUploadDir();
+    }
+
+    public function getUploadDir(){
+
+        return 'uploads/save_file/'.$this->getUsername();
+    }
 
     public function __construct()
     {
@@ -92,5 +207,115 @@ class User implements UserInterface, \Serializable
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set mh4save_path
+     *
+     * @param string $mh4savePath
+     * @return User
+     */
+    public function setMh4savePath($mh4savePath)
+    {
+        $this->mh4save_path = $mh4savePath;
+        echo "1||";
+        if(null !== $this->getMh4File()){
+            $filename = sha1(uniqid(mt_rand()),true);
+            $this->mh4save_path.='/'.$filename.'.'.$this->getMh4File()->guessExtension();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get mh4save_path
+     *
+     * @return string 
+     */
+    public function getMh4savePath()
+    {
+        return $this->mh4save_path;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return User
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 }

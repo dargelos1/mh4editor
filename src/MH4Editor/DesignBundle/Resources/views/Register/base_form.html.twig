@@ -1,0 +1,17 @@
+{% extends '::frontend.html.twig' %}
+
+{%block container %}
+<div class="container page-content">
+	<div class="grid">
+		<div class="row cells3">
+			<div class="cell"></div>
+			<div class="cell {%block formStyleName%}{%endblock%} hidden">
+				<h1>{%block formName%}Form{%endblock%}</h1>
+					{%block form%}{%endblock%}
+			</div>
+			<div class="cell"></div>
+		</div>
+	</div>
+</div>
+	
+{%endblock %}

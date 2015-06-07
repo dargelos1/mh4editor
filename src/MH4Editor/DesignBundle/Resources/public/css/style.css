@@ -17,4 +17,16 @@ div.register-form.show {
   -ms-transition: all 1s linear;
   -o-transition: all 1s linear; }
 
+/* Metro Loader Colors*/
+.preloader-ring.emerald-style > .wrap > .circle:after {
+  background-color: #008a00; }
+.preloader-ring.fix-pos {
+  display: inline-block;
+  padding-top: 10px;
+  padding-left: 10px;
+  margin: 0px;
+  visibility: hidden; }
+  .preloader-ring.fix-pos.show {
+    visibility: visible; }
+
 /*# sourceMappingURL=style.css.map */

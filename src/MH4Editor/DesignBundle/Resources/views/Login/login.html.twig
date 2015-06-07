@@ -38,10 +38,13 @@
 {%block javascripts%}
 	{{ parent() }}
 	<script type="text/javascript">
+	$(function(){
 
-	$("#login-btn")
-	.on('click',function(){
-		window.location.href="/register";
-	});
+		$("#login-btn")
+		.on('click',function(){
+			window.location.href="/register";
+		});
+	})();
+	
 	</script>
 {%endblock %}

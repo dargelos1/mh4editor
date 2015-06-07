@@ -33,3 +33,26 @@ body {
   	
   	
   }
+
+  /* Metro Loader Colors*/
+
+  .preloader-ring{
+
+  	&.emerald-style > .wrap > .circle:after{
+
+  		background-color : #008a00;
+
+  	}
+
+  	&.fix-pos{
+  		display:inline-block;
+  		padding-top: 10px;
+  		padding-left: 10px;
+  		margin: 0px;
+  		visibility: hidden;
+
+  		&.show{
+  			visibility: visible;
+  		}
+  	}
+  }
