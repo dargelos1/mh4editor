@@ -6,6 +6,10 @@ mh4_login_frontend:
     path:    /login
     defaults: { _controller: MH4EditorBundle:Login:login }
 
+mh4_login_check:
+    path:    /login/check
+    defaults: { _controller: MH4EditorBundle:Login:checkLogin }
+
 m4h_register_frontend:
     path:    /register
     defaults: { _controller: MH4EditorBundle:Register:showForm }

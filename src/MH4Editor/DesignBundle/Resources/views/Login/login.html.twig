@@ -7,25 +7,30 @@
 			<div class="cell"></div>
 			<div class="cell">
 				<h1>Login</h1>
-					<label>{%trans %}Username{%endtrans %}</label>
-					<div class="input-control text full-size" data-role="input">
-						<input type="text" >
-						<button class="button helper-button clear">
-							<span class="mif-cross"></span>
-						</button>
-					</div>
+					{% if error %}
+					    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
+					<form name="login" id="frm-login" method="post" action="{{path('mh4_login_check')}}">
+						<label>{%trans %}Username{%endtrans %}</label>
+						<div class="input-control text full-size" data-role="input">
+							<input type="text" id="in-mh4username" name="_mh4username" value="{{last_username}}" >
+							<button class="button helper-button clear">
+								<span class="mif-cross"></span>
+							</button>
+						</div>
 
-					<label>{%trans %}Password{%endtrans %}</label>
-					<div class="input-control password full-size" data-role="input">
-						<input type="password" >
-						<button class="button helper-button reveal">
-							<span class="mif-looks"></span>
-						</button>
-					</div>
+						<label>{%trans %}Password{%endtrans %}</label>
+						<div class="input-control password full-size" data-role="input">
+							<input type="password" id="in-mh4password" name="_mh4password">
+							<button class="button helper-button reveal">
+								<span class="mif-looks"></span>
+							</button>
+						</div>
 
-					<button class="button rounded">Log in</button>
+						<button class="button rounded">Log in</button>
 
-					<button id="login-btn" class="button rounded float-right">Register</button>
+						<button type="button" id="login-btn" class="button rounded float-right">Register</button>
+					</form>
 
 			</div>
 			<div class="cell"></div>
@@ -42,7 +47,7 @@
 
 		$("#login-btn")
 		.on('click',function(){
-			window.location.href="/register";
+			window.location.href="{{path('m4h_register_frontend')}}";
 		});
 	})();
 	

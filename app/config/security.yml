@@ -3,7 +3,9 @@
 security:
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        MH4Editor\MH4EditorBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
@@ -12,6 +14,11 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+
+        user_db:
+            entity:
+                class: MH4Editor\MH4EditorBundle\Entity\User
+                property: username
         in_memory:
             memory:
                 users:
@@ -25,6 +32,45 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        default:
+            provider: user_db
+            form_login:
+                # submit the login form here
+                check_path: mh4_login_check
+
+                # the user is redirected here when they need to log in
+                login_path: mh4_login_frontend
+
+                # if true, forward the user to the login form instead of redirecting
+                use_forward: true
+
+                # login success redirecting options (read further below)
+                always_use_default_target_path: true
+                default_target_path:            mh4_editor_homepage
+                target_path_parameter:          _target_path
+                use_referer:                    true
+
+                # login failure redirecting options (read further below)
+                failure_path:    mh4_login_frontend
+                failure_forward: false
+                failure_path_parameter: _failure_path
+
+                # field names for the username and password fields
+                username_parameter: _mh4username
+                password_parameter: _mh4password
+
+                # csrf token options
+                csrf_parameter: _csrf_token
+                intention:      authenticate
+                # by default, the login form *must* be a POST, not a GET
+                post_only:      true
+                remember_me:    false
+
+                # by default, a session must exist before submitting an authentication request
+                # if false, then Request::hasPreviousSession is not called during authentication
+                # new in Symfony 2.3
+                require_previous_session: true
         # the login page has to be accessible for everybody
         demo_login:
             pattern:  ^/demo/secured/login$
@@ -49,4 +95,6 @@ security:
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/cookbook/security/access_control.html
     access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY} #//, requires_channel: https 
+        - { path: ^/, roles: ROLE_USER }
+        
