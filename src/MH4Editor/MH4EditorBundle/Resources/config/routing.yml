@@ -17,3 +17,11 @@ m4h_register_frontend:
 m4h_register_backend:
     path:    /register/done
     defaults: { _controller: MH4EditorBundle:Register:register }
+
+mh4_item_list:
+    path:   /item/list
+    defaults: { _controller: MH4EditorBundle:Item:list }
+
+mh4_item_edit:
+    path:   /item/edit/{item_id}
+    defaults: { _controller: MH4EditorBundle:Item:edit }

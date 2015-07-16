@@ -29,4 +29,99 @@ div.register-form.show {
   .preloader-ring.fix-pos.show {
     visibility: visible; }
 
+/* Header*/
+.app-bar {
+  /*override some styles*/ }
+  .app-bar img {
+    width: 200px; }
+  .app-bar, .app-bar .app-bar-element {
+    height: 112px; }
+  .app-bar ul.app-bar-menu, .app-bar ul.app-bar-menu li {
+    height: 112px;
+    line-height: 112px; }
+  .app-bar #user-info span, .app-bar #user-info a {
+    font-size: 30px;
+    line-height: 112px; }
+  .app-bar #user-info a::before {
+    width: 10px;
+    height: 10px; }
+  .app-bar #user-info #user-info-details {
+    width: 235px; }
+
+/* Main Container*/
+.main-container {
+  display: flex; }
+  .main-container .main-barside .sidebar2 ul {
+    width: 200px; }
+  .main-container .main-barside .sidebar2 li.title {
+    text-align: center; }
+
+.main-content {
+  padding-left: 20px;
+  padding-top: 20px;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row wrap;
+  width: 80%; }
+  .main-content div.finder {
+    width: 100%; }
+    .main-content div.finder div.input-control.text {
+      margin: .325rem 0;
+      width: 79% !important; }
+    .main-content div.finder div.input-control.select {
+      margin-right: 5px;
+      width: 84px !important;
+      min-width: 84px; }
+
+.item {
+  width: 200px;
+  height: 234px;
+  border: 1px solid #ADADAD;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  margin: 5px;
+  padding: 10px;
+  background-color: beige;
+  cursor: pointer;
+  transition: 0.7s all; }
+  .item:hover {
+    background-color: #4390df;
+    border: 2px solid #1485AE; }
+  .item button {
+    transition: 0.7s all; }
+    .item button[data-buy], .item button[data-edit] {
+      -webkit-opacity: 0;
+      -moz-opacity: 0;
+      -ms-opacity: 0;
+      -o-opacity: 0; }
+      .item button[data-buy].show, .item button[data-edit].show {
+        -webkit-opacity: 1;
+        -moz-opacity: 1;
+        -ms-opacity: 1;
+        -o-opacity: 1; }
+  .item p.item-info {
+    margin-top: 0px; }
+
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center; }
+  .pagination .item {
+    width: 50px;
+    height: 50px;
+    line-height: 33px;
+    /*border: 1px solid #ADADAD;
+    @include vendor-prefix('border-radius','5px');
+    margin: 5px;
+    padding: 10px;
+    background-color: beige;
+    cursor: pointer;*/
+    transition: 0.7s all;
+    /*&:hover{
+      background-color: rgb(67,144,223);
+      border: 2px solid #1485AE;
+    }*/ }
+
 /*# sourceMappingURL=style.css.map */

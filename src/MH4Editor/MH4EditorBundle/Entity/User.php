@@ -17,6 +17,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class User implements UserInterface, \Serializable
 {
+
+    const USER  = 0;
+    const ADMIN = 1;
+    
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -56,6 +60,11 @@ class User implements UserInterface, \Serializable
      */
     private $isActive;
 
+    /**
+     * @ORM\Column(name="role", type="integer",options={"default" = "0"})
+     */
+    private $role;
+
 
     private $temp;
 
@@ -83,7 +92,7 @@ class User implements UserInterface, \Serializable
      */
     public function preUpload(){
 
-        if(null === $this->getMh4File()){
+        if(null !== $this->getMh4File()){
 
             $filename = sha1(uniqid(mt_rand()),true);
             $this->setMh4savePath($filename.'.'.$this->getMh4File()->guessExtension());
@@ -139,17 +148,17 @@ class User implements UserInterface, \Serializable
 
     public function getWebPath(){
 
-        return null === $this->mh4save_path ? null : $this->getUploadDir()."/".$this->mh4save_path;
+        return null === $this->mh4save_path ? null : $this->mh4save_path;
     }
 
     public function getUploadRootDir(){
 
-        return __DIR__."/../../../../web/".$this->getUploadDir();
+        return __DIR__."/../../../../web";
     }
 
     public function getUploadDir(){
 
-        return 'uploads/save_file/'.$this->getUsername();
+        return $this->getUploadRootDir().'/uploads/save_file/'.$this->getUsername();
     }
 
     public function __construct()
@@ -178,7 +187,13 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $r = $this->getRole();
+        if($r === self::USER)
+            return array('ROLE_USER');
+        else if($r === self::ADMIN)
+            return array('ROLE_SUPER_ADMIN');
+        else
+            return array('IS_AUTHENTICATED_ANONYMOUSLY');
     }
 
     public function eraseCredentials()
@@ -324,5 +339,28 @@ class User implements UserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Set role
+     *
+     * @param integer $role
+     * @return User
+     */
+    public function setRole()
+    {
+        $this->role = 0;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return integer 
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }

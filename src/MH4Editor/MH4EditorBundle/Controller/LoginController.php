@@ -11,7 +11,7 @@ class LoginController extends Controller
     public function loginAction()
     {
 
-    	 $authenticationUtils = $this->get('security.authentication_utils');
+    	$authenticationUtils = $this->get('security.authentication_utils');
 
 	    // get the login error if there is one
 	    $error = $authenticationUtils->getLastAuthenticationError();
@@ -19,6 +19,8 @@ class LoginController extends Controller
 	    // last username entered by the user
 	    $lastUsername = $authenticationUtils->getLastUsername();
 	    $security = $this->container->get('security.context');
+
+	    //$this->denyAccessUnlessGranted('ROLE_USER',null,'You must be logged to access this area.');
 
 	    if($security->isGranted('ROLE_USER')) {
             return new RedirectResponse($this->get('router')->generate('mh4_editor_homepage'));
@@ -31,5 +33,10 @@ class LoginController extends Controller
 	        	)
 	        );
 	    }
+    }
+
+    public function checkLoginAction()
+    {
+
     }
 }

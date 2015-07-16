@@ -16,7 +16,7 @@ class RegisterController extends Controller
     {
     	$userForm = new UserForm();
     	$form = $this->createForm(new UserRegistrationType(),$userForm);
-
+        
     	$f = $form->createView();
         return $this->render('DesignBundle:Register:regform.html.twig',
         	array(
@@ -46,6 +46,7 @@ class RegisterController extends Controller
         	$user2 = $em->getRepository("MH4EditorBundle:User")->findBy(array("email" => $user->getEmail()));
 
         	if(count($user2) == 0){
+                $user->setRole(); //By default sets to 0. Change it in DDBB
         		$em->persist($user);
         		$em->flush();
         		$message = "user ".$user->getUsername()." registered!";

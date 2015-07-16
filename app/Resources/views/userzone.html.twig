@@ -1,0 +1,15 @@
+<div id="user-info" class="user-info">
+	{%if app.user != null %}
+		<span class="mif-user"></span>
+		<a class="dropdown-toggle fg-white">{{app.user.username}}</a>
+		<div class="app-bar-drop-container bg-white fg-black place-right " data-role="dropdown">
+			<div id="user-info-details" class="padding20">
+				Hunter name: {{hunterName | default("__HunteName__")}} <br>
+				HR: {{ hunterRank | default(0)}} <br>
+				Zenies: {{ zenies | default(0)}} <br>
+				Caravan Points: {{ caravanPoints | default(0)}}<br>
+
+			</div>
+		</div>
+	{%endif%}
+</div>

@@ -1,0 +1,3 @@
+services:
+    mh4_cipher:
+        class: MH4Editor\MH4CipherBundle\Services\MH4CipherService

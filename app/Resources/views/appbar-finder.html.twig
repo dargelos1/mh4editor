@@ -1,0 +1,18 @@
+<div class="finder">
+	<span display="inline-block">{%trans%}Mostrar {%endtrans%}</span>
+	<div class="input-control select">
+		<select id="finder-filter-offset" name="finder-filter-offset">
+			<option value="10">10</option>
+			<option value="25">25</option>
+			<option value="50">50</option>
+			<option selected="selected" value="100">100</option>
+		</select>
+	</div>
+	<span display="inline-block">{%trans%} registros.{%endtrans%}</span>
+	<div class="input-control text full-size" data-role="input">
+		<input id="finder-item-name" name="finder-item-name" type="text" style="padding-right:62px" placeholder="{%trans%}Busca por nombre de objeto...{%endtrans%}"/>
+		<button data-action="find-name" class="button" id="btn-find-item-name">
+			<span class="mif-search"></span>
+		</button>
+	</div>
+</div>

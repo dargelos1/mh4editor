@@ -1,3 +1,7 @@
+mh4_cipher:
+    resource: "@MH4CipherBundle/Resources/config/routing.yml"
+    prefix:   /
+
 mh4_editor:
     resource: "@MH4EditorBundle/Resources/config/routing.yml"
     prefix:   /

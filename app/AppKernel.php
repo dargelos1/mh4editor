@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             //new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new MH4Editor\MH4EditorBundle\MH4EditorBundle(),
             new MH4Editor\DesignBundle\DesignBundle(),
+            new MH4Editor\MH4CipherBundle\MH4CipherBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

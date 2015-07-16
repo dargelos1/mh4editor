@@ -4,55 +4,211 @@ body {
 
 @mixin vendor-prefix($name,$argument){
 
-	-webkit-#{$name} : #{$argument};
-	-moz-#{$name} : #{$argument};
-	-ms-#{$name} : #{$argument};
-	-o-#{$name} : #{$argument};
+  -webkit-#{$name} : #{$argument};
+  -moz-#{$name} : #{$argument};
+  -ms-#{$name} : #{$argument};
+  -o-#{$name} : #{$argument};
+  $name : #{$argument};
 
 }
 
 .float-right {
-  float: right; }
+  float: right; 
+}
 
-  div.register-form{
-  	&.hidden{
-  		opacity: 0;
-  		position: relative;
-  		left: -300px;
-  		@include vendor-prefix(transition,all 1s linear )
+div.register-form{
+  &.hidden{
+    opacity: 0;
+    position: relative;
+    left: -300px;
+    @include vendor-prefix(transition,all 1s linear )
 
-  	}
-
-  	&.show{
-
-	  	opacity: 1;
-	  	left: 0px;
-	  	@include vendor-prefix(transition,all 1s linear)
-  	}
-  	
-  	
-  	
   }
 
-  /* Metro Loader Colors*/
+  &.show{
 
-  .preloader-ring{
+    opacity: 1;
+    left: 0px;
+    @include vendor-prefix(transition,all 1s linear)
+  } 
+  
+}
 
-  	&.emerald-style > .wrap > .circle:after{
+/* Metro Loader Colors*/
 
-  		background-color : #008a00;
+.preloader-ring{
 
-  	}
+  &.emerald-style > .wrap > .circle:after{
 
-  	&.fix-pos{
-  		display:inline-block;
-  		padding-top: 10px;
-  		padding-left: 10px;
-  		margin: 0px;
-  		visibility: hidden;
+    background-color : #008a00;
 
-  		&.show{
-  			visibility: visible;
-  		}
-  	}
   }
+
+  &.fix-pos{
+    display:inline-block;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin: 0px;
+    visibility: hidden;
+
+    &.show{
+      visibility: visible;
+    }
+  }
+}
+
+
+/* Header*/
+
+.app-bar{
+
+  img{
+    width: 200px;
+  }
+
+  /*override some styles*/
+  
+  &, .app-bar-element{
+    height: 112px;
+  }
+
+  ul.app-bar-menu{
+
+    &,li{
+      height: 112px;
+      line-height: 112px;
+    }
+  }
+
+
+
+  #user-info
+  {
+    span,a{
+      font-size: 30px;
+      line-height: 112px;
+    }
+    a::before
+    {
+      width: 10px;
+      height: 10px;
+    }
+
+    #user-info-details
+    {
+      width: 235px;
+    }
+
+  }
+
+}
+
+/* Main Container*/
+
+.main-container{
+
+  display: flex;
+
+  .main-barside{
+
+
+    .sidebar2{
+
+      ul{
+        width: 200px;
+      }
+
+      li.title{
+        text-align: center;
+      }
+    }
+  }
+}
+
+.main-content{
+
+  padding-left: 20px;
+  padding-top: 20px;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row wrap;
+  width: 80%;
+
+  div.finder{
+
+
+    width: 100%;
+
+
+    div.input-control{
+
+      &.text{
+        
+        margin: .325rem 0;
+        width: 79% !important;
+      }
+
+      &.select{
+        margin-right: 5px;
+        width: 84px !important;
+        min-width: 84px;
+      }
+    }
+  }
+}
+
+.item{
+  width: 200px;
+  height: 234px;
+  border: 1px solid #ADADAD;
+  @include vendor-prefix('border-radius','5px');
+  margin: 5px;
+  padding: 10px;
+  background-color: beige;
+  cursor: pointer;
+  transition: 0.7s all;
+
+  &:hover{
+    background-color: rgb(67,144,223);
+    border: 2px solid #1485AE;
+  }
+
+  button{
+    transition: 0.7s all;
+    &[data-buy],&[data-edit]{
+      @include vendor-prefix('opacity',0);
+      &.show{
+        @include vendor-prefix('opacity',1);
+      }
+    }
+  }
+
+  p.item-info{
+    margin-top: 0px;
+  }
+
+}
+
+.pagination{
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .item{
+    width: 50px;
+    height: 50px;
+    line-height: 33px;
+    /*border: 1px solid #ADADAD;
+    @include vendor-prefix('border-radius','5px');
+    margin: 5px;
+    padding: 10px;
+    background-color: beige;
+    cursor: pointer;*/
+    transition: 0.7s all;
+
+    /*&:hover{
+      background-color: rgb(67,144,223);
+      border: 2px solid #1485AE;
+    }*/
+  }
+}

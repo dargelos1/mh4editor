@@ -19,6 +19,7 @@ security:
             entity:
                 class: MH4Editor\MH4EditorBundle\Entity\User
                 property: username
+
         in_memory:
             memory:
                 users:
@@ -34,6 +35,7 @@ security:
             security: false
 
         default:
+            anonymous: ~
             provider: user_db
             form_login:
                 # submit the login form here
@@ -61,7 +63,7 @@ security:
                 password_parameter: _mh4password
 
                 # csrf token options
-                csrf_parameter: _csrf_token
+                #csrf_parameter: _csrf_token
                 intention:      authenticate
                 # by default, the login form *must* be a POST, not a GET
                 post_only:      true
@@ -72,21 +74,7 @@ security:
                 # new in Symfony 2.3
                 require_previous_session: true
         # the login page has to be accessible for everybody
-        demo_login:
-            pattern:  ^/demo/secured/login$
-            security: false
-
         # secures part of the application
-        demo_secured_area:
-            pattern:    ^/demo/secured/
-            # it's important to notice that in this case _demo_security_check and _demo_login
-            # are route names and that they are specified in the AcmeDemoBundle
-            form_login:
-                check_path: _demo_security_check
-                login_path: _demo_login
-            logout:
-                path:   _demo_logout
-                target: _demo
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
@@ -95,6 +83,7 @@ security:
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/cookbook/security/access_control.html
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY} #//, requires_channel: https 
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY} #//, requires_channel: https
         - { path: ^/, roles: ROLE_USER }
         

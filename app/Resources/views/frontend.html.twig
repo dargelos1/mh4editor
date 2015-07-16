@@ -1,9 +1,16 @@
 {% extends '::base.html.twig' %}
 {%block javascripts %}
 	<script type="text/javascript" src="{{asset('bundles/design/js/jquery-2.1.1.js')}}"></script>
+	<script type="text/javascript" src="{{asset('bundles/design/js/dust-full.js')}}"></script>
 	<!--<script type="text/javascript" src="{{asset('bundles/design/js/jquery-ui-1.10.4.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('bundles/design/js/jquery-ui.custom.min.js')}}"></script>-->
 	<script type="text/javascript" src="{{asset('bundles/design/js/metro.js')}}"></script>
+	<script src="{{ asset('bundles/design/js/mh4app.js') }}"></script>
+	<script src="{{ asset('bundles/design/js/templates/general_tmp.js') }}"></script>
+	<script src="{{ asset('bundles/design/js/dialogManager.js') }}"></script>
+	<script src="{{ asset('bundles/design/js/paginationManager.js') }}"></script>
+	
+
 {%endblock%}
 
 {% block stylesheets %}
@@ -13,5 +20,28 @@
 	<link href="{{asset('bundles/design/css/style.css')}}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block body %}
+	{% block header %}
+		<div class="app-bar" data-role="appbar">
+
+			<a class="app-bar-element" href="{{path('mh4_editor_homepage')}}">
+				<img class="header-logo" src="{{asset('bundles/design/images/mh4-logo.png')}}">
+			</a>
+
+			{%block appBarMenu %}
+				{%if app.user%}
+					{%include '::appbar-menu.html.twig'%}
+				{%endif%}
+				
+			{%endblock%}
+
+			<div class="app-bar-element place-right">
+				{%block userZone %}
+					{%include '::userzone.html.twig' %}
+				{%endblock%}
+					
+			</div>
+			<div class="app-bar-pullbutton place-right automatic"></div>
+		</div>
+	{%endblock%}
 	{% block container %}{% endblock %}
 {% endblock %}

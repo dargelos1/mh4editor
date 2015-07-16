@@ -1,0 +1,194 @@
+{% extends '::frontend.html.twig' %}
+
+{%block userZone %}
+	{%include '::userzone.html.twig' with {'hunterName': hunterName} %}
+{%endblock%}
+{%block container %}
+<div class="page-content">
+	<div class="main-container">
+
+		<div class="main-barside">
+			{%include '::sidebar-menu.html.twig'%}
+		</div>
+
+		<div class="main-content">
+			{% include '::appbar-finder.html.twig' %}
+			{{itemBox}}
+			
+		</div>
+	</div>
+		
+</div>
+	
+{%endblock %}
+
+{%block javascripts%}
+	{{ parent() }}
+	<script type="text/javascript">
+
+	$(function(){
+
+		var sendData = {};
+		sendData['maxShow'] = $('#finder-filter-offset').val();
+		sendData['search'] 	= $('#finder-item-name').val();
+		mh4app.loadTemplate('general');
+		mh4app.getData(
+			'{{path("mh4_item_list")}}',sendData,function(data){
+			if(data.status){
+				$(data.items).each(function(idx,item){
+
+					var html = "";
+					var options = [];
+					for(var i=1;i<=item.carryMax;i++){
+						//var option = { value: i}
+						//options.push(option);
+						options.push(i);
+					}
+					dust.render('shop-item',{
+						id: item.id,
+						img: item.img,
+						name: item.name,
+						description: item.description,
+						buyIngame: item.buyIngamePrice,
+						carryMax: item.carryMax,
+						caravanPoints: item.buyWebCaravanPoints,
+						{%if is_granted('ROLE_SUPER_ADMIN') %}
+							admin: true,
+						{% endif %}
+						options : options
+					},function(err,out){
+
+						$(".main-content").html($(".main-content").html()+out);
+						
+					});
+
+					var dialogId = "item_dialog_"+item.id;
+					//console.log("OPTIONS",options);
+					mh4app.dialogManager.addDialog(
+						{
+							id: dialogId,
+							templateOptions: {
+								options: options,
+								itemName: item.name,
+								selectId: 'select_'+item.name,
+								iId: item.id
+							}
+						}
+					);
+
+					{%if is_granted('ROLE_SUPER_ADMIN') %}
+						var dialog2Id = "item_edit_dialog_"+item.id;
+						mh4app.dialogManager.addDialog(
+							{
+								id: dialog2Id,
+								template : 'item-edit-dialog',
+								templateOptions: {
+									options: options,
+									itemName: item.name,
+									selectId: 'select_'+item.name,
+									buyIngame: item.buyIngamePrice,
+									caravanPoints: item.buyWebCaravanPoints,
+									iId: item.id
+								}
+							}
+						);
+
+						mh4app.dialogManager.dialogs[dialog2Id].init();
+						mh4app.dialogManager.registerButtons(
+							dialog2Id,
+							[
+								{
+									action: 'edit',
+									find: 'inputs',
+									callback: function(foundElements,button){
+
+
+										var data = {};
+										$(button).addClass('loading-cube');
+										$(foundElements).each(function(i,e){
+											
+											data[$(e).attr('name')] = $(e).val();
+											
+										});
+										console.log(data);
+										var itemId = mh4app.dialogManager.getDialog(dialog2Id).dialog.data("id");
+										var urlRequest = '{{path("mh4_item_edit",{item_id: 0} )}}';
+										urlRequest = urlRequest.replace('0',itemId);
+										mh4app.getData(
+											urlRequest,
+											data,
+											function(data){
+												$(button).removeClass('loading-cube');
+												if(data.status){
+													mh4app.dialogManager.getDialog(dialog2Id).closeDialog();
+													$('.item[data-id='+itemId+'] p.item-info').find('span#sItemPrice').html(data.buyPrice);
+													$('.item[data-id='+itemId+'] p.item-info').find('span#sItemCp').html(data.cPoints);
+												}
+											}
+										);
+									}
+								}
+							]
+
+						);
+					{% endif %}
+
+					mh4app.dialogManager.dialogs[dialogId].init();
+					mh4app.dialogManager.registerButtons(dialogId);
+					
+
+				});
+
+				$(".main-content .item")
+				.on('click',function(e){
+
+					if($(this).hasClass("element-selected")){
+						$(this).removeClass("element-selected");
+						$(this).find("button[data-buy]").removeClass("show");
+						{%if is_granted('ROLE_USER') %}
+							$(this).find("button[data-edit]").removeClass("show");
+						{% endif %}
+					}else{
+
+						var that = this;
+						$(this).addClass("element-selected");
+						$(this).find("button[data-buy]")
+						.addClass("show")
+						.off('click')
+						.on('click',function(e){
+
+							//console.log($(that));
+							var d = mh4app.dialogManager.getDialog("item_dialog_"+$(that).data('id'));
+							d.openDialog();
+							
+
+							e.stopPropagation();
+						});
+
+						{%if is_granted('ROLE_USER') %}
+
+							$(this).find("button[data-edit]")
+							.addClass("show")
+							.off('click')
+							.on('click',function(e){
+
+								//console.log($(that));
+								var d = mh4app.dialogManager.getDialog("item_edit_dialog_"+$(that).data('id'));
+								d.openDialog();
+								
+
+								e.stopPropagation();
+							});
+						{% endif %}
+
+					}
+
+				});
+				
+			}
+		});
+		
+	});
+	
+	</script>
+{%endblock %}
