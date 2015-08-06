@@ -77,12 +77,19 @@
 							'</p>'+
 						'</div>',
 		'pagination': 	'<div class="pagination" id="{controlId}">'+
-							'<div class="item"><</div>'+
+							'<div class="item" data-pagination-action="backward"><</div>'+
 							'{#pages}'+
-								'<div class="item {itemType}">{.}</div>'+
+								'<div data-offset="{val}" class="item {itemType} pageButton">{val}</div>'+
 							'{/pages}'+
-							'<div class="item">></div>'+
-						'</div>'
+							'<div class="item" data-pagination-action="forward">></div>'+
+						'</div>',
+   'size-error-alert':  '<div data-role="dialog" data-id="{id}" id="{id}" data-overlay="true" data-overlay-color="op-dark" class="padding20">'+
+							'<h1> Alert</h1>'+
+							'<p> {alertMessage} </p>'+
+							'<p>'+
+								'<button data-action="cancel" class="button danger block-shadow-danger text-shadow">Aceptar</button>'+
+							'</p>'+
+						'</div>',
 	};
 
 })();

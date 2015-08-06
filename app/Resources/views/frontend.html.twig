@@ -9,15 +9,27 @@
 	<script src="{{ asset('bundles/design/js/templates/general_tmp.js') }}"></script>
 	<script src="{{ asset('bundles/design/js/dialogManager.js') }}"></script>
 	<script src="{{ asset('bundles/design/js/paginationManager.js') }}"></script>
+	<script src="{{ asset('bundles/design/js/fileManager.js') }}"></script>
+	<script src="{{ asset('bundles/design/js/colpick.js') }}"></script>
+	<script src="{{ asset('bundles/design/js/jquery-throttle-debounce.min.js') }}"></script>
+	
+	<script type="text/javascript">
+		$(function(){
+			//Always load templates
+			mh4app.loadTemplate('general');
+		});
+	</script>
 	
 
 {%endblock%}
 
 {% block stylesheets %}
 	<link href="{{asset('bundles/design/css/metro.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{asset('bundles/design/css/metro-schemes.css')}}" rel="stylesheet" type="text/css"/>
 	<!--<link href="{{asset('bundles/design/css/metro-icons.css')}}" rel="stylesheet" type="text/css"/>-->
 	<link href="{{asset('bundles/design/css/metro-icons.css')}}" rel="stylesheet" type="text/css"/>
 	<link href="{{asset('bundles/design/css/style.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{asset('bundles/design/css/colpick.css')}}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block body %}
 	{% block header %}

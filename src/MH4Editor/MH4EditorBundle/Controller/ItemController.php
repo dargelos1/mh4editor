@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class ItemController extends Controller
 {
@@ -17,7 +18,7 @@ class ItemController extends Controller
 
         $vars  = $request->request->all();
 
-        $maxShow    = (isset($vars['maxShow']) && !empty($vars['maxShow'])) ? $vars['maxShow'] : 100;
+        $maxShow    = (isset($vars['maxShow']) && !empty($vars['maxShow'])) ? $vars['maxShow'] : 25;
         $search     = (isset($vars['search']) && !empty($vars['search'])) ? $vars['search'] : '';
         $offset     = (isset($vars['offset']) && !empty($vars['offset'])) ? $vars['offset'] : 1;
 
@@ -26,18 +27,40 @@ class ItemController extends Controller
     	$user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery(
-            "SELECT i
-            FROM MH4EditorBundle:Item i
-            "
-        )
-        ->setMaxResults(100)
-        ->setFirstResult($offset);
+        $query = null;
+        if(trim($search) !== ''){
+            $query = $em->createQuery(
+                "SELECT i
+                FROM MH4EditorBundle:Item i
+                WHERE i.name LIKE :search
+                "
+            );
+            
+            $query->setParameter("search","%".$search."%");
+        }else{
+            $query = $em->createQuery(
+                "SELECT i
+                FROM MH4EditorBundle:Item i
+                "
+            );
+        }
+            
+        
 
-        $results = $query->getResult();
+        //$results = $query->getResult();
+        $paginator = new Paginator($query);
 
+        $totalItems = count($paginator);
+        
+
+        $paginator
+        ->getQuery()
+        ->setMaxResults($maxShow)
+        ->setFirstResult($maxShow*($offset-1));
+
+        $pagesCount = ceil($totalItems / $paginator->getQuery()->getMaxResults());
         $items = array();
-        foreach ($results as $item) {
+        foreach ($paginator as $item) {
             $itm = array();
             $itm['id'] = $item->getId();
             $itm['name'] = $item->getName();
@@ -52,6 +75,11 @@ class ItemController extends Controller
         }
 
         $response['items'] = $items;
+        $response['paginator'] = array(
+
+            "total" => $totalItems,
+            "pages" => $pagesCount
+        );
 
         return new Response(json_encode($response),200);
     	
@@ -88,6 +116,53 @@ class ItemController extends Controller
         $response['buyPrice'] = $itemPrice;
         $response['cPoints'] = $itemCp;
 
+
+        return new Response(json_encode($response),200);
+
+    }
+
+    public function buyAction(Request $request,$item_name){
+
+        $user = $this->getUser();
+        $response = array();
+        $response["status"] = false;
+        if($user && $request->isXMLHttpRequest()){
+            
+            $em = $this->getDoctrine()->getManager();
+
+            $item = $em->getRepository("MH4EditorBundle:Item")->findBy(array("name" => $item_name));
+            if($item){
+
+                $vars  = $request->request->all();
+
+                $itemPrice = $vars["item-price"];
+                $itemPrice = $vars["item-units"];
+
+                $mh4Cipher = $this->get("mh4_cipher");
+                if(!file_exists($user->getUploadDir()."/decrypted.bin")){
+                    $mh4Cipher->MH4Decrypt($user->getAbsolutePath() ,$user->getUploadDir()."/decrypted.bin",$this);
+                }
+
+                $zenies = $mh4Cipher->getZenies();
+
+            }else{
+                return new Response(json_encode($response),200);
+            }
+
+            $vars  = $request->request->all();
+        }
+
+        return new Response(json_encode($response),200);
+
+    }
+
+    public function sellAction(Request $request,$item_id){
+
+        $user = $this->getUser();
+        $response = array();
+        $response["status"] = false;
+        if($user && $request->isXMLHttpRequest()){
+        }
 
         return new Response(json_encode($response),200);
 

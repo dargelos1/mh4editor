@@ -25,3 +25,20 @@ mh4_item_list:
 mh4_item_edit:
     path:   /item/edit/{item_id}
     defaults: { _controller: MH4EditorBundle:Item:edit }
+
+mh4_item_buy:
+    path:   /item/buy/{item_name}
+    defaults: { _controller: MH4EditorBundle:Item:buy }
+    requirements: { item_name: \w+\s+'*-*_* }
+
+mh4_item_sell:
+    path:   /item/sell/{item_id}
+    defaults: { _controller: MH4EditorBundle:Item:sell }
+
+mh4_file_upload:
+    path:   /user/savefile/upload
+    defaults: { _controller: MH4EditorBundle:User:fileUpload }
+
+mh4_file_download:
+    path:   /user/savefile/download
+    defaults: { _controller: MH4EditorBundle:User:fileDownload }

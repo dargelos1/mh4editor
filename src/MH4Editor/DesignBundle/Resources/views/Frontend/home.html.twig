@@ -14,27 +14,120 @@
 		<div class="main-content">
 			{% include '::appbar-finder.html.twig' %}
 			{{itemBox}}
+			<!--div data-role="preloader" data-type="metro" data-style="dark"></div-->
 			
 		</div>
+		
 	</div>
 		
 </div>
-	
+<div class="file-menus">
+	{% include '::file-menu.html.twig' %}
+</div>
 {%endblock %}
 
 {%block javascripts%}
 	{{ parent() }}
 	<script type="text/javascript">
+	 function openFileMenu(){
+            var  charm = $("#file-menu").data("charm");
+            if (charm.element.data("opened") === true) {
+                charm.close();
+            } else {
+                charm.open();
+            }
+        }
+	</script>
+	<script type="text/javascript">
 
 	$(function(){
+
+		//File Manager init
+		var alertId = "alert_dialog_mh4-user-file";
+		//console.log("OPTIONS",options);
+		mh4app.dialogManager.addDialog(
+			{
+				id: alertId,
+				template: 'size-error-alert',
+				templateOptions: {
+					alertMessage: "File size incorrect!",
+				}
+			}
+		);
+		mh4app.dialogManager.getDialog(alertId).init();
+		mh4app.dialogManager.registerButtons(alertId);
+
+
+		mh4app.fileManager.registerEvents({
+
+			serverSide: true,
+			uploadUrl: '{{path('mh4_file_upload')}}',
+			onLoadFile: function(file){
+
+				var size = file.getSize();
+				if(size !== 81408){
+					
+					var a = mh4app.dialogManager.getDialog(alertId);
+					a.openDialog();
+				}else{
+					file.sendToServer();
+				}
+
+			},
+			onSendProgress: function(progressEvent){
+
+				console.log(progressEvent.loaded,progressEvent.total);
+				console.log((progressEvent.loaded*100/progressEvent.total)+"%")
+			},
+			onSendSuccess: function(data){
+				console.log(data);
+			},
+			onSendError: function(xhr,errStatus,errThrown){
+
+			}
+		});
+		//Pick Color Plugin
+		$('.color-box').each(function(index, el) {
+			
+
+			var color = "";
+			switch($(el).attr("id")){
+
+				case "featuresColor":
+					color = "{{ FeaturesColor | default('#000000')}}";
+					break;
+				case "hairColor":
+					color = "{{ HairColor | default('#000000')}}";
+					break;
+				case "clothColor":
+					color = "{{ ClothColor | default('#000000')}}";
+					break;
+				case "skinColor":
+					color = "{{ SkinColor | default('#000000')}}";
+					break;
+			}
+			color = color.replace("#","");
+			$(this).colpick({
+				colorScheme:'dark',
+				layout:'rgbhex',
+				color: color,
+				onSubmit:function(hsb,hex,rgb,el) {
+					$(el).css('background-color', '#'+hex);
+					$(el).colpickHide();
+				}
+			}).css('background-color', "#"+color);
+
+		});
+		//
 
 		var sendData = {};
 		sendData['maxShow'] = $('#finder-filter-offset').val();
 		sendData['search'] 	= $('#finder-item-name').val();
-		mh4app.loadTemplate('general');
+		
 		mh4app.getData(
 			'{{path("mh4_item_list")}}',sendData,function(data){
 			if(data.status){
+				$("[data-role=preloader]").remove();
 				$(data.items).each(function(idx,item){
 
 					var html = "";
@@ -110,7 +203,7 @@
 											data[$(e).attr('name')] = $(e).val();
 											
 										});
-										console.log(data);
+										//console.log(data);
 										var itemId = mh4app.dialogManager.getDialog(dialog2Id).dialog.data("id");
 										var urlRequest = '{{path("mh4_item_edit",{item_id: 0} )}}';
 										urlRequest = urlRequest.replace('0',itemId);
@@ -139,9 +232,16 @@
 
 				});
 
-				$(".main-content .item")
-				.on('click',function(e){
+				mh4app.paginationManager.addPagination({
+					id: "item_pag",
+					element: $(".main-content")
+				});
 
+				var paginator = mh4app.paginationManager.getPagination("item_pag");
+				paginator.init(data.paginator.pages);
+				
+				$(".main-content .item[data-role]")
+				.on('click',function(e){
 					if($(this).hasClass("element-selected")){
 						$(this).removeClass("element-selected");
 						$(this).find("button[data-buy]").removeClass("show");
@@ -185,10 +285,317 @@
 
 				});
 				
+				$('#finder-filter-offset').on("change",function(){
+					sendData['maxShow'] = $(this).val();
+					mh4app.getData(
+						'{{path("mh4_item_list")}}',sendData,function(data){
+						var finder = $("#pag_content_item_pag").find(".finder");
+						$("#pag_content_item_pag").html(finder);
+
+						if(data.status){
+							$("[data-role=preloader]").remove();
+							var values = {};
+							values["offsetValue"] = $('#finder-filter-offset').val();
+							values["searchValue"] = $('#finder-item-name').val();
+							values["paginator"] = paginator;
+							if(data.items.length === 0){
+								$("#pag_content_item_pag").html(finder);
+							}else{
+								itemsRender(data,$("#pag_content_item_pag"),values);
+								
+							}
+							registerEvents(values);
+							
+						}
+					});
+				});
+
+				$('#finder-item-name').on("keyup",$.debounce( 350,function(){
+
+					sendData['search'] 	= $(this).val();
+					mh4app.getData(
+						'{{path("mh4_item_list")}}',sendData,function(data){
+						var finder = $("#pag_content_item_pag").find(".finder");
+						$("#pag_content_item_pag").html(finder);
+						if(data.status){
+							$("[data-role=preloader]").remove();
+							var values = {};
+							values["offsetValue"] = $('#finder-filter-offset').val();
+							values["searchValue"] = $('#finder-item-name').val();
+							values["paginator"] = paginator;
+							if(data.items.length === 0){
+								$("#pag_content_item_pag").html(finder);
+							}else{
+								itemsRender(data,$("#pag_content_item_pag"),values);
+								
+							}
+							registerEvents(values);
+							$('#finder-item-name').focus();
+						}
+					});
+
+				}));
+
+				$(paginator).on("pageChanged",function(event,params){
+
+					console.log("pageChanged From "+params.changedFrom+" toPage "+params.changedTo);
+					sendData['offset'] 	= params.changedTo;
+					//===Send to server==
+					mh4app.getData(
+						'{{path("mh4_item_list")}}',sendData,function(data){
+						var finder = $("#pag_content_"+params.pagId).find(".finder");
+						$("#pag_content_"+params.pagId).html(finder);
+						if(data.status){
+							$("[data-role=preloader]").remove();
+							var values = {};
+							values["offsetValue"] = $('#finder-filter-offset').val();
+							values["searchValue"] = $('#finder-item-name').val();
+							values["paginator"] = paginator;
+							itemsRender(data,$("#pag_content_"+params.pagId),values);
+							registerEvents(values);
+						}
+					});
+					
+					//== End send to server===
+				});
+				
 			}
 		});
+
+		//Item render
+		function itemsRender(data,renderOn,values) {
+			values = values || {};
+			$(data.items).each(function(idx,item){
+
+				var html = "";
+				var options = [];
+				for(var i=1;i<=item.carryMax;i++){
+					//var option = { value: i}
+					//options.push(option);
+					options.push(i);
+				}
+				dust.render('shop-item',{
+					id: item.id,
+					img: item.img,
+					name: item.name,
+					description: item.description,
+					buyIngame: item.buyIngamePrice,
+					carryMax: item.carryMax,
+					caravanPoints: item.buyWebCaravanPoints,
+					{%if is_granted('ROLE_SUPER_ADMIN') %}
+						admin: true,
+					{% endif %}
+					options : options
+				},function(err,out){
+
+					$(renderOn).html($(renderOn).html()+out);
+					
+				});
+
+				if(values.offsetValue){
+					$('#finder-filter-offset').val(values.offsetValue);
+				}
+
+				if(values.searchValue){
+					$('#finder-item-name').val(values.searchValue);
+				}
+
+				var dialogId = "item_dialog_"+item.id;
+				//console.log("OPTIONS",options);
+				mh4app.dialogManager.addDialog(
+					{
+						id: dialogId,
+						templateOptions: {
+							options: options,
+							itemName: item.name,
+							selectId: 'select_'+item.name,
+							iId: item.id
+						}
+					}
+				);
+
+				{%if is_granted('ROLE_SUPER_ADMIN') %}
+					var dialog2Id = "item_edit_dialog_"+item.id;
+					mh4app.dialogManager.addDialog(
+						{
+							id: dialog2Id,
+							template : 'item-edit-dialog',
+							templateOptions: {
+								options: options,
+								itemName: item.name,
+								selectId: 'select_'+item.name,
+								buyIngame: item.buyIngamePrice,
+								caravanPoints: item.buyWebCaravanPoints,
+								iId: item.id
+							}
+						}
+					);
+
+					mh4app.dialogManager.dialogs[dialog2Id].init();
+					mh4app.dialogManager.registerButtons(
+						dialog2Id,
+						[
+							{
+								action: 'edit',
+								find: 'inputs',
+								callback: function(foundElements,button){
+
+
+									var data = {};
+									$(button).addClass('loading-cube');
+									$(foundElements).each(function(i,e){
+										
+										data[$(e).attr('name')] = $(e).val();
+										
+									});
+									//console.log(data);
+									var itemId = mh4app.dialogManager.getDialog(dialog2Id).dialog.data("id");
+									var urlRequest = '{{path("mh4_item_edit",{item_id: 0} )}}';
+									urlRequest = urlRequest.replace('0',itemId);
+									mh4app.getData(
+										urlRequest,
+										data,
+										function(data){
+											$(button).removeClass('loading-cube');
+											if(data.status){
+												mh4app.dialogManager.getDialog(dialog2Id).closeDialog();
+												$('.item[data-id='+itemId+'] p.item-info').find('span#sItemPrice').html(data.buyPrice);
+												$('.item[data-id='+itemId+'] p.item-info').find('span#sItemCp').html(data.cPoints);
+											}
+										}
+									);
+								}
+							}
+						]
+
+					);
+				{% endif %}
+
+				mh4app.dialogManager.dialogs[dialogId].init();
+				mh4app.dialogManager.registerButtons(dialogId);
+				
+
+			});
+
+			var paginator = mh4app.paginationManager.getPagination("item_pag");
+			paginator.removeAllPages().addMultiplePages(data.paginator.pages).refreshPages();
+
+			$(".main-content .item[data-role]")
+			.on('click',function(e){
+
+				if($(this).hasClass("element-selected")){
+					$(this).removeClass("element-selected");
+					$(this).find("button[data-buy]").removeClass("show");
+					{%if is_granted('ROLE_USER') %}
+						$(this).find("button[data-edit]").removeClass("show");
+					{% endif %}
+				}else{
+
+					var that = this;
+					$(this).addClass("element-selected");
+					$(this).find("button[data-buy]")
+					.addClass("show")
+					.off('click')
+					.on('click',function(e){
+
+						//console.log($(that));
+						var d = mh4app.dialogManager.getDialog("item_dialog_"+$(that).data('id'));
+						d.openDialog();
+						
+
+						e.stopPropagation();
+					});
+
+					{%if is_granted('ROLE_USER') %}
+
+						$(this).find("button[data-edit]")
+						.addClass("show")
+						.off('click')
+						.on('click',function(e){
+
+							//console.log($(that));
+							var d = mh4app.dialogManager.getDialog("item_edit_dialog_"+$(that).data('id'));
+							d.openDialog();
+							
+
+							e.stopPropagation();
+						});
+					{% endif %}
+
+				}
+
+			});
+		}
+
+		function registerEvents(values){
+			$('#finder-filter-offset').on("change",function(){
+				sendData['maxShow'] = $(this).val();
+				mh4app.getData(
+					'{{path("mh4_item_list")}}',sendData,function(data){
+					var finder = $("#pag_content_item_pag").find(".finder");
+					$("#pag_content_item_pag").html(finder);
+
+					if(data.status){
+						$("[data-role=preloader]").remove();
+						var values = {};
+						values["offsetValue"] = $('#finder-filter-offset').val();
+						values["searchValue"] = $('#finder-item-name').val();
+						values["paginator"] = values.paginator;
+						itemsRender(data,$("#pag_content_item_pag"),values);
+						registerEvents(values);
+					}
+				});
+			});
+
+			$('#finder-item-name').on("keyup",$.debounce( 350,function(){
+
+				sendData['search'] 	= $(this).val();
+				mh4app.getData(
+					'{{path("mh4_item_list")}}',sendData,function(data){
+					var finder = $("#pag_content_item_pag").find(".finder");
+					$("#pag_content_item_pag").html(finder);
+					if(data.status){
+						$("[data-role=preloader]").remove();
+						var values = {};
+						values["offsetValue"] = $('#finder-filter-offset').val();
+						values["searchValue"] = $('#finder-item-name').val();
+						values["paginator"] = values.paginator;
+						if(data.items.length === 0){
+							$("#pag_content_item_pag").html(finder);
+						}else{
+							itemsRender(data,$("#pag_content_item_pag"),values);
+							
+						}
+						registerEvents(values);
+						$('#finder-item-name').focus();
+					}
+				});
+
+			}));
+
+			$(values.paginator).on("pageChanged",function(event,params){
+
+				console.log("pageChanged From "+params.changedFrom+" toPage "+params.changedTo);
+				sendData['offset'] 	= params.changedTo;
+				//===Send to server==
+				mh4app.getData(
+					'{{path("mh4_item_list")}}',sendData,function(data){
+					var finder = $("#pag_content_"+params.pagId).find(".finder");
+					$("#pag_content_"+params.pagId).html(finder);
+					if(data.status){
+						$("[data-role=preloader]").remove();
+						var values = {};
+						values["offsetValue"] = $('#finder-filter-offset').val();
+						values["searchValue"] = $('#finder-item-name').val();
+						values["paginator"] = values.paginator;
+						itemsRender(data,$("#pag_content_"+params.pagId),values);
+						registerEvents(values);
+					}
+				});
+			});
+		}
 		
-	});
+});
 	
 	</script>
 {%endblock %}

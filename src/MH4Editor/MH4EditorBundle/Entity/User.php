@@ -61,6 +61,11 @@ class User implements UserInterface, \Serializable
     private $isActive;
 
     /**
+     * @ORM\Column(name="is_banned", type="boolean")
+     */
+    private $isBanned;
+
+    /**
      * @ORM\Column(name="role", type="integer",options={"default" = "0"})
      */
     private $role;
@@ -339,6 +344,29 @@ class User implements UserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Set isBanned
+     *
+     * @param boolean $isActive
+     * @return User
+     */
+    public function setIsBanned($isBanned)
+    {
+        $this->isBanned = $isBanned;
+
+        return $this;
+    }
+
+     /**
+     * Get isBanned
+     *
+     * @return boolean 
+     */
+    public function getIsBanned()
+    {
+        return $this->isBanned;
     }
 
     /**

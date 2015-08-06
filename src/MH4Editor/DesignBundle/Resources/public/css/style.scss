@@ -97,12 +97,32 @@ div.register-form{
     #user-info-details
     {
       width: 235px;
+
+      .color-box {
+
+        float:right;
+        width:30px;
+        height:30px;
+        margin:5px;
+        border: 1px solid white;
+      }
+
     }
 
   }
 
 }
 
+/*File menu*/
+#file-menu{
+
+  &.charm.left-side{
+
+    width: 221px;
+
+  }
+
+}
 /* Main Container*/
 
 .main-container{
@@ -155,6 +175,13 @@ div.register-form{
       }
     }
   }
+
+  .pagination-content{
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+
+  }
 }
 
 .item{
@@ -166,11 +193,17 @@ div.register-form{
   padding: 10px;
   background-color: beige;
   cursor: pointer;
+  font-size: 14px;
   transition: 0.7s all;
 
   &:hover{
     background-color: rgb(67,144,223);
     border: 2px solid #1485AE;
+  }
+
+  img{
+    width: 100px;
+    height: 100px;
   }
 
   button{
@@ -211,4 +244,16 @@ div.register-form{
       border: 2px solid #1485AE;
     }*/
   }
+}
+
+/*Override Plugins styles and Metro*/
+.colpick{
+  z-index: 999999999;
+}
+/* end Override*/
+
+/*General styles*/
+.hide{
+  visibility: hidden;
+  display: none;
 }

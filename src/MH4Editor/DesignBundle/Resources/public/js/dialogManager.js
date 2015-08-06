@@ -24,7 +24,7 @@
 
 			/*Register the other buttons*/
 			if(typeof oButtons !== "undefined" && typeof oButtons === "object"){
-				console.info(oButtons);
+				//console.info(oButtons);
 				$(oButtons).each(function(i,e){
 
 					var elements;
@@ -58,6 +58,8 @@
 				fromTemplate: true,
 				openDialog: function(){
 					//console.log(this.dialog);
+					console.log(this.dialogId);
+					console.log($('#'+this.dialogId));
 					var d =  $('#'+this.dialogId).data("dialog");
 					d.open();
 					
@@ -118,12 +120,11 @@
 					*/
 					if(typeof params.id === "undefined")
 						params.id = options.id;
-					console.log("PARAMS",params);
+					//console.log("PARAMS",params);
 					dust.render(this.template,params,function(err,out){
 
 						that.html = out;
 						that.setDialog(that.html);
-						console.log(that.html);
 						
 					});
 
