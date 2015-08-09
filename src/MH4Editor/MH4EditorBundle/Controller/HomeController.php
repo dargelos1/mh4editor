@@ -28,6 +28,8 @@ class HomeController extends Controller
         $HR = $mh4Cipher->getHunterRanking($user);
         $CP = $mh4Cipher->getCaravanPoints($user);
         $itemBox = null;
+        //
+        //USAR CANONICAL NAME ITEM PARA REFRENCIAR EL ID DEL OBJETO YA QUE EL NOMBRE PUEDE ESTAR REPETIDO!
         //$itemBox = $mh4Cipher->getItemBox($user);
         //$itemBox = $mh4Cipher->getItemBoxAtSlot(9,$user);
         //$mh4Cipher->cheatSetAllBoxItems($user);
