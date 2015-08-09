@@ -281,7 +281,7 @@ class MH4CipherService extends Controller{
 
 					$cell['itemId'] = $itemId;
 					$cell['units'] = $itemUnits;
-					$row['cell'.$k] = $cell;
+					$row['col'.$k] = $cell;
 
     			}
     			$page['row'.$j] = $row;
@@ -291,25 +291,7 @@ class MH4CipherService extends Controller{
     		$box['page'.$i] = $page;
     		
     	}
-    	/*
-    	for($i=0;$i<1400;$i++){
 
-    		$cell = array();
-    		$itemId = fread($decryptedFile,2);
-			$itemId = unpack("v",$itemId);
-			$itemId = $itemId[1];
-
-			$itemUnits = fread($decryptedFile,2);
-			$itemUnits = unpack("v",$itemUnits);
-			$itemUnits = $itemUnits[1];
-
-			$cell['itemId'] = $itemId;
-			$cell['units'] = $itemUnits;
-			$box[] = $cell;
-
-
-    	}
-		*/
 		$box = json_encode($box);
 		//echo "HunterName: ".$name;
 		fclose($decryptedFile);
@@ -479,6 +461,23 @@ class MH4CipherService extends Controller{
 		unlink($user->getUploadDir()."/decrypted.bin");
 		rename($user->getUploadDir()."/decrypted_edit.bin", $user->getUploadDir()."/decrypted.bin");
 		return $readed;
+    }
+
+    public function getItemBoxAtSlot($slot,$user,$toJSON=false){
+
+    	$box = $this->getItemBox($user);
+    	$box =json_decode($box);
+    	$page = floor($slot/100);
+    	$row = floor($slot/10);
+    	$col = $slot%10;
+
+    	$i = $box->{"page".$page}->{"row".$row}->{"col".$col};
+
+    	$item = array();
+    	$item['id'] = $i->itemId;
+    	$item['uds'] = $i->units;
+
+		return ($toJSON) ? json_encode($item) : $i;
     }
 
     public function setItemBoxAtSlot($itemId,$uds,$slot,$user){

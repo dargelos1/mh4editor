@@ -164,7 +164,9 @@
 								options: options,
 								itemName: item.name,
 								selectId: 'select_'+item.name,
-								iId: item.id
+								iId: item.id,
+								price: item.buyIngamePrice,
+
 							}
 						}
 					);
@@ -227,7 +229,59 @@
 					{% endif %}
 
 					mh4app.dialogManager.dialogs[dialogId].init();
-					mh4app.dialogManager.registerButtons(dialogId);
+					mh4app.dialogManager.registerButtons(
+						dialogId,
+						[
+							{
+								action: "buy",
+								find: "selects",
+								bindEvents: {
+									onChange: function(){
+
+										var pBase = item.buyIngamePrice;
+										$("#"+dialogId+"-price").html(pBase*$(this).val());
+									
+									}
+								},
+								callback: function(foundElements,button){
+									var data = {};
+									var e = $(foundElements).get(0);
+									
+									
+									var id = $(e).attr("id");
+									id = id.replace("select_","");
+									data["item-price-zenies"] =  item.buyIngamePrice;
+									data["item-units"] = $(e).val();
+
+									var urlRequest = '{{path("mh4_item_buy",{item_name: 'A'} )}}';
+									urlRequest = urlRequest.replace('A',id);
+									mh4app.getData(
+										urlRequest,
+										data,
+										function(data){
+											//$(button).removeClass('loading-cube');
+											if(data.status){
+												mh4app.dialogManager.getDialog(dialogId).closeDialog();
+												$("#user-zenies").html(data.zenies);
+												$("#user-caravan-points").html(data.caravanPoints);
+											}else{
+												if(data.banned){
+													//add dialog alert
+													alert("You have been banned due to suspicious actions.");
+												}
+
+												if(data.errMsg){
+													//add dialog alert
+													alert(data.errMsg);
+												}
+											}
+										},
+										'PUT'
+									);
+								}
+							}
+						]
+					);
 					
 
 				});
@@ -241,6 +295,7 @@
 				paginator.init(data.paginator.pages);
 				
 				$(".main-content .item[data-role]")
+				.off("click")
 				.on('click',function(e){
 					if($(this).hasClass("element-selected")){
 						$(this).removeClass("element-selected");
@@ -285,7 +340,9 @@
 
 				});
 				
-				$('#finder-filter-offset').on("change",function(){
+				$('#finder-filter-offset')
+				.off("change")
+				.on("change",function(){
 					sendData['maxShow'] = $(this).val();
 					mh4app.getData(
 						'{{path("mh4_item_list")}}',sendData,function(data){
@@ -310,7 +367,9 @@
 					});
 				});
 
-				$('#finder-item-name').on("keyup",$.debounce( 350,function(){
+				$('#finder-item-name')
+				.off("keyup")
+				.on("keyup",$.debounce( 350,function(){
 
 					sendData['search'] 	= $(this).val();
 					mh4app.getData(
@@ -336,7 +395,9 @@
 
 				}));
 
-				$(paginator).on("pageChanged",function(event,params){
+				$(paginator)
+				.off("pageChanged")
+				.on("pageChanged",function(event,params){
 
 					console.log("pageChanged From "+params.changedFrom+" toPage "+params.changedTo);
 					sendData['offset'] 	= params.changedTo;
@@ -409,7 +470,8 @@
 							options: options,
 							itemName: item.name,
 							selectId: 'select_'+item.name,
-							iId: item.id
+							iId: item.id,
+							price: item.buyIngamePrice
 						}
 					}
 				);
@@ -472,7 +534,59 @@
 				{% endif %}
 
 				mh4app.dialogManager.dialogs[dialogId].init();
-				mh4app.dialogManager.registerButtons(dialogId);
+				mh4app.dialogManager.registerButtons(
+						dialogId,
+						[
+							{
+								action: "buy",
+								find: "selects",
+								bindEvents: {
+									onChange: function(){
+
+										var pBase = item.buyIngamePrice;
+										$("#"+dialogId+"-price").html(pBase*$(this).val());
+									
+									}
+								},
+								callback: function(foundElements,button){
+									var data = {};
+									var e = $(foundElements).get(0);
+									
+									
+									var id = $(e).attr("id");
+									id = id.replace("select_","");
+									data["item-price-zenies"] =  item.buyIngamePrice;
+									data["item-units"] = $(e).val();
+
+									var urlRequest = '{{path("mh4_item_buy",{item_name: 'A'} )}}';
+									urlRequest = urlRequest.replace('A',id);
+									mh4app.getData(
+										urlRequest,
+										data,
+										function(data){
+											//$(button).removeClass('loading-cube');
+											if(data.status){
+												mh4app.dialogManager.getDialog(dialogId).closeDialog();
+												$("#user-zenies").html(data.zenies);
+												$("#user-caravan-points").html(data.caravanPoints);
+											}else{
+												if(data.banned){
+													//add dialog alert
+													alert("You have been banned due to suspicious actions.");
+												}
+
+												if(data.errMsg){
+													//add dialog alert
+													alert(data.errMsg);
+												}
+											}
+										},
+										'PUT'
+									);
+								}
+							}
+						]
+					);
 				
 
 			});
@@ -481,6 +595,7 @@
 			paginator.removeAllPages().addMultiplePages(data.paginator.pages).refreshPages();
 
 			$(".main-content .item[data-role]")
+			.off("click")
 			.on('click',function(e){
 
 				if($(this).hasClass("element-selected")){
@@ -528,7 +643,9 @@
 		}
 
 		function registerEvents(values){
-			$('#finder-filter-offset').on("change",function(){
+			$('#finder-filter-offset')
+			.off("change")
+			.on("change",function(){
 				sendData['maxShow'] = $(this).val();
 				mh4app.getData(
 					'{{path("mh4_item_list")}}',sendData,function(data){
@@ -547,7 +664,9 @@
 				});
 			});
 
-			$('#finder-item-name').on("keyup",$.debounce( 350,function(){
+			$('#finder-item-name')
+			.off("keyup")
+			.on("keyup",$.debounce( 350,function(){
 
 				sendData['search'] 	= $(this).val();
 				mh4app.getData(
@@ -573,7 +692,9 @@
 
 			}));
 
-			$(values.paginator).on("pageChanged",function(event,params){
+			$(values.paginator)
+			.off("pageChanged")
+			.on("pageChanged",function(event,params){
 
 				console.log("pageChanged From "+params.changedFrom+" toPage "+params.changedTo);
 				sendData['offset'] 	= params.changedTo;

@@ -53,6 +53,9 @@ div.register-form.show {
       height: 30px;
       margin: 5px;
       border: 1px solid white; }
+    .app-bar #user-info #user-info-details span, .app-bar #user-info #user-info-details a {
+      font-size: 1rem !important;
+      line-height: 3.125rem !important; }
 
 /*File menu*/
 #file-menu.charm.left-side {

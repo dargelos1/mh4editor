@@ -4,11 +4,11 @@
 		<a class="dropdown-toggle fg-white">{{app.user.username}}</a>
 		<div class="app-bar-drop-container bg-white fg-black place-right " data-role="dropdown">
 			<div id="user-info-details" class="padding20">
-				Hunter name: {{hunterName | default("__HunteName__")}} <br>
-				HR: {{ hunterRank | default(0)}} <br>
-				Zenies: {{ zenies | default(0)}} <br>
-				Caravan Points: {{ caravanPoints | default(0)}}<br>
-				Gender: {{ sex | default('M')}}<br>
+				Hunter name: <span id="user-hunter-name">{{hunterName | default("__HunteName__")}}</span><br>
+				HR: <span id="user-hr">{{ hunterRank | default(0)}}</span><br>
+				Zenies: <span id="user-zenies">{{ zenies | default(0)}}</span><br>
+				Caravan Points: <span id="user-caravan-points">{{ caravanPoints | default(0)}}</span><br>
+				Gender: <span id="user-gender">{{ sex | default('M')}}</span><br>
 				<hr>
 				Feat. Color: <div id="featuresColor" class="color-box"></div><br>
 				Hair Color: <div id="hairColor" class="color-box"></div><br>

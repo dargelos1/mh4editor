@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use MH4Editor\MH4EditorBundle\Entity\Item;
 
 class ItemController extends Controller
 {
@@ -62,14 +63,16 @@ class ItemController extends Controller
         $items = array();
         foreach ($paginator as $item) {
             $itm = array();
-            $itm['id'] = $item->getId();
+            //$itm['id'] = $item->getId();
+            $itm['id'] =$item->getCanonicalName();
             $itm['name'] = $item->getName();
             $itm['description'] = $item->getDescription();
             $itm['img'] = $item->getUrlPath();
             $itm['buyIngamePrice'] = $item->getBuyPrice();
             $itm['sellIngamePrice'] = $item->getSellPrice();
             $itm['buyWebCaravanPoints'] = $item->getCaravanWebBuyValue();
-            $itm['carryMax'] = $item->getCarryCapacity();
+            //$itm['carryMax'] = $item->getCarryCapacity();
+            $itm['carryMax'] = $item->getBoxCapacity();
 
             $items[] = $itm;
         }
@@ -96,7 +99,12 @@ class ItemController extends Controller
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $item = $em->getRepository("MH4EditorBundle:Item")->find($item_id);
+        $item = $em->getRepository("MH4EditorBundle:Item")->findBy(array("canonicalName"=>$item_id));
+
+        if(count($item) > 0 && $item[0] && $item[0] instanceof Item){
+
+            $item = $item[0];
+        }
 
         $vars  = $request->request->all();
 
@@ -131,25 +139,55 @@ class ItemController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $item = $em->getRepository("MH4EditorBundle:Item")->findBy(array("name" => $item_name));
-            if($item){
+            
+            if(count($item) > 0 && $item[0] && $item[0] instanceof Item){
+
+                $item = $item[0];
 
                 $vars  = $request->request->all();
 
-                $itemPrice = $vars["item-price"];
-                $itemPrice = $vars["item-units"];
+                $itemPriceZ = isset($vars["item-price-zenies"]) ? $vars["item-price-zenies"] : 0;
+                $itemPriceCP = isset($vars["item-price-cp"]) ? $vars["item-price-cp"] : 0;
+                $itemUnits = isset($vars["item-units"]) ? $vars["item-units"] : 0;
+                //First, check if there are some client price manipulation. If there are, then bann the user.
+
+                if($item->getBuyPrice() != $itemPriceZ){
+                    $user->setIsBanned(true);
+                    $em->persist($user);
+                    $em->flush();
+                    $response["banned"] = true;
+                    return new Response(json_encode($response),200);
+                }
 
                 $mh4Cipher = $this->get("mh4_cipher");
                 if(!file_exists($user->getUploadDir()."/decrypted.bin")){
                     $mh4Cipher->MH4Decrypt($user->getAbsolutePath() ,$user->getUploadDir()."/decrypted.bin",$this);
                 }
 
-                $zenies = $mh4Cipher->getZenies();
+                $zenies = $mh4Cipher->getZenies($user);
+                $CP = $mh4Cipher->getCaravanPoints($user);
 
-            }else{
-                return new Response(json_encode($response),200);
+                $newZenies = $zenies - ($itemPriceZ*$itemUnits); //Save into an other var for future bugs setting the items
+                //and recover the transaction
+
+                //If the user havn't enough money, do nothing.
+
+                if($newZenies< 0){
+
+                    $response["errMsg"] = "You have not enought money to buy this";
+                    return new Response(json_encode($response),200);
+                }
+
+                $itemList = array();
+                $itemList[$item->getId()] = $itemUnits;
+                $mh4Cipher->setZenies($newZenies,$user);
+                $box = $this->distributeItemsInBox($itemList);
+
+                $response["status"] = true;
+                $response["zenies"] = $newZenies;
+                $response["caravanPoints"] = $CP;
+
             }
-
-            $vars  = $request->request->all();
         }
 
         return new Response(json_encode($response),200);
@@ -166,5 +204,82 @@ class ItemController extends Controller
 
         return new Response(json_encode($response),200);
 
+    }
+
+    /*Distribuye en modulo 99, las cantidades de los items a guardar en la caja. Busca en cada slot del mismo item
+    que no tenga 99uds para setearlo a 99 hasta que ya no queden más y así por cada item distinto*/
+    //$itemList = array("id" => $uds)
+    //Return: by default, the Box status in JSON. If toJSON false, return the BOX Object
+    private function distributeItemsInBox($itemList = array(),$toJSON = true){
+
+        $mh4Cipher = $this->get("mh4_cipher");
+        $user = $this->getUser();
+        $box = $mh4Cipher->getItemBox($user);
+        $box = json_decode($box);
+        
+        foreach($box as $pageIndex => $page){
+
+            foreach ($page as $rowIndex => $row) {
+               
+               foreach ($row as $cell => $item) {
+                    
+                    $iPage = str_replace("page","",$pageIndex);
+                    $iRow = str_replace("row","",$rowIndex);
+                    $iCell = str_replace("col","",$cell);
+                    $slot = ($iPage*100)+($iRow*10)+($iCell%10); //From table format to int
+                    $currItem = array_key_exists($item->itemId ,$itemList) ? key($itemList) : FALSE;
+                    /*if($currItem)
+                        var_dump("KEY: ".$currItem);
+                    reset($itemList);*/
+                    
+                    if( $currItem !== FALSE){
+                        //Check each cell. If found an item, get that item and check if the slot has 99 units.
+                        $units = $item->units;
+                        //var_dump("ITEM_UNITS: ".$item->units);
+                        //var_dump(" AT SLOT:".$slot);
+                        
+                        if ($units< 99) {
+                            
+                            $item->units += $itemList[$currItem];
+                             
+                            if($item->units > 99){
+                                
+                                $itemList[$currItem] = $item->units%99;
+                                $item->units = 99;
+                                $units = $item->units;
+                                
+                            }else{
+                                $itemList[$currItem] = 0;
+                                array_shift($itemList);
+                                $units = $item->units;
+                                
+                            }
+
+                            //Now set item back to box jsonyfied and binary
+                            //var_dump($itemList[$currItem]);
+                            $box->{$pageIndex}->{$rowIndex}->{$cell} = $item;
+                            $mh4Cipher->setItemBoxAtSlot($item->itemId,$item->units,$slot,$user);
+                            $len = count($itemList);
+                            if($len === 0) break 3;
+                        }
+
+                    }else if($item->itemId === 0 && count($itemList) > 0 ){
+                       
+                        //var_dump($box->{$pageIndex}->{$rowIndex}->{$cell});
+                        $itemId = key($itemList);
+                        $units =  array_shift($itemList);
+                        $box->{$pageIndex}->{$rowIndex}->{$cell}->itemId = $itemId;
+                        $box->{$pageIndex}->{$rowIndex}->{$cell}->units = $units;
+                        $mh4Cipher->setItemBoxAtSlot($itemId,$units,$slot,$user);
+                        $len = count($itemList);
+                        if($len === 0) break 3;
+                    }else {
+                        //break 3;
+                    }
+               }
+            }
+        }
+        //die;
+        return ($toJSON) ? json_encode($box) : $box;
     }
 }

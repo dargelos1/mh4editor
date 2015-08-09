@@ -18,10 +18,10 @@
             return this;
 		},
 
-		getData : function(dataUrl,data,callback){
+		getData : function(dataUrl,data,callback,type){
 
 			$.ajax({
-				type: 'POST',
+				type: type ? type : 'POST',
 				url: dataUrl,
 				dataType: 'json',
 				data: data,

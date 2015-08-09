@@ -35,6 +35,7 @@
 										'{/options}'+
 									'</select>'+
 								'</div>'+
+								' Total price: <span id="{id}-price">{price}</span> z.'+
 							'</p>'+
 							'<p>'+
 								'<button data-action="buy" class="button success block-shadow-success text-shadow">Comprar</button>'+

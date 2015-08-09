@@ -18,6 +18,7 @@
 
 			/* Register cancel button */
 			$("#"+dialogId).find("button[data-action=cancel]")
+			.off("click")
 			.on('click',function(){
 				that.getDialog(dialogId).closeDialog();
 			});
@@ -28,11 +29,31 @@
 				$(oButtons).each(function(i,e){
 
 					var elements;
-					if(e.find == "inputs"){
-						elements = $("#"+dialogId).find('input');
+					
+					switch(e.find){
+						case "inputs":
+							elements = $("#"+dialogId).find('input');
+							break;
+						case "selects":
+							elements = $("#"+dialogId).find('select');
+							break;
+					}
+
+					if(e.bindEvents){
+
+						$(Object.keys(e.bindEvents)).each(function(index, event) {
+							
+							switch(event){
+								case "onChange":
+									$(elements)
+									.off("change")
+									.on("change",e.bindEvents.onChange);
+							}
+						});
 					}
 
 					$("#"+dialogId).find('button[data-action='+e.action+']')
+					.off("click")
 					.on('click',function(){
 						
 						e.callback(elements,this);
@@ -142,6 +163,9 @@
 					}else{
 						this.loadFromHTML(this.html);
 					}
+					var id = "#"+$(this.html).attr("id");
+					if($('body').find(id).length > 0)
+						$('body').find(id).remove();
 					$('body').append(this.html);
 
 					return this;

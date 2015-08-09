@@ -29,7 +29,8 @@ mh4_item_edit:
 mh4_item_buy:
     path:   /item/buy/{item_name}
     defaults: { _controller: MH4EditorBundle:Item:buy }
-    requirements: { item_name: \w+\s+'*-*_* }
+    requirements: { item_name: "^(?!\d)([\wáéíóúÁÉÍÓÚ\.\+]+)( |[\wáéíóúÁÉÍÓÚ\.\+]+|')*" }
+    methods: [PUT]
 
 mh4_item_sell:
     path:   /item/sell/{item_id}

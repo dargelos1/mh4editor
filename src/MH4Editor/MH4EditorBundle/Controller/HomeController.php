@@ -29,9 +29,10 @@ class HomeController extends Controller
         $CP = $mh4Cipher->getCaravanPoints($user);
         $itemBox = null;
         //$itemBox = $mh4Cipher->getItemBox($user);
+        //$itemBox = $mh4Cipher->getItemBoxAtSlot(9,$user);
         //$mh4Cipher->cheatSetAllBoxItems($user);
         //$mh4Cipher->setRangeItems($user,1401,1914);
-        $mh4Cipher->setItemList(
+        /*$mh4Cipher->setItemList(
             $user,
             array(
                 744,
@@ -47,8 +48,8 @@ class HomeController extends Controller
             ),
             true,
             980
-        );
-        $mh4Cipher->setCaravanPoints(1000000,$user);
+        );*/
+        //$mh4Cipher->setCaravanPoints(1000000,$user);
         //$mh4Cipher->cheatSetAllEquipment($user);
         //$mh4Cipher->setAllArmors($user);
         //$readed = $mh4Cipher->setItemBoxAtSlot(15,99,878,$user); //megazumos
@@ -79,7 +80,7 @@ class HomeController extends Controller
                     "hunterRank"    => $HR,
                     "itemBox"       => $itemBox,
                     "caravanPoints" => $CP,
-                    "sex"           => $sex,
+                    "sex"           => $sex == "M" ? "Male" : "Female",
                     "FeaturesColor" => $featuresColor,
                     "HairColor"     => $hairColor,
                     "ClothColor"    => $clothColor,

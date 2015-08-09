@@ -98,6 +98,16 @@ class Item
      */
     private $icon;
 
+    /**
+     * @ORM\Column(type="text",name="canonicalName")
+     */
+    private $canonicalName;
+
+    /**
+     * @ORM\Column(type="integer",name="box_capacity")
+     */
+    private $boxCapacity;
+
 
 
     /**
@@ -412,5 +422,51 @@ class Item
     public function getUrlPath(){
 
         return 'bundles/design/images/icons_items/'.$this->getIcon();
+    }
+
+    /**
+     * Set canonicalName
+     *
+     * @param string $canonicalName
+     * @return Item
+     */
+    public function setCanonicalName($canonicalName)
+    {
+        $this->canonicalName = $canonicalName;
+
+        return $this;
+    }
+
+    /**
+     * Get canonicalName
+     *
+     * @return string 
+     */
+    public function getCanonicalName()
+    {
+        return $this->canonicalName;
+    }
+
+    /**
+     * Set canonicalName
+     *
+     * @param string $canonicalName
+     * @return Item
+     */
+    public function setBoxCapacity($boxCapacity)
+    {
+        $this->boxCapacity = $boxCapacity;
+
+        return $this;
+    }
+
+    /**
+     * Get boxCapacity
+     *
+     * @return integer 
+     */
+    public function getBoxCapacity()
+    {
+        return $this->boxCapacity;
     }
 }
