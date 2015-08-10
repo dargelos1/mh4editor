@@ -46,13 +46,13 @@ class MH4CipherService extends Controller{
 
     }*/
 
-    public function MH4Encrypt($file,$fileOut){
+    /*public function MH4Encrypt($file,$fileOut){
 
 		$line =  exec("../tools/savedata.py e ".$file." ".$fileOut." 2>&1");
 		//echo $line;
     	//system("tools/savedata.py d ".$file." ".$fileOut);
 
-    }
+    }*/
 
 
     public function getHunterName($user){
@@ -705,5 +705,51 @@ class MH4CipherService extends Controller{
 		fwrite($fd,$buff2);
 		fclose($fd);
 		fclose($f);
+	}
+
+	public function MH4Encrypt($file,$fileOut){
+
+		$user = $controller->getUser();
+		$f = fopen($file,"rb");
+		$buffer = fread($f,filesize($file));
+
+		$len = strlen($buffer);
+
+		$bytes = unpack("C*",$buffer);
+		$cSUM = 0;
+		$bLen = count($bytes);
+		for($i=1;$i<=$bLen;$i++){
+			$cSUM += $bytes[$i];
+		}
+		$fish = new Blowfish('blowfish key iorajegqmrna4itjeangmb agmwgtobjteowhv9mope',Blowfish::BLOWFISH_MODE_EBC,Blowfish::BLOWFISH_PADDING_NONE);
+
+		$buff2 = "";
+		$cSUM = unpack("C*", pack("C", $cSUM));
+		$buff2.= $cSUM[1].$cSUM[2].$cSUM[3].$cSUM[4];
+		$buff2.= $buffer;
+		$seed = (mt_rand(0,(2^16-1)) & 0xFFFF);
+		$buffer = "";
+		$fSeed = (($seed << 16) + 0x10);
+		$fSeed = unpack("C*", pack("C", $fSeed));
+		$buffer .= $fSeed[1].$fSeed[2].$fSeed[3].$fSeed[4];
+		$buffer .= $this->_xor($buff2,$seed);
+		$buff2 = "";
+		$x=0;
+		$len = $len+8;
+		while($x<$len){
+			
+			$buff2.= $this->bytesSwap($buffer[$x].$buffer[$x+1].$buffer[$x+2].$buffer[$x+3]);
+			$x+=4;
+		}
+		$enc = $fish->encrypt($buff2);
+		$buffer = "";
+		$x = 0;
+		while($x<$len){
+			
+			$buffer.= $this->bytesSwap($enc[$x].$enc[$x+1].$enc[$x+2].$enc[$x+3]);
+			$x+=4;
+		}
+
+
 	}
 }
