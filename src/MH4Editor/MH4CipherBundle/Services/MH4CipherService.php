@@ -1,6 +1,7 @@
 <?php
 namespace MH4Editor\MH4CipherBundle\Services;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use MH4Editor\MH4CipherBundle\Utils\Blowfish;
 
 class MH4CipherService extends Controller{
 
@@ -35,7 +36,7 @@ class MH4CipherService extends Controller{
 	//28bytes per equipment
 
 
-	public function MH4Decrypt($file,$fileOut,$controller){
+	/*public function MH4Decrypt($file,$fileOut,$controller){
 
 		$user = $controller->getUser();
 		//ladybug_dump($user);die;
@@ -43,7 +44,7 @@ class MH4CipherService extends Controller{
 		//echo $line;
     	//system("tools/savedata.py d ".$file." ".$fileOut);
 
-    }
+    }*/
 
     public function MH4Encrypt($file,$fileOut){
 
@@ -613,4 +614,96 @@ class MH4CipherService extends Controller{
 		return $readed;
 
     }
+
+
+///??========================
+
+
+
+
+	private function bytesSwap($string){
+		
+		$bytes = unpack("C*",$string);
+		
+		$byte0 = chr($bytes[1]);
+		$byte1 = chr($bytes[2]);
+		$byte2 = chr($bytes[3]);
+		$byte3 = chr($bytes[4]);
+		return $byte3.$byte2.$byte1.$byte0;
+	}
+
+	private function _xor($buff, $key){
+	    $buff2 = "";
+		$len = strlen($buff);
+		for($i=0;$i<$len;$i=$i+2){
+			if($key == 0)
+				$key = 1;
+			$key = $key * 0xb0 % 0xff53;
+			
+			$bShort = unpack("v",$buff[$i].$buff[$i+1]);
+			
+			$bShort = $bShort[1] & 0xFFFF;
+			$bShort ^= $key;
+			$chars = unpack("C*", pack("v", $bShort));
+			$buff2.= chr($chars[1]);
+			$buff2.= chr($chars[2]);
+			
+		}
+
+		return $buff2;
+	}
+
+	public function MH4Decrypt($file,$fileOut,$controller){
+
+		$user = $controller->getUser();
+		$f = fopen($file,"rb");
+		$buffer = fread($f,filesize($file));
+
+		$len = strlen($buffer);
+		$x=0;
+		$buff2 = "";
+		while($x<$len){
+			
+			$buff2.= $this->bytesSwap($buffer[$x].$buffer[$x+1].$buffer[$x+2].$buffer[$x+3]);
+			$x+=4;
+		}
+
+		$fish = new Blowfish('blowfish key iorajegqmrna4itjeangmb agmwgtobjteowhv9mope',Blowfish::BLOWFISH_MODE_EBC,Blowfish::BLOWFISH_PADDING_NONE);
+		$dec = $fish->decrypt($buff2);
+
+		$buffer = "";
+		$x = 0;
+		while($x<$len){
+			
+			$buffer.= $this->bytesSwap($dec[$x].$dec[$x+1].$dec[$x+2].$dec[$x+3]);
+			$x+=4;
+		}
+
+		$seed = unpack("L",$buffer);
+		//var_dump($seed[1] >> 16);die;
+		$seed = (($seed[1] >> 16) & 0xFFFF);
+		//remove first 4 bytes;
+		$buffer = substr($buffer,4);
+		$buff2 = "";
+		//var_dump($buffer);die;
+		$buff2 = $this->_xor($buffer,$seed);
+		$csum = unpack("L",$buff2);
+		$csum = $csum[1];
+		$buff2 = substr($buff2,4);
+		$bytes = unpack("C*",$buff2);
+		$SUM = 0;
+		$bLen = count($bytes);
+		for($i=1;$i<=$bLen;$i++){
+			$SUM += $bytes[$i];
+		}
+		if($csum != $SUM & 0xffffffff)
+		    echo 'Invalid checksum in header.';
+
+		$fd = fopen($fileOut,"wb");
+
+		//echo $buff2;
+		fwrite($fd,$buff2);
+		fclose($fd);
+		fclose($f);
+	}
 }

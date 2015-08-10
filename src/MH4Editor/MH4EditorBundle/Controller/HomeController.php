@@ -14,6 +14,7 @@ class HomeController extends Controller
 
         $mh4Cipher = $this->get("mh4_cipher");
         if(!file_exists($user->getUploadDir()."/decrypted.bin")){
+            //ladybug_dump($user->getAbsolutePath());die;
             $mh4Cipher->MH4Decrypt($user->getAbsolutePath() ,$user->getUploadDir()."/decrypted.bin",$this);
         }
         $hunterName = $mh4Cipher->getHunterName($user);
