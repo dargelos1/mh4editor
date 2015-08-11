@@ -655,9 +655,13 @@ class MH4CipherService extends Controller{
 
 	public function MH4Decrypt($file,$fileOut,$controller){
 
-		$user = $controller->getUser();
-		$f = fopen($file,"rb");
-		$buffer = fread($f,filesize($file));
+		if(file_exists($file)){
+			$user = $controller->getUser();
+			$f = fopen($file,"rb");
+			$buffer = fread($f,filesize($file));
+		}else{
+			return false;
+		}
 
 		$len = strlen($buffer);
 		$x=0;
@@ -705,13 +709,19 @@ class MH4CipherService extends Controller{
 		fwrite($fd,$buff2);
 		fclose($fd);
 		fclose($f);
+		return true;
 	}
 
 	public function MH4Encrypt($file,$fileOut){
 
-		$user = $controller->getUser();
-		$f = fopen($file,"rb");
-		$buffer = fread($f,filesize($file));
+		$f = null;
+		$buffer ="";
+		if(file_exists($file)){
+			$f = fopen($file,"rb");
+			$buffer = fread($f,filesize($file));
+		}else{
+			return false;
+		}
 
 		$len = strlen($buffer);
 
@@ -724,14 +734,16 @@ class MH4CipherService extends Controller{
 		$fish = new Blowfish('blowfish key iorajegqmrna4itjeangmb agmwgtobjteowhv9mope',Blowfish::BLOWFISH_MODE_EBC,Blowfish::BLOWFISH_PADDING_NONE);
 
 		$buff2 = "";
-		$cSUM = unpack("C*", pack("C", $cSUM));
-		$buff2.= $cSUM[1].$cSUM[2].$cSUM[3].$cSUM[4];
+		$cSUM = unpack("C*", pack("L", $cSUM));
+		$buff2.= chr($cSUM[1]).chr($cSUM[2]).chr($cSUM[3]).chr($cSUM[4]);
 		$buff2.= $buffer;
 		$seed = (mt_rand(0,(2^16-1)) & 0xFFFF);
 		$buffer = "";
 		$fSeed = (($seed << 16) + 0x10);
-		$fSeed = unpack("C*", pack("C", $fSeed));
-		$buffer .= $fSeed[1].$fSeed[2].$fSeed[3].$fSeed[4];
+		$fSeed = unpack("C*", pack("L", $fSeed));
+		$buffer .= chr($fSeed[1]).chr($fSeed[2]).chr($fSeed[3]).chr($fSeed[4]);
+
+
 		$buffer .= $this->_xor($buff2,$seed);
 		$buff2 = "";
 		$x=0;
@@ -749,6 +761,14 @@ class MH4CipherService extends Controller{
 			$buffer.= $this->bytesSwap($enc[$x].$enc[$x+1].$enc[$x+2].$enc[$x+3]);
 			$x+=4;
 		}
+
+		$fd = fopen($fileOut,"wb");
+
+		//echo $buff2;
+		fwrite($fd,$buffer);
+		fclose($fd);
+		fclose($f);
+		return true;
 
 
 	}

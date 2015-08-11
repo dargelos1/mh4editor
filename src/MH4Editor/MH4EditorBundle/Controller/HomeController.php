@@ -12,24 +12,53 @@ class HomeController extends Controller
     {
     	$user = $this->getUser();
 
+        $hunterName = "NO_NAME";
+        $sex = "NO_GENDER";
+
+        $featuresColor = "000000";
+        $hairColor = "000000";
+        $clothColor = "000000";
+        $skinColor = "000000";
+
+        $zenies = 0;
+        $HR = 0;
+        $CP = 0;
+        $itemBox = null;
+
         $mh4Cipher = $this->get("mh4_cipher");
         if(!file_exists($user->getUploadDir()."/decrypted.bin")){
             //ladybug_dump($user->getAbsolutePath());die;
-            $mh4Cipher->MH4Decrypt($user->getAbsolutePath() ,$user->getUploadDir()."/decrypted.bin",$this);
+            $status = $mh4Cipher->MH4Decrypt($user->getAbsolutePath() ,$user->getUploadDir()."/decrypted.bin",$this);
+            if($status){
+                $hunterName = $mh4Cipher->getHunterName($user);
+                $sex = $mh4Cipher->getSex($user);
+
+                $featuresColor = $mh4Cipher->getColor($user,"features");
+                $hairColor = $mh4Cipher->getColor($user,"hair");
+                $clothColor = $mh4Cipher->getColor($user,"cloth");
+                $skinColor = $mh4Cipher->getColor($user,"skin");
+
+                $zenies = $mh4Cipher->getZenies($user);
+                $HR = $mh4Cipher->getHunterRanking($user);
+                $CP = $mh4Cipher->getCaravanPoints($user);
+                $itemBox = null;
+            }
+        }else{
+            $hunterName = $mh4Cipher->getHunterName($user);
+            $sex = $mh4Cipher->getSex($user);
+
+            $featuresColor = $mh4Cipher->getColor($user,"features");
+            $hairColor = $mh4Cipher->getColor($user,"hair");
+            $clothColor = $mh4Cipher->getColor($user,"cloth");
+            $skinColor = $mh4Cipher->getColor($user,"skin");
+
+            $zenies = $mh4Cipher->getZenies($user);
+            $HR = $mh4Cipher->getHunterRanking($user);
+            $CP = $mh4Cipher->getCaravanPoints($user);
+            $itemBox = null;
         }
-        $hunterName = $mh4Cipher->getHunterName($user);
-        $sex = $mh4Cipher->getSex($user);
-
-        $featuresColor = $mh4Cipher->getColor($user,"features");
-        $hairColor = $mh4Cipher->getColor($user,"hair");
-        $clothColor = $mh4Cipher->getColor($user,"cloth");
-        $skinColor = $mh4Cipher->getColor($user,"skin");
-
-        $zenies = $mh4Cipher->getZenies($user);
-        $HR = $mh4Cipher->getHunterRanking($user);
-        $CP = $mh4Cipher->getCaravanPoints($user);
-        $itemBox = null;
         //
+        //$RCTotal = $mh4Cipher->getRCTotalPoints($user);
         //USAR CANONICAL NAME ITEM PARA REFRENCIAR EL ID DEL OBJETO YA QUE EL NOMBRE PUEDE ESTAR REPETIDO!
         //$itemBox = $mh4Cipher->getItemBox($user);
         //$itemBox = $mh4Cipher->getItemBoxAtSlot(9,$user);

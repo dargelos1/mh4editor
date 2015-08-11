@@ -233,8 +233,10 @@ class ItemController extends Controller
                     reset($itemList);*/
                     
                     if( $currItem !== FALSE){
+
                         //Check each cell. If found an item, get that item and check if the slot has 99 units.
                         $units = $item->units;
+                        //var_dump("ITEM=>".$item->itemId);
                         //var_dump("ITEM_UNITS: ".$item->units);
                         //var_dump(" AT SLOT:".$slot);
                         
@@ -279,7 +281,7 @@ class ItemController extends Controller
                }
             }
         }
-        //die;
+        die;
         return ($toJSON) ? json_encode($box) : $box;
     }
 }

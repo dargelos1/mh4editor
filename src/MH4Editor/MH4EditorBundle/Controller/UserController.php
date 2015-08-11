@@ -82,7 +82,7 @@ class UserController extends Controller
 	    		$response->setContent($content);
 	    		return $response;
     		}else{
-    			$response['fileMessage'] = "Sorry your userX file doesn't exists in our server.";
+    			$response['fileMessage'] = "Sorry your userX file doesn't exists in our server. Upload first.";
     		}
     		
 
