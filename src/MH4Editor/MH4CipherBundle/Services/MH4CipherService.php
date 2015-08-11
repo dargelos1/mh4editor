@@ -204,6 +204,35 @@ class MH4CipherService extends Controller{
 		return $HR;
     }
 
+    public function setHunterRanking($HR,$user){
+
+    	$readed = 0;
+    	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
+    	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
+
+    	$data1 = fread($decryptedFile, 0x2C);
+    	$readed+= strlen($data1);
+    	fwrite($editFile, $data1);
+    	
+    	fwrite($editFile, pack("v",$HR));
+
+    	fseek($decryptedFile,(0x2C+2));
+    	$readed+= 2;
+
+    	$data1 = fread($decryptedFile, (filesize($user->getUploadDir()."/decrypted.bin")-(0x2C+2) ) );
+		fwrite($editFile, $data1);
+		$readed+= strlen($data1);
+		//$box = json_encode($box);
+		//echo "HunterName: ".$name;
+		fclose($decryptedFile);
+		fclose($editFile);
+		unlink($user->getUploadDir()."/decrypted.bin");
+		rename($user->getUploadDir()."/decrypted_edit.bin", $user->getUploadDir()."/decrypted.bin");
+
+		//return $readed;
+		return $this;
+    }
+
     public function getRCTotalPoints($user){
 
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
@@ -214,6 +243,35 @@ class MH4CipherService extends Controller{
 		//echo "HunterName: ".$name;
 		fclose($decryptedFile);
 		return $RCPoints;
+    }
+
+    public function setRCTotalPoints($RCPoints,$user){
+
+    	$readed = 0;
+    	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
+    	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
+
+    	$data1 = fread($decryptedFile, 0x30);
+    	$readed+= strlen($data1);
+    	fwrite($editFile, $data1);
+    	
+    	fwrite($editFile, pack("V",$RCPoints));
+
+    	fseek($decryptedFile,(0x30+4));
+    	$readed+= 4;
+
+    	$data1 = fread($decryptedFile, (filesize($user->getUploadDir()."/decrypted.bin")-(0x30+4) ) );
+		fwrite($editFile, $data1);
+		$readed+= strlen($data1);
+		//$box = json_encode($box);
+		//echo "HunterName: ".$name;
+		fclose($decryptedFile);
+		fclose($editFile);
+		unlink($user->getUploadDir()."/decrypted.bin");
+		rename($user->getUploadDir()."/decrypted_edit.bin", $user->getUploadDir()."/decrypted.bin");
+
+		//return $readed;
+		return $this;
     }
 
     public function getCaravanPoints($user){

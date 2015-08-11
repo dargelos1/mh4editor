@@ -58,7 +58,9 @@ class HomeController extends Controller
             $itemBox = null;
         }
         //
-        //$RCTotal = $mh4Cipher->getRCTotalPoints($user);
+        $RCTotal = $mh4Cipher->getRCTotalPoints($user);
+        //$mh4Cipher->setRCTotalPoints(227450,$user);
+        //$mh4Cipher->setHunterRanking(75,$user);
         //USAR CANONICAL NAME ITEM PARA REFRENCIAR EL ID DEL OBJETO YA QUE EL NOMBRE PUEDE ESTAR REPETIDO!
         //$itemBox = $mh4Cipher->getItemBox($user);
         //$itemBox = $mh4Cipher->getItemBoxAtSlot(9,$user);
