@@ -29,7 +29,7 @@
 {%block javascripts%}
 	{{ parent() }}
 	<script type="text/javascript">
-	 function openFileMenu(){
+		function openFileMenu(){
             var  charm = $("#file-menu").data("charm");
             if (charm.element.data("opened") === true) {
                 charm.close();
@@ -37,10 +37,20 @@
                 charm.open();
             }
         }
+
 	</script>
 	<script type="text/javascript">
 
 	$(function(){
+
+		$('#a-file').on('click', function(e) {
+		    console.log('click');
+		    $('#lab-file', $(this)).trigger('click');
+		});
+
+		$('#a-file #lab-file').on('click', function(e) {
+		    e.stopPropagation();
+		});
 
 		//File Manager init
 		var alertId = "alert_dialog_mh4-user-file";
@@ -50,7 +60,7 @@
 				id: alertId,
 				template: 'size-error-alert',
 				templateOptions: {
-					alertMessage: "File size incorrect!",
+					alertMessage: "{%trans%}File size incorrect!{%endtrans%}",
 				}
 			}
 		);
@@ -267,7 +277,7 @@
 											}else{
 												if(data.banned){
 													//add dialog alert
-													alert("You have been banned due to suspicious actions.");
+													alert("{%trans%}You have been banned due to suspicious actions.{%endtrans%}");
 												}
 
 												if(data.errMsg){
@@ -412,7 +422,7 @@
 							values["offsetValue"] = $('#finder-filter-offset').val();
 							values["searchValue"] = $('#finder-item-name').val();
 							values["paginator"] = paginator;
-							itemsRender(data,$("#pag_content_"+params.pagId),values);
+							itemsRender(data,$("#pag_content_"+params.pagId),values,false);
 							registerEvents(values);
 						}
 					});
@@ -424,8 +434,9 @@
 		});
 
 		//Item render
-		function itemsRender(data,renderOn,values) {
+		function itemsRender(data,renderOn,values,updatePagination) {
 			values = values || {};
+			updatePagination = updatePagination || true;
 			$(data.items).each(function(idx,item){
 
 				var html = "";
@@ -572,7 +583,7 @@
 											}else{
 												if(data.banned){
 													//add dialog alert
-													alert("You have been banned due to suspicious actions.");
+													alert("{%trans%}You have been banned due to suspicious actions.{%endtrans%}");
 												}
 
 												if(data.errMsg){
@@ -590,9 +601,11 @@
 				
 
 			});
-
-			var paginator = mh4app.paginationManager.getPagination("item_pag");
-			paginator.removeAllPages().addMultiplePages(data.paginator.pages).refreshPages();
+		
+			if(updatePagination){
+				var paginator = mh4app.paginationManager.getPagination("item_pag");
+				paginator.removeAllPages().addMultiplePages(data.paginator.pages).refreshPages();
+			}
 
 			$(".main-content .item[data-role]")
 			.off("click")
@@ -709,7 +722,7 @@
 						values["offsetValue"] = $('#finder-filter-offset').val();
 						values["searchValue"] = $('#finder-item-name').val();
 						values["paginator"] = values.paginator;
-						itemsRender(data,$("#pag_content_"+params.pagId),values);
+						itemsRender(data,$("#pag_content_"+params.pagId),values,false);
 						registerEvents(values);
 					}
 				});

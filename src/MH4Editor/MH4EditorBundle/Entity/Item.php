@@ -36,6 +36,11 @@ class Item
      */
     private $name;
 
+     /**
+     * @ORM\Column(type="text",name="name_en")
+     */
+    private $nameEn;
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\ManyToOne(targetEntity="ItemType")
@@ -73,6 +78,11 @@ class Item
      */
     private $description;
 
+     /**
+     * @ORM\Column(type="string", length=255,name="description_en")
+     */
+    private $descriptionEn;
+
     /**
      * @ORM\Column(type="integer",name="web_zenis_buy")
      */
@@ -108,6 +118,11 @@ class Item
      */
     private $boxCapacity;
 
+    /**
+     * @ORM\Column(type="integer",name="times_bought")
+     */
+    private $timesBought;
+
 
 
     /**
@@ -142,6 +157,30 @@ class Item
     {
         return $this->name;
     }
+
+    /**
+     * Get nameEn
+     *
+     * @return string 
+     */
+    public function getEnglishName()
+    {
+        return $this->nameEn;
+    }
+
+    /**
+     * Set nameEn
+     *
+     * @param string $nameEn
+     * @return Item
+     */
+    public function setEnglishName($nameEn)
+    {
+        $this->nameEn = $nameEn;
+
+        return $this;
+    }
+
 
     /**
      * Set type
@@ -302,6 +341,29 @@ class Item
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set descriptionEn
+     *
+     * @param string $description
+     * @return Item
+     */
+    public function setEnglishDescription($descriptionEn)
+    {
+        $this->descriptionEn = $descriptionEn;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getEnglishDescription()
+    {
+        return $this->descriptionEn;
     }
 
     /**
@@ -468,5 +530,75 @@ class Item
     public function getBoxCapacity()
     {
         return $this->boxCapacity;
+    }
+
+    /**
+     * Set timesBought
+     *
+     * @param string $timesBought
+     * @return Item
+     */
+    public function setTimesBought($timesBought)
+    {
+        $this->timesBought = $timesBought;
+
+        return $this;
+    }
+
+    /**
+     * Get timesBought
+     *
+     * @return integer 
+     */
+    public function getTimesBought()
+    {
+        return $this->timesBought;
+    }
+
+
+    /**
+     * Set nameEn
+     *
+     * @param string $nameEn
+     * @return Item
+     */
+    public function setNameEn($nameEn)
+    {
+        $this->nameEn = $nameEn;
+
+        return $this;
+    }
+
+    /**
+     * Get nameEn
+     *
+     * @return string 
+     */
+    public function getNameEn()
+    {
+        return $this->nameEn;
+    }
+
+    /**
+     * Set descriptionEn
+     *
+     * @param string $descriptionEn
+     * @return Item
+     */
+    public function setDescriptionEn($descriptionEn)
+    {
+        $this->descriptionEn = $descriptionEn;
+
+        return $this;
+    }
+
+    /**
+     * Get descriptionEn
+     *
+     * @return string 
+     */
+    public function getDescriptionEn()
+    {
+        return $this->descriptionEn;
     }
 }

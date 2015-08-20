@@ -569,6 +569,169 @@ class MH4CipherService extends Controller{
 		return $readed;
     }
 
+    public function getEquipmentBox($user){
+
+    	$box = array();
+    	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
+    	fseek($decryptedFile,self::EQUIP_BOX_OFFSET);
+
+    	for($i=0;$i<15;$i++){
+
+
+    		$page = array();
+    		
+    		for($j=0;$j<10;$j++){
+    			$row = array();
+    			for($k=0;$k<10;$k++){
+    				$cell = array();
+
+		    		$itemType = fread($decryptedFile,1);
+					$itemType = unpack("C",$itemType);
+					$itemType = $itemType[1];
+
+					$slots = fread($decryptedFile,1);
+					$slots = unpack("C",$slots);
+					$slots = $slots[1];
+
+					
+
+					$equipId = fread($decryptedFile,2);
+					$equipId = unpack("S",$equipId);
+					$equipId = $equipId[1];
+
+					$unk1 = fread($decryptedFile,1);
+					$unk1 = unpack("C",$unk1);
+					$unk1 = $unk1[1];
+
+					$unk2 = fread($decryptedFile,1);
+					$unk2 = unpack("C",$unk2);
+					$unk2 = $unk2[1];
+
+					$unk3 = fread($decryptedFile,1);
+					$unk3 = unpack("C",$unk3);
+					$unk3 = $unk3[1];
+
+					$unk4 = fread($decryptedFile,1);
+					$unk4 = unpack("C",$unk4);
+					$unk4 = $unk4[1];
+
+					$unk5 = fread($decryptedFile,1);
+					$unk5 = unpack("C",$unk5);
+					$unk5 = $unk5[1];
+
+					$unk6 = fread($decryptedFile,1);
+					$unk6 = unpack("C",$unk6);
+					$unk6 = $unk6[1];
+
+					$unk7 = fread($decryptedFile,1);
+					$unk7 = unpack("C",$unk7);
+					$unk7 = $unk7[1];
+
+					$unk8 = fread($decryptedFile,1);
+					$unk8 = unpack("C",$unk8);
+					$unk8 = $unk8[1];
+
+					$skill1Id = fread($decryptedFile,2);
+					$skill1Id = unpack("S",$skill1Id);
+					$skill1Id = $skill1Id[1];
+
+					$skill1Points = fread($decryptedFile,2);
+					$skill1Points = unpack("S",$skill1Points);
+					$skill1Points = $skill1Points[1];
+
+					$skill2Id = fread($decryptedFile,2);
+					$skill2Id = unpack("S",$skill2Id);
+					$skill2Id = $skill2Id[1];
+
+					$skill2Points = fread($decryptedFile,2);
+					$skill2Points = unpack("S",$skill2Points);
+					$skill2Points = $skill2Points[1];
+
+					$unk9 = fread($decryptedFile,4);
+					$unk9 = unpack("C4",$unk9);
+					$unk9 = $unk9[1];
+
+					$unk10 = fread($decryptedFile,4);
+					$unk10 = unpack("C4",$unk10);
+					$unk10 = $unk10[1];
+
+
+					$cell['itemType'] = $itemType; 				//1 byte
+					$cell['slots'] = $slots; 					//1 byte
+					$cell['equipId'] = $equipId;				//2 byte
+
+					$cell['unk1'] = $unk1;						//1 byte
+					$cell['unk2'] = $unk2;						//1 byte
+					$cell['unk3'] = $unk3;						//1 byte
+					$cell['unk4'] = $unk4;						//1 byte
+					$cell['unk5'] = $unk5;						//1 byte
+					$cell['unk6'] = $unk6;						//1 byte
+					$cell['unk7'] = $unk7;						//1 byte
+					$cell['unk8'] = $unk8;						//1 byte
+
+					$cell['skill1Id'] = $skill1Id;				//2 byte
+					$cell['skill1Points'] = $skill1Points;	//2 byte
+
+					$cell['skill2Id'] = $skill2Id;				//2 byte
+					$cell['skill2Points'] = $skill2Points;	//2 byte
+
+					$cell['unk9'] = $unk9;						//4 byte
+					$cell['unk10'] = $unk10;					//4 byte
+
+					$row['col'.$k] = $cell;
+
+    			}
+    			$page['row'.$j] = $row;
+			
+    		}
+
+    		$box['page'.$i] = $page;
+    		
+    	}
+
+		$box = json_encode($box);
+		//echo "HunterName: ".$name;
+		fclose($decryptedFile);
+		return $box;
+    }
+
+    public function setEquipmentBoxAtSlot($equipment,$slot,$user){
+
+    	$readed = 0;
+    	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
+    	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
+
+    	$data1 = fread($decryptedFile, self::EQUIP_BOX_OFFSET+(28*$slot));
+    	$readed+= strlen($data1);
+    	fwrite($editFile, $data1);
+    	
+    	fwrite($editFile, pack("C",$equipment['itemType']));
+    	fwrite($editFile, pack("C",$equipment['slots']));
+    	fwrite($editFile, pack("S",$equipment['equipId']));
+    	fwrite($editFile, pack("C8",0,0,0,0,0,0,0,0));
+    	fwrite($editFile, pack("S",$equipment['skill1Id']));
+    	fwrite($editFile, pack("S",$equipment['skill1Points']));
+    	fwrite($editFile, pack("S",$equipment['skill2Id']));
+    	fwrite($editFile, pack("S",$equipment['skill2Points']));
+    	fwrite($editFile, pack("C8",0,0,0,0,0,0,0,0));
+
+    	fseek($decryptedFile,(self::EQUIP_BOX_OFFSET+(28*$slot)+28));
+    	$readed+= 28;
+
+    	$data1 = fread($decryptedFile, (filesize($user->getUploadDir()."/decrypted.bin")-(self::EQUIP_BOX_OFFSET+(28*$slot)+28) ) );
+		fwrite($editFile, $data1);
+		$readed+= strlen($data1);
+		//$box = json_encode($box);
+		//echo "HunterName: ".$name;
+		fclose($decryptedFile);
+		fclose($editFile);
+
+		unlink($user->getUploadDir()."/decrypted.bin");
+		rename($user->getUploadDir()."/decrypted_edit.bin", $user->getUploadDir()."/decrypted.bin");
+
+		return $readed;
+    }
+
     public function cheatSetAllEquipment($user){
 
     	$readed = 0;
@@ -587,12 +750,15 @@ class MH4CipherService extends Controller{
     	);
     	fwrite($editFile, $data1);
 
+    	$slots = 3;
+
 		for($j=1;$j<=15;$j++){
 
 			for ($k=1; $k <=100 ; $k++) { 
 				$equipType = $j;
 				$equipId = $k;
-    			fwrite($editFile, pack("S",$equipType));
+    			fwrite($editFile, pack("C",$equipType));
+    			fwrite($editFile, pack("C",$slots));
     			fwrite($editFile, pack("S",$equipId));
     			$bytesLen = count($bytes);
     			for($b = 0;$b<$bytesLen;$b++){
@@ -625,7 +791,7 @@ class MH4CipherService extends Controller{
 
     }
 
-    public function setAllArmors($user){
+    public function setAllArmors($user,$type){
 
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
@@ -644,7 +810,7 @@ class MH4CipherService extends Controller{
     	fwrite($editFile, $data1);
 
     	for($i=1;$i<=1500;$i++){
-    		$equipType = self::EQUIP_BOOTS;
+    		$equipType = $type;
 			$equipId = $i;
 			fwrite($editFile, pack("S",$equipType));
 			fwrite($editFile, pack("S",$equipId));

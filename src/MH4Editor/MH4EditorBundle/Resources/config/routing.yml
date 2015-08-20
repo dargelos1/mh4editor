@@ -2,9 +2,16 @@ mh4_editor_homepage:
     path:    /
     defaults: { _controller: MH4EditorBundle:Home:index }
 
+mh4_editor_changelang:
+    path:    /changelang/{lang}
+    defaults: { _controller: MH4EditorBundle:Home:changeLanguageByUrl }
+
 mh4_login_frontend:
     path:    /login
     defaults: { _controller: MH4EditorBundle:Login:login }
+
+mh4_logout_frontend:
+    path:   /logout
 
 mh4_login_check:
     path:    /login/check
@@ -43,3 +50,19 @@ mh4_file_upload:
 mh4_file_download:
     path:   /user/savefile/download
     defaults: { _controller: MH4EditorBundle:User:fileDownload }
+
+mh4_talisman_creator:
+    path:   /talismancreator
+    defaults: { _controller: MH4EditorBundle:Home:showTalismanCreator}
+
+mh4_talisman_list:
+    path:   /talismancreator/list
+    defaults: { _controller: MH4EditorBundle:Talisman:list}
+
+mh4_talisman_ability_list:
+    path:   /talismancreator/abilitylist
+    defaults: { _controller: MH4EditorBundle:Talisman:abilityList}
+
+mh4_gen_talisman:
+    path:   /talismancreator/gentalisman
+    defaults: { _controller: MH4EditorBundle:Talisman:genTalisman}

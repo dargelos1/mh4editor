@@ -47,17 +47,20 @@ class RegisterController extends Controller
 
         	if(count($user2) == 0){
                 $user->setRole(); //By default sets to 0. Change it in DDBB
+                $user->setIsBanned(false);
+                $user->setLocale("en");
         		$em->persist($user);
         		$em->flush();
         		$message = "user ".$user->getUsername()." registered!";
         		$status = true;
+                $this->get("session")->getFlashBag()->set("reg_success","Your accout has been created! You can now login.");
         		
         	}else{
         		$message = "The username or email is in use!";
         		$status = false;
         	}
         	
-			return new RedirectResponse($this->generateUrl('mh4_login_frontend'));
+			//return new RedirectResponse($this->generateUrl('mh4_login_frontend'));
 
         	return new Response(
         		json_encode(

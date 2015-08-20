@@ -16,6 +16,9 @@
 	<script type="text/javascript">
 		$(function(){
 			//Always load templates
+			{%if app.user%}
+			mh4app.setLanguage('{{app.user.getLocale}}');
+			{%endif%}
 			mh4app.loadTemplate('general');
 		});
 	</script>

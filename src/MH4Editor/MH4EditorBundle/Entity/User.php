@@ -4,6 +4,7 @@ namespace MH4Editor\MH4EditorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -20,6 +21,8 @@ class User implements UserInterface, \Serializable
 
     const USER  = 0;
     const ADMIN = 1;
+
+    const DEFAULT_LOCALE = "en";
     
     /**
      * @ORM\Column(type="integer")
@@ -69,6 +72,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="role", type="integer",options={"default" = "0"})
      */
     private $role;
+
+    /**
+     * @ORM\Column(name="locale", type="string",options={"default" = "en"})
+     */
+    private $locale;
 
 
     private $temp;
@@ -354,7 +362,7 @@ class User implements UserInterface, \Serializable
      */
     public function setIsBanned($isBanned)
     {
-        $this->isBanned = $isBanned;
+        $this->isBanned = ($isBanned !== null && $isBanned != "") ? $isBanned : false;
 
         return $this;
     }
@@ -391,4 +399,51 @@ class User implements UserInterface, \Serializable
     {
         return $this->role;
     }
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     * @return User
+     */
+    public function setLocale($locale)
+    {
+        if($locale!== null && $locale !== "")
+            $this->locale = $locale;
+        else
+            $this->locale = DEFAULT_LOCALE;
+
+        return $this;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string 
+     */
+    public function getLocale()
+    {
+        return ($this->locale != null && $this->locale != "") ? $this->locale : DEFAULT_LOCALE;
+    }
+
+    public function isAccountNonExpired(){
+
+    }
+
+    public function isAccountNonLocked(){
+
+    }
+
+    public function isCredentialsNonExpired(){
+
+    }
+
+    public function isEnabled(){
+
+        return $this->getIsBanned();
+
+    }
+
+
+    
 }

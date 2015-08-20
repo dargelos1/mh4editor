@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="4bee20c01165c9acf438338f9050b0b9" resname="File size incorrect!">
+        <source>File size incorrect!</source>
+        <target>File size incorrect!</target>
+      </trans-unit>
+      <trans-unit id="d56a1e3ff65232c65eebcae2524e31db" resname="You have been banned due to suspicious actions.">
+        <source>You have been banned due to suspicious actions.</source>
+        <target>__You have been banned due to suspicious actions.</target>
+      </trans-unit>
+      <trans-unit id="f6039d44b29456b20f8f373155ae4973" resname="Username">
+        <source>Username</source>
+        <target>__Username</target>
+      </trans-unit>
+      <trans-unit id="dc647eb65e6711e155375218212b3964" resname="Password">
+        <source>Password</source>
+        <target>__Password</target>
+      </trans-unit>
+      <trans-unit id="63889cfb9d3cbe05d1bd2be5cc9953fd" resname="Male">
+        <source>Male</source>
+        <target>Male</target>
+      </trans-unit>
+      <trans-unit id="b719ce180ec7bd9641fece2f920f4817" resname="Female">
+        <source>Female</source>
+        <target>Female</target>
+      </trans-unit>
+      <trans-unit id="f6c17271997ab44f1017dd257cb5577d" resname="You have not enought money to buy this">
+        <source>You have not enought money to buy this</source>
+        <target>You have not enought money to buy this</target>
+      </trans-unit>
+      <trans-unit id="e73dd8c0c0da880d84a1170744e46ca6" resname="The save file has been stored sucessfully.">
+        <source>The save file has been stored sucessfully.</source>
+        <target>The save file has been stored sucessfully.</target>
+      </trans-unit>
+      <trans-unit id="7fce54058054cbb371744f01c8963009" resname="The file could not be stored in server. Conntact with the administrator.">
+        <source>The file could not be stored in server. Conntact with the administrator.</source>
+        <target>The file could not be stored in server. Conntact with the administrator.</target>
+      </trans-unit>
+      <trans-unit id="f7f0e2c5a2311f224d5670492fc427a6" resname="An error ocurred while uploading the file...">
+        <source>An error ocurred while uploading the file...</source>
+        <target>An error ocurred while uploading the file...</target>
+      </trans-unit>
+      <trans-unit id="b0789abfb313247c47e44b90573f31cc" resname="An error ocurred while uploading the file... Maybe the file is corrupted.">
+        <source>An error ocurred while uploading the file... Maybe the file is corrupted.</source>
+        <target>An error ocurred while uploading the file... Maybe the file is corrupted.</target>
+      </trans-unit>
+      <trans-unit id="73bfcf205f43c4575752397a2d18ce97" resname="Sorry your userX file doesn't exists in our server. Upload first.">
+        <source>Sorry your userX file doesn't exists in our server. Upload first.</source>
+        <target>Sorry your userX file doesn't exists in our server. Upload it first.</target>
+      </trans-unit>
+      <trans-unit id="d41d8cd98f00b204e9800998ecf8427e" resname="Your account have been banned.">
+        <source>Your account have been banned.</source>
+        <target>Your account have been banned.</target>
+      </trans-unit>
+      <trans-unit id="bffe9a3c9a7e00ba00a11749e022d911" resname="Log in">
+        <source>Log in</source>
+        <target>__Log in</target>
+      </trans-unit>
+      <trans-unit id="0ba7583639a274c434bbe6ef797115a4" resname="Register">
+        <source>Register</source>
+        <target>__Register</target>
+      </trans-unit>
+      <trans-unit id="1" resname="Banned">
+        <source>Banned</source>
+        <target>Banned</target>
+      </trans-unit>
+      <trans-unit id="2" resname="Confirm Password">
+        <source>Confirm Password</source>
+        <target>Confirm Password</target>
+      </trans-unit>
+      <trans-unit id="3" resname="MH4 User File">
+        <source>MH4 User File</source>
+        <target>MH4 User File</target>
+      </trans-unit>
+      <trans-unit id="4" resname="Register form">
+        <source>Register form</source>
+        <target>Register form</target>
+      </trans-unit>
+      <trans-unit id="5" resname="Logout">
+        <source>Logout</source>
+        <target>Logout</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

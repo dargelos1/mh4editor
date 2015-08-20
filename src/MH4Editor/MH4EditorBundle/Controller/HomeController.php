@@ -11,6 +11,7 @@ class HomeController extends Controller
     public function indexAction()
     {
     	$user = $this->getUser();
+        //wvar_dump($this->get('request')->getSession()->get('_locale'));die;
 
         $hunterName = "NO_NAME";
         $sex = "NO_GENDER";
@@ -85,7 +86,7 @@ class HomeController extends Controller
         );*/
         //$mh4Cipher->setCaravanPoints(1000000,$user);
         //$mh4Cipher->cheatSetAllEquipment($user);
-        //$mh4Cipher->setAllArmors($user);
+        //$mh4Cipher->setAllArmors($user,$mh4Cipher::EQUIP_TALISMAN);
         //$readed = $mh4Cipher->setItemBoxAtSlot(15,99,878,$user); //megazumos
         /*$readed = $mh4Cipher->setItemBoxAtSlot(1318,99,900,$user); //garra d. velocidrome*/
         /*$mh4Cipher->setItemBoxAtSlot(1643,99,910,$user); //esf. armadura fuerte
@@ -105,6 +106,7 @@ class HomeController extends Controller
         //echo "Bytes readed: ".$readed;
         //die;
 
+        $translator = $this->get("translator");
 
     	return $this->render(
 	        	'DesignBundle:Frontend:home.html.twig',
@@ -114,7 +116,7 @@ class HomeController extends Controller
                     "hunterRank"    => $HR,
                     "itemBox"       => $itemBox,
                     "caravanPoints" => $CP,
-                    "sex"           => $sex == "M" ? "Male" : "Female",
+                    "sex"           => $sex == "M" ? $translator->trans("Male") : $translator->trans("Female"),
                     "FeaturesColor" => $featuresColor,
                     "HairColor"     => $hairColor,
                     "ClothColor"    => $clothColor,
@@ -122,5 +124,116 @@ class HomeController extends Controller
 	        	)
 	        );
         //return new Response("Protected Area!!!".$user->getUsername(),200);
+    }
+
+    public function showTalismanCreatorAction()
+    {
+
+        $user = $this->getUser();
+        $translator = $this->get("translator");
+        //wvar_dump($this->get('request')->getSession()->get('_locale'));die;
+
+        $hunterName = "NO_NAME";
+        $sex = "NO_GENDER";
+
+        $featuresColor = "000000";
+        $hairColor = "000000";
+        $clothColor = "000000";
+        $skinColor = "000000";
+
+        $zenies = 0;
+        $HR = 0;
+        $CP = 0;
+        $itemBox = null;
+
+        $mh4Cipher = $this->get("mh4_cipher");
+        if(!file_exists($user->getUploadDir()."/decrypted.bin")){
+            $status = $mh4Cipher->MH4Decrypt($user->getAbsolutePath() ,$user->getUploadDir()."/decrypted.bin",$this);
+            if($status){
+                $hunterName = $mh4Cipher->getHunterName($user);
+                $sex = $mh4Cipher->getSex($user);
+
+                $featuresColor = $mh4Cipher->getColor($user,"features");
+                $hairColor = $mh4Cipher->getColor($user,"hair");
+                $clothColor = $mh4Cipher->getColor($user,"cloth");
+                $skinColor = $mh4Cipher->getColor($user,"skin");
+
+                $zenies = $mh4Cipher->getZenies($user);
+                $HR = $mh4Cipher->getHunterRanking($user);
+                $CP = $mh4Cipher->getCaravanPoints($user);
+                $itemBox = null;
+            }
+        }else{
+            $hunterName = $mh4Cipher->getHunterName($user);
+            $sex = $mh4Cipher->getSex($user);
+
+            $featuresColor = $mh4Cipher->getColor($user,"features");
+            $hairColor = $mh4Cipher->getColor($user,"hair");
+            $clothColor = $mh4Cipher->getColor($user,"cloth");
+            $skinColor = $mh4Cipher->getColor($user,"skin");
+
+            $zenies = $mh4Cipher->getZenies($user);
+            $HR = $mh4Cipher->getHunterRanking($user);
+            $CP = $mh4Cipher->getCaravanPoints($user);
+            $itemBox = null;
+        }
+        
+        $RCTotal = $mh4Cipher->getRCTotalPoints($user);
+
+        return $this->render(
+                'DesignBundle:Frontend:talisman_creator.html.twig',
+                array(
+                    "hunterName"    => $hunterName,
+                    "zenies"        => $zenies,
+                    "hunterRank"    => $HR,
+                    "itemBox"       => $itemBox,
+                    "caravanPoints" => $CP,
+                    "sex"           => $sex == "M" ? $translator->trans("Male") : $translator->trans("Female"),
+                    "FeaturesColor" => $featuresColor,
+                    "HairColor"     => $hairColor,
+                    "ClothColor"    => $clothColor,
+                    "SkinColor"     => $skinColor
+                )
+            );
+    }
+
+    public function changeLanguageAction()
+    {
+        $request = $this->getRequest();
+        if($request->request->has('lang') && in_array($request->request->get('lang'), array("es", "en"))){
+            $request->getSession()->set('_locale', $request->request->get('lang'));
+            $request->setLocale($request->getSession()->get('_locale', "en"));
+            $loggeduser = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();
+            $loggeduser->setLanguage($request->getLocale());
+            $em->persist($loggeduser);
+            $em->flush();
+            if($request->request->has('referer')){
+                return $this->redirect($request->request->get('referer'));
+            }
+        }
+        return $this->redirect($this->generateUrl('mh4_editor_homepage'));
+    }    
+
+    public function changeLanguageByUrlAction($lang)
+    {
+        $request = $this->getRequest();
+
+        if(in_array($lang, array("es", "en"))){
+            $request->getSession()->set('_locale', $lang);
+
+            $request->setLocale($request->getSession()->get('_locale', "en"));
+
+            $loggeduser = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();
+            $loggeduser->setLocale($request->getLocale());
+            $em->persist($loggeduser);
+            $em->flush();
+
+            /*if($request->request->has('referer')){
+                return $this->redirect($request->request->get('referer'));
+            }*/
+        }
+        return $this->redirect($this->generateUrl('mh4_editor_homepage'));
     }
 }

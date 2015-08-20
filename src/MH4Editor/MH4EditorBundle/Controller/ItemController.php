@@ -26,14 +26,22 @@ class ItemController extends Controller
         $response = array();
         $response['status'] = true;
     	$user = $this->getUser();
+        $locale = $user->getLocale();
         $em = $this->getDoctrine()->getManager();
+
+        $fName = ($locale == "es") ? "name" : "nameEn";
 
         $query = null;
         if(trim($search) !== ''){
             $query = $em->createQuery(
                 "SELECT i
                 FROM MH4EditorBundle:Item i
-                WHERE i.name LIKE :search
+                WHERE i.".$fName." LIKE :search
+                AND (
+                    i.".$fName." != 'dummy' AND i.description != 'dummy' AND
+                    i.".$fName." NOT LIKE '%Invalid Message%' AND i.description NOT LIKE '%Invalid Message%' AND
+                    i.".$fName." NOT LIKE '%dummy%' AND i.description NOT LIKE '%dummy%'
+                )
                 "
             );
             
@@ -42,6 +50,10 @@ class ItemController extends Controller
             $query = $em->createQuery(
                 "SELECT i
                 FROM MH4EditorBundle:Item i
+                WHERE
+                    i.".$fName." != 'dummy' AND i.description != 'dummy' AND
+                    i.".$fName." NOT LIKE '%Invalid Message%' AND i.description NOT LIKE '%Invalid Message%' AND
+                    i.".$fName." NOT LIKE '%dummy%' AND i.description NOT LIKE '%dummy%'
                 "
             );
         }
@@ -65,8 +77,8 @@ class ItemController extends Controller
             $itm = array();
             //$itm['id'] = $item->getId();
             $itm['id'] =$item->getCanonicalName();
-            $itm['name'] = $item->getName();
-            $itm['description'] = $item->getDescription();
+            $itm['name'] = ($locale == "es") ? $item->getName() : $item->getEnglishName();
+            $itm['description'] = ($locale == "es") ? $item->getDescription() : $item->getEnglishDescription();
             $itm['img'] = $item->getUrlPath();
             $itm['buyIngamePrice'] = $item->getBuyPrice();
             $itm['sellIngamePrice'] = $item->getSellPrice();
@@ -141,7 +153,7 @@ class ItemController extends Controller
             $item = $em->getRepository("MH4EditorBundle:Item")->findBy(array("name" => $item_name));
             
             if(count($item) > 0 && $item[0] && $item[0] instanceof Item){
-
+                
                 $item = $item[0];
 
                 $vars  = $request->request->all();
@@ -174,15 +186,18 @@ class ItemController extends Controller
 
                 if($newZenies< 0){
 
-                    $response["errMsg"] = "You have not enought money to buy this";
+                    $response["errMsg"] = $translator->trans("You have not enought money to buy this");
                     return new Response(json_encode($response),200);
                 }
+
+                $item->setTimesBought($item->getTimesBought()+$itemUnits);
+                $em->persist($item);
+                $em->flush();
 
                 $itemList = array();
                 $itemList[$item->getId()] = $itemUnits;
                 $mh4Cipher->setZenies($newZenies,$user);
                 $box = $this->distributeItemsInBox($itemList);
-
                 $response["status"] = true;
                 $response["zenies"] = $newZenies;
                 $response["caravanPoints"] = $CP;
@@ -281,7 +296,6 @@ class ItemController extends Controller
                }
             }
         }
-        die;
         return ($toJSON) ? json_encode($box) : $box;
     }
 }

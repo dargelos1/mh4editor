@@ -1,6 +1,8 @@
 # you can read more about security in the related section of the documentation
 # http://symfony.com/doc/current/book/security.html
 security:
+    
+    always_authenticate_before_granting: true
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
     encoders:
         MH4Editor\MH4EditorBundle\Entity\User:
@@ -73,6 +75,11 @@ security:
                 # if false, then Request::hasPreviousSession is not called during authentication
                 # new in Symfony 2.3
                 require_previous_session: true
+            logout:
+                path: mh4_logout_frontend
+                target: /
+                success_handler: app.user_logout_success_listener
+                invalidate_session: false
         # the login page has to be accessible for everybody
         # secures part of the application
             #anonymous: ~

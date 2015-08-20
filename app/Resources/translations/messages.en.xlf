@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="f796c7350205976f3426bed98479b96a" resname="Mostrar">
+        <source>Mostrar</source>
+        <target>__Mostrar</target>
+      </trans-unit>
+      <trans-unit id="de1b332af07bcd80d496165f3260dc5c" resname="registros">
+        <source>registros</source>
+        <target>__registros</target>
+      </trans-unit>
+      <trans-unit id="dafe852ab8c47f3a633ca1577c8c67d1" resname="Busca por nombre de objeto...">
+        <source>Busca por nombre de objeto...</source>
+        <target>__Busca por nombre de objeto...</target>
+      </trans-unit>
+      <trans-unit id="0b27918290ff5323bea1e3b78a9cf04e" resname="File">
+        <source>File</source>
+        <target>__File</target>
+      </trans-unit>
+      <trans-unit id="0cb7c158aa69c9523f0af989fab1885b" resname="Talisman Creator">
+        <source>Talisman Creator</source>
+        <target>__Talisman Creator</target>
+      </trans-unit>
+      <trans-unit id="78722e6d1b58a89e4b5bf25edeffa01e" resname="Character customization">
+        <source>Character customization</source>
+        <target>__Character customization</target>
+      </trans-unit>
+      <trans-unit id="0b9a4cde728869e268d23be00f8640ee" resname="File menu">
+        <source>File menu</source>
+        <target>__File menu</target>
+      </trans-unit>
+      <trans-unit id="53d0fa7adaf222eb05cc2393e6baa079" resname="ReUpload UserX file">
+        <source>ReUpload UserX file</source>
+        <target>__ReUpload UserX file</target>
+      </trans-unit>
+      <trans-unit id="74540c79e377bea903e1023a46df5574" resname="Open file">
+        <source>Open file</source>
+        <target>__Open file</target>
+      </trans-unit>
+      <trans-unit id="8efe6693e65e72232b5d09a328095ae5" resname="Download UserX file">
+        <source>Download UserX file</source>
+        <target>__Download UserX file</target>
+      </trans-unit>
+      <trans-unit id="51603fbf73bb5a137a30a0d5978fdd93" resname="MH4U Save file">
+        <source>MH4U Save file</source>
+        <target>__MH4U Save file</target>
+      </trans-unit>
+      <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools">
+        <source>Tools</source>
+        <target>__Tools</target>
+      </trans-unit>
+      <trans-unit id="f1b18ad856198e443fddc9a19cf255f3" resname="Talisman creator">
+        <source>Talisman creator</source>
+        <target>__Talisman creator</target>
+      </trans-unit>
+      <trans-unit id="a02c83a7dbd96295beaefb72c2bee2de" resname="Main">
+        <source>Main</source>
+        <target>__Main</target>
+      </trans-unit>
+      <trans-unit id="f460cdc8aef294faf9dbaa2ed67200e0" resname="Monsters">
+        <source>Monsters</source>
+        <target>__Monsters</target>
+      </trans-unit>
+      <trans-unit id="8a90c0eea4a6a26a919d1936e06b4920" resname="Weapons">
+        <source>Weapons</source>
+        <target>__Weapons</target>
+      </trans-unit>
+      <trans-unit id="975eacacebe9dc402dffa3eae65936c1" resname="Armors">
+        <source>Armors</source>
+        <target>__Armors</target>
+      </trans-unit>
+      <trans-unit id="9dea4016dbcc290b773ab2fae678aaa8" resname="Items">
+        <source>Items</source>
+        <target>__Items</target>
+      </trans-unit>
+      <trans-unit id="6719b781833a6a122702422b88c26258" resname="Jewels">
+        <source>Jewels</source>
+        <target>__Jewels</target>
+      </trans-unit>
+      <trans-unit id="25bbacc197e20922341287a8ec3daadd" resname="Hunter name">
+        <source>Hunter name</source>
+        <target>__Hunter name</target>
+      </trans-unit>
+      <trans-unit id="fd4c638da5f85d025963f99fe90b1b1a" resname="HR">
+        <source>HR</source>
+        <target>__HR</target>
+      </trans-unit>
+      <trans-unit id="7806e7914829d455a270ffcc4f80b81b" resname="Caravan Points">
+        <source>Caravan Points</source>
+        <target>__Caravan Points</target>
+      </trans-unit>
+      <trans-unit id="019ec3132cdf8ee0f2e2a75cf5d3e459" resname="Gender">
+        <source>Gender</source>
+        <target>__Gender</target>
+      </trans-unit>
+      <trans-unit id="c4546a8d0e8bf0c7a2c297dff4c87a74" resname="Feat. Color">
+        <source>Feat. Color</source>
+        <target>__Feat. Color</target>
+      </trans-unit>
+      <trans-unit id="8d1c10bb6935f1e98aadbfd1acabd3e4" resname="Hair Color">
+        <source>Hair Color</source>
+        <target>__Hair Color</target>
+      </trans-unit>
+      <trans-unit id="c6e73a420d6958604b948492f59545b5" resname="Cloth Color">
+        <source>Cloth Color</source>
+        <target>__Cloth Color</target>
+      </trans-unit>
+      <trans-unit id="d9a0f832de78d1d9a2165729c5c4b80a" resname="Skin Color">
+        <source>Skin Color</source>
+        <target>__Skin Color</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,13 +1,13 @@
 <div data-role="charm" id="file-menu" data-position="left">
-    <h1 class="text-light"><span class="mif-file-empty icon"></span> File menu</h1>
+    <h1 class="text-light"><span class="mif-file-empty icon"></span> {%trans%}File menu{%endtrans%}</h1>
     <ul class="v-menu darcula">
-	    <li class="menu-title"><span class="mif-upload icon"></span> ReUpload UserX file</li>
-	    <li><a href="#"><input class="hide" type="file" name="mh4-user-file" id="mh4-user-file"/><span class="mif-sd-card icon"></span><label for="mh4-user-file">Open file...</label></a></li>
+	    <li class="menu-title"><span class="mif-upload icon"></span> {%trans%}ReUpload UserX file{%endtrans%}</li>
+	    <li><a href="#" id="a-file"><input class="hide" type="file" name="mh4-user-file" id="mh4-user-file"/><span class="mif-sd-card icon"></span><label id="lab-file" for="mh4-user-file">{%trans%}Open file{%endtrans%}...</label></a></li>
 	    <li class="divider"></li>
-	    <li class="menu-title"><span class="mif-download icon"></span> Download UserX file</li>
-	    <li><a href="{{path('mh4_file_download')}}"><span class="mif-download icon"></span>MH4U Save file</a></li>
+	    <li class="menu-title"><span class="mif-download icon"></span> {%trans%}Download UserX file{%endtrans%}</li>
+	    <li><a href="{{path('mh4_file_download')}}"><span class="mif-download icon"></span>{%trans%}MH4U Save file{%endtrans%}</a></li>
 	    <li class="divider"></li>
-	    <li class="menu-title"><span class="mif-apps icon"></span> Tools</li>
-	    <li><a href="#"><span class="mif-lab icon"></span>Talisman creator</a></li>
+	    <li class="menu-title"><span class="mif-apps icon"></span> {%trans%}Tools{%endtrans%}</li>
+	    <li><a href="#"><span class="mif-lab icon"></span>{%trans%}Talisman creator{%endtrans%}</a></li>
 	</ul>
 </div>

@@ -8,8 +8,40 @@
 			<div class="cell">
 				<h1>Login</h1>
 					{% if error %}
-					    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					    <div class="panel alert collapsible" data-role="panel">
+							<div class="heading">
+								<span class="icon mif-cross"></span>
+								<span class="title">{%trans%}Error{%endtrans%}</span>
+							</div>
+							<div class="content">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+						</div>
 					{% endif %}
+					<div>
+						{% for flashMessage in app.session.flashbag.get('banned') %}
+
+							<div class="panel alert collapsible collapsed" data-role="panel">
+								<div class="heading">
+									<span class="icon mif-cross"></span>
+									<span class="title">{%trans%}Banned{%endtrans%}</span>
+								</div>
+								<div class="content">{{ flashMessage }}</div>
+							</div>
+						    
+
+						{% endfor %}
+						{% for flashMessage in app.session.flashbag.get('reg_success') %}
+
+							<div class="panel success collapsible" data-role="panel">
+								<div class="heading">
+									<span class="icon mif-checkmark"></span>
+									<span class="title">{%trans%}Account created{%endtrans%}</span>
+								</div>
+								<div class="content">{{ flashMessage }}</div>
+							</div>
+						    
+
+						{% endfor %}
+					</div>
 					<form name="login" id="frm-login" method="post" action="{{path('mh4_login_check')}}">
 						<label>{%trans %}Username{%endtrans %}</label>
 						<div class="input-control text full-size" data-role="input">
@@ -27,9 +59,9 @@
 							</button>
 						</div>
 
-						<button class="button rounded">Log in</button>
+						<button class="button rounded">{%trans %}Log in{%endtrans %}</button>
 
-						<button type="button" id="login-btn" class="button rounded float-right">Register</button>
+						<button type="button" id="login-btn" class="button rounded float-right">{%trans %}Register{%endtrans %}</button>
 					</form>
 
 			</div>
@@ -49,7 +81,7 @@
 		.on('click',function(){
 			window.location.href="{{path('m4h_register_frontend')}}";
 		});
-	})();
+	});
 	
 	</script>
 {%endblock %}

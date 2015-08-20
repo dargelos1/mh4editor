@@ -4,6 +4,18 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.user_locale_listener:
+        class: MH4Editor\MH4EditorBundle\EventListener\UserLocaleListener
+        arguments: ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    kernel.listener.banned_listener:
+        class: MH4Editor\MH4EditorBundle\EventListener\KernelListener
+        arguments: [@router,@security.context,@translator,@session]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest}
+
+    app.user_logout_success_listener:
+        class: MH4Editor\MH4EditorBundle\EventListener\LogoutSuccessListener
+        arguments: [@security.context,@translator,@session,@service_container]

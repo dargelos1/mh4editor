@@ -1,0 +1,278 @@
+Torso+;1;
+Punzante;10;Aumenta mucho el ataque y sube el afilado de tu arma.
+Pulso firme;10;Aumenta la potencia de disparo normal, perforador y perdigón, y flechas salva, abanico y perforantes.
+Bienestar;10;Previene el veneno, la parálisis, el sueño y el aturdimiento.
+Furia;10;"Con un nivel alto de salud, da los efectos de tripas; con nivel bajo, potencia ataque y defensa."
+Biólogo;15;La bomba boñiga es más eficaz. Evita bloqueo de uso de objetos y plaga nitro. Retarda la cólera.
+Bioinvestigador;10;La bomba boñiga es más eficaz. Evita bloqueo de uso de objetos y la plaga nitro.
+Acróbata;10;Reduce el gasto de resistencia al bloquear, evadir o evadir en carrera. Más invulnerabilidad a evasión.
+Iai-jutsu;10;Permite aturdir a monstruos con desenfundadura de armas cortantes y enfundar más rápido, etc.
+Muro de hierro;10;Aumenta la defensa y anula los efectos de defensa reducida.
+Crueldad;10;Aumenta el daño al atacar puntos débiles del enemigo y aumenta la afinidad un 15%.
+Sed de sangre;10;Acelera indicadores/atq. carga. Permite comer carne cruda. Filetes dan resistencia ilimitada temporal.
+Portaescudos;10;Ataques que no eran bloqueables se hacen bloqueables y aumenta la velocidad de recup. de resistencia.
+Pies veloces;10;Aumenta la distancia de evasión y aumenta el ataque cuando el indicador de salud está al máximo.
+Elementalidad;10;Aumenta la potencia de ataques elementales y alarga el tiempo de efecto de ciertos objetos.
+Rataque;10;Aumenta el número de objetos para recoger en zonas de recogida. Quizá extraes 2 amuletos a la vez.
+Cazarrecompensas;10;Aumenta la probabilidad de obtener más recompensas de misión y objetos de recompensa por captura.
+Despertar;10;Libera propiedades elementales latentes en ciertas armas que carecen de ellas.
+Ojo preciso;10;Evita que tus ataques sean rechazados.
+Ojo ciego;-10;Tus ataques son rechazados más fácilmente.
+Afilado +1;10;Aumenta el afilado de tu arma.
+Desenf. especial;10;Aumenta la afinidad con todos los ataques de desenfundadura en un 100%.
+Pena inmediata;10;Permite aturdir a monstruos con desenfundadura de armas cortantes y aumenta algo el ataque.
+Vel. recarga +3;20;Acelera mucho la recarga de ballesta y carga automáticamente los revestimientos de arco.
+Vel. recarga +2;15;Acelera la recarga de ballesta y carga automáticamente los revestimientos de arco.
+Vel. recarga +1;10;Acelera ligeramente la recarga de ballesta y la carga de revestimientos de arco.
+Vel. recarga -1;-10;Ralentiza ligeramente la recarga de ballesta y la carga de revestimientos de arco.
+Vel. recarga -2;-15;Ralentiza la recarga de ballesta y la carga de revestimientos de arco.
+Vel. recarga -3;-20;Ralentiza mucho la recarga de ballesta y la carga de revestimientos de arco.
+Cadencia +3;20;Aumenta mucho la cadencia de la ballesta.
+Cadencia +2;15;Aumenta la cadencia de la ballesta.
+Cadencia +1;10;Aumenta algo la cadencia de la ballesta.
+Cadencia -1;-10;Reduce algo la cadencia de la ballesta.
+Cadencia -2;-15;Reduce la cadencia de la ballesta.
+Cadencia -3;-20;Reduce mucho la cadencia de la ballesta.
+Disparo bonus;10;Permite disparar un tiro más con el disparo rápido.
+Poder oculto +2;15;Te da gran poder durante un tiempo limitado cuando se dan unas condiciones determinadas.
+Poder oculto +1;10;Te da poder durante un tiempo limitado cuando se dan unas condiciones determinadas.
+Espíritu +2;15;Aumenta mucho ataque y afinidad cuando un monstruo grande se enfada en la misma área.
+Espíritu +1;10;Aumenta el ataque y la afinidad cuando un monstruo grande se enfada en la misma área.
+Invencible;10;Te permite recuperarte de los ataques que recibas con mayor rapidez.
+Dios del amuleto;20;Te permite extraer dos amuletos a la vez... Quizá.
+Buscamuletos;15;Te permite extraer dos amuletos a la vez... Quizá.
+Recogeamuletos;10;Te permite extraer dos amuletos a la vez... Quizááá...
+Maza;10;Aumenta el daño al golpear partes del cuerpo en las que tus ataques son muy efectivos.
+Antiplagas;10;Anula todas las plagas elementales (fuego, agua, rayo, hielo y draco).
+Ataque +4;25;Aumenta muchísimo el ataque.
+Ataque +3;20;Aumenta mucho el ataque.
+Ataque +2;15;Aumenta el ataque.
+Ataque +1;10;Aumenta algo el ataque.
+Ataque -1;-10;Reduce algo el ataque.
+Ataque -2;-15;Reduce el ataque.
+Ataque -3;-20;Reduce mucho el ataque.
+Defensa +4;25;Aumenta muchísimo la defensa.
+Defensa +3;20;Aumenta mucho la defensa.
+Defensa +2;15;Aumenta la defensa.
+Defensa +1;10;Aumenta algo la defensa.
+Defensa -1;-10;Reduce algo la defensa.
+Defensa -2;-15;Reduce la defensa.
+Defensa -3;-20;Reduce mucho la defensa.
+Dios recogedor;20;Muy a menudo aumenta las veces en que pueden recogerse objetos en zonas de recogida.
+Recogida +2;15;A menudo aumenta las ocasiones en que pueden recogerse objetos en zonas de recogida.
+Recogida +1;10;A veces aumenta las ocasiones en que pueden recogerse objetos en zonas de recogida.
+Recogida -1;-10;A veces reduce las ocasiones en que pueden recogerse objetos en zonas de recogida.
+Dios cortador;20;Aumenta en una (puede que más) las posibilidades de corte y evita empujones mientras se corta.
+Célebre cortante;15;Aumenta las posibilidades de corte y previene empujones mientras se corta.
+Experto cortador;10;Previene empujones mientras se está cortando.
+Suerte +2;20;Muy a menudo aumenta el número de objetos de recompensa por acabar una misión.
+Suerte +1;15;Suele aumentar el número de objetos de recompensa recibidos al final de una misión.
+Suerte;10;A veces aumenta el número de objetos de recompensa por acabar una misión.
+Suerte -1;-10;A veces reduce el número de objetos de recompensa por acabar una misión.
+Suerte -2;-15;A menudo reduce el número de objetos de recompensa por acabar una misión.
+Dios capturador;20;Aumenta muchísimo la probabilidad de obtener más objetos de recompensa por capturas.
+Maestro capturas;15;Aumenta mucho la probabilidad de obtener más objetos de recompensa por capturas.
+Experto capturas;10;Aumenta la probabilidad de obtener más objetos de recompensa por capturas.
+Dios crítico;30;Aumenta la afinidad un 30%.
+Ojo crítico +4;25;Warning: This skill does not exist in the game but is still present in the game data.
+Ojo crítico +3;20;Aumenta la afinidad un 20%.
+Ojo crítico +2;15;Aumenta la afinidad un 15%.
+Ojo crítico +1;10;Aumenta la afinidad un 10%.
+Ojo crítico -1;-10;Reduce la afinidad un 5%.
+Ojo crítico -2;-15;Reduce la afinidad un 10%.
+Ojo crítico -3;-20;Reduce la afinidad un 15%.
+Dios artillero;20;Gran aumento de potenc. de balista, cañón, lanza pistola, fuego de wyv., disp. explosivo, frascos carg. imp.
+Artillería +2;15;Más potencia de balista, cañón, lanza pistola, fuego de wyvern, disp. explosivo, frascos carg. imp.
+Artillería +1;10;Algo más de potencia de balista, cañón, lanza pistola, fuego de wyv., disp. explosivo, frascos carg. imp.
+Evasión +3;20;Extiende mucho el periodo de invulnerabilidad al evadir.
+Evasión +2;15;Extiende el periodo de invulnerabilidad al evadir.
+Evasión +1;10;Extiende algo el periodo de invulnerabilidad al evadir.
+Evasión -1;-10;Reduce el periodo de invulnerabilidad durante la evasión.
+Salud +50;15;Aumenta la salud máxima en 50.
+Salud +20;10;Aumenta la salud máxima en 20.
+Salud -10;-10;Reduce la salud máxima en 10.
+Salud -30;-15;Reduce la salud máxima en 30.
+Tapones +2;15;Anula el efecto de todos los rugidos de monstruos grandes.
+Tapones +1;10;Anula el efecto del rugido de algunos monstruos grandes.
+Filo de cuchilla;10;Divide por 2 la velocidad de pérdida de afilado del arma.
+Filo romo;-10;Dobla la velocidad de pérdida de afilado del arma.
+Guardia +2;15;Aumenta mucho la probabilidad de mantener el terreno al bloquear un ataque.
+Guardia +1;10;Aumenta la probabilidad de mantener el terreno al bloquear un ataque.
+Guardia -1;-10;Reduce la probabilidad de mantener el terreno al bloquear un ataque.
+Escudo;10;Hace que ataques que no eran bloqueables se hagan bloqueables.
+Afilado rápido;10;Acelera el afilado de armas.
+Afilado lento;-10;Reduce el afilado de armas.
+Adrenalina +2;15;Aumenta mucho el ataque y la defensa con la salud por debajo del 40% de su cantidad máxima.
+Adrenalina +1;10;Aumenta mucho la defensa cuando la salud está por debajo del 40% de su cantidad máxima.
+Agobiado;-10;Reduce la potencia de defensa y ataque cuando el nivel de salud es inferior al 40% del total.
+Bombardero;10;Aumenta el daño de bomba y la probabilidad de combinación de todas las bombas al 100%.
+Estado anormal +2;15;Aumenta la potencia de ataques de estados anormales.
+Estado anormal +1;10;Aumenta ligeramente la potencia de ataques de estados anormales.
+Estado anormal -1;-10;Reduce la potencia de ataques de estados anormales.
+Corredor +1;10;Ralentiza el uso de resistencia de acciones que requieren un consumo continuo (como correr).
+Corredor -1;-10;Acelera el uso de resistencia de acciones que requieren un consumo continuo (como correr).
+Destructor;10;Hace más fácil romper o cortar partes de monstruos grandes.
+Distancia evasión;10;Aumenta la distancia de evasión.
+Vaina rápida;10;Aumenta la velocidad de desenfundadura de las armas.
+Concentración;10;Acelera carga indicador esp. l./ hacha e./esp. d., fras. esp. c., atq. carga arco/g. esp./mart.
+Distracción;-10;Ralentiza carga indicador esp. l./ hacha e./esp. d., fras. esp. c., atq. carga arco/g. esp./mart.
+Robarresistencia;10;Aumenta la capacidad de ciertos ataques de agotar a monstruos.
+Plena forma;10;Aumenta el ataque cuando el indicador de salud está al máximo.
+Tripas;10;Evita desmayarte una vez al recibir un golpe mortal si tienes cierta cantidad de salud.
+Carga+;10;Aumenta capac. munición balles. y lanza pistola, frascos esp. c. y capac. ataque cargado de arcos.
+Normal/salva+;10;Aumenta la potencia de disparos normales y flechas en salva.
+Perforante+;10;Aumenta la potencia de disparos perforadores y flechas perforantes.
+Perdigón/abanico+;10;Aumenta la potencia de disparos de perdigón y flechas en abanico.
+Boxeador;10;Facilita aturdir monstruos.
+Piel de hierro;10;Anula los efectos de defensa reducida.
+Efecto objeto +1;10;Aumenta el tiempo de efecto de ciertos objetos.
+Efecto objeto -1;-10;Reduce el tiempo de efecto de ciertos objetos.
+Mun. normal;10;Permite que se carguen todos los niveles de disparos normales.
+Mun. perforadora;15;Permite que se carguen todos los niveles de disparos perforadores.
+Mun. perfor. Nv1;10;Permite que se carguen los disparos perforadores Nv1.
+Mun. perdigón;15;Permite que se carguen todos los niveles de disparos de perdigón.
+Mun. perdigón Nv1;10;Permite que se carguen los disparos de perdigón Nv1.
+Mun. explosiva;15;Permite que se carguen todos los niveles de disparos explosivos.
+Mun. explosiva Nv1;10;Permite que se carguen los disparos explosivos Nv1.
+Mun. fragmentación;15;Permite que se carguen todos los niveles de disparos de grupo.
+Mun. fragment. Nv1;10;Permite que se carguen los disparos de grupo Nv1.
+Mun. cortadora;10;Permite que se carguen los disparos cortadores.
+Mun. nitro;10;Permite que se carguen los disparos de nitro.
+Revestim. veneno;10;Permite usar revestimientos de veneno cuando llevas un arco.
+Revestim. paraliz.;10;Permite usar revestimientos paralizantes cuando llevas un arco.
+Revestim. sueño;10;Permite usar revestimientos de sueño cuando llevas un arco.
+Revestim. energía;10;Permite usar revestimientos de energía cuando llevas un arco.
+Revestim. alcance;10;Permite usar revestimientos de alcance cuando llevas un arco.
+Revestim. fatiga;10;Permite usar revestimientos de fatiga cuando llevas un arco.
+Revestim. nitro;10;Permite usar revestimientos de nitro cuando llevas un arco.
+Precisión +2;15;Reduce mucho la desviación al disparar.
+Precisión +1;10;Reduce la desviación al disparar.
+Precisión -1;-10;Aumenta la desviación al disparar.
+Precisión -2;-15;Aumenta mucho la desviación al disparar.
+Ataque fuego +3;20;Aumenta muchísimo la potencia de ataques de fuego y disparos de llama.
+Ataque fuego +2;15;Aumenta mucho la potencia de ataques de fuego y disparos de llama.
+Ataque fuego +1;10;Aumenta la potencia de ataques de fuego y disparos de llama.
+Ataque fuego -1;-10;Reduce la potencia de ataques de fuego y disparos de llama.
+Ataque agua +3;20;Aumenta muchísimo la potencia de ataques de agua y disparos de agua.
+Ataque agua +2;15;Aumenta mucho la potencia de ataques de agua y disparos de agua.
+Ataque agua +1;10;Aumenta la potencia de ataques de agua y disparos de agua.
+Ataque agua -1;-10;Reduce la potencia de ataques de agua y disparos de agua.
+Ataque rayo +3;20;Aumenta muchísimo la potencia de ataques de rayo y disparos de rayo.
+Ataque rayo +2;15;Aumenta mucho la potencia de ataques de rayo y disparos de rayo.
+Ataque rayo +1;10;Aumenta la potencia de ataques de rayo y disparos de rayo.
+Ataque rayo -1;-10;Reduce la potencia de ataques de rayo y disparos de rayo.
+Ataque hielo +3;20;Aumenta muchísimo la potencia de ataques de hielo y disparos congeladores.
+Ataque hielo +2;15;Aumenta mucho la potencia de ataques de hielo y disparos congelantes.
+Ataque hielo +1;10;Aumenta la potencia de ataques de hielo y disparos congelantes.
+Ataque hielo -1;-10;Reduce la potencia de ataques de hielo y disparos congelantes.
+Ataque draco +3;20;Aumenta muchísimo la potencia de ataques de draco y disparos de draco.
+Ataque draco +2;15;Aumenta mucho la potencia de ataques de draco y disparos de draco.
+Ataque draco +1;10;Aumenta la potencia de ataques de draco y disparos de draco.
+Ataque draco -1;-10;Reduce la potencia de ataques de draco y disparos de draco.
+Elemental +1;10;Aumenta la potencia de ataques elementales.
+Elemental -1;-10;Reduce la potencia de ataques elementales.
+Resist. fuego +20;15;Aumenta la resistencia al fuego en 20.
+Resist. fuego +15;10;Aumenta la resistencia al fuego en 15.
+Resist. fuego -20;-10;Reduce la resistencia al fuego en 20.
+Resist. agua +20;15;Aumenta la resistencia al agua en 20.
+Resist. agua +15;10;Aumenta la resistencia al agua en 15.
+Resist. agua -20;-10;Reduce la resistencia al agua en 20.
+Resist. rayo +20;15;Aumenta la resistencia al rayo en 20.
+Resist. rayo +15;10;Aumenta la resistencia al rayo en 15.
+Resist. rayo -20;-10;Reduce la resistencia al rayo en 20.
+Resist. hielo +20;15;Aumenta la resistencia al hielo en 20.
+Resist. hielo +15;10;Aumenta la resistencia al hielo en 15.
+Resist. hielo -20;-10;Reduce la resistencia al hielo en 20.
+Resist. draco +20;15;Aumenta la resistencia al draco en 20.
+Resist. draco +15;10;Aumenta la resistencia al draco en 15.
+Resist. draco -20;-10;Reduce la resistencia al draco en 20.
+Veloc. recogida;10;Aumenta la velocidad de cortar, recoger, coger insectos y extraer.
+Autorrastreador;15;Siempre muestra monstruos grandes en el mapa, como si estuvieran marcados.
+Detectar;10;Aumenta la información en el mapa cuando hay monstruos grandes marcados.
+Gurú de captura;10;Te permite conocer cuándo se puede capturar a un monstruo grande que hayas marcado.
+Curación +1;10;Aumenta la eficacia de los objetos que otorgan salud.
+Curación -1;-10;Reduce la eficacia de los objetos que otorgan salud.
+Efecto área +2;15;Transfiere los efectos de ciertos objetos a los camaradas en la zona.
+Efecto área +1;10;Transfiere parte de los efectos de ciertos objetos a los camaradas en la zona.
+Músico;10;Reduce la probabilidad de rotura de cuernos y aumenta el tiempo de efecto de melodías de cornamusa.
+Fortalecer;10;Aumenta tu ataque y defensa cada vez que caes en la batalla.
+Carnívoro;10;Comes carne cruda, y los filetes poco hechos y al punto dan resistencia ilimitada temporal.
+Carroñero;15;Dota cualquier objeto que comas o bebas de potencia para subir tu resistencia máxima.
+Glotón;10;Aumenta la eficacia de la carne, que sube la resistencia máxima.
+Constitución +2;15;Reduce mucho el gasto de resist. al evadir/bloquear. Puedes eludir en carrera en cualquier dirección.
+Constitución +1;10;Reduce el gasto de resistencia al evadir/bloquear. Puedes eludir en carrera en cualquier dirección.
+Constitución -1;-10;Acelera el gasto de resistencia al evadir, bloquear, etc.
+Constitución -2;-15;Acelera mucho el gasto de resistencia al evadir, bloquear, etc.
+Estado forma +1;10;Aumenta la velocidad de recuperación de resistencia.
+Estado forma -1;-10;Reduce la velocidad de recuperación de resistencia.
+Resist. viento +2;15;Anula la presión del viento de casi todos los monstruos.
+Resist. viento +1;10;Reduce casi toda la presión del viento.
+Consumir +2;15;Aumenta la velocidad de consumo de carne y objetos.
+Consumir +1;10;Aumenta la velocidad de consumo de carne.
+Consumir -1;-10;Reduce la velocidad de consumo de carne.
+Combinación +45%;15;Aumenta la probabilidad de combinación un 45%.
+Combinación +20%;10;Mejora las opciones de éxito de combinación en un 20%.
+Combinación -10%;-10;Reduce la probabilidad de combinación un 10%.
+Combinación -20%;-15;Reduce las opciones de éxito de combinación en un 20%.
+Combinación+;10;Garantiza los mejores resultados con combinaciones que producen más de un objeto a la vez.
+Soldado;10;"Mejora éxito de pesca y cocina en misiones y muestra el mapa siempre, aun sin el objeto ""mapa""."
+Anula el calor;10;Anula el daño provocado por calor y lava.
+Aumentar calor;-10;Aumenta el daño provocado por calor y lava.
+Anula el frío;10;Anula todo el frío.
+Aumentar frío;-10;Aumenta la velocidad a la que se agota la resistencia máxima por frío.
+Héroe camarada;10;"Mejores estadísticas de camaradas y permite gesto de ""ovación"" cuando se desmayan/recuperan."
+Reunión camaradas;10;Aumenta el ataque y la defensa de los camaradas.
+Ovación camaradas;10;"Permite ""ovación"" con camaradas cuando se desmayan/recuperan. No se puede usar repetidamente."
+Recuperación +2;15;Acelera mucho la recuperación del daño temporal (parte roja del indicador de salud).
+Recuperación +1;10;Acelera la recuperación del daño temporal (parte roja del indicador de salud).
+Recuperación -1;-10;Frena la recuperación del daño temporal (parte roja del indicador de salud).
+Recuperación -2;-15;Frena mucho la recuperación del daño temporal (parte roja del indicador de salud).
+Capricho +2;15;Reduce mucho la probabilidad de rotura de picos, redes de bichos, bumeranes y cuernos.
+Capricho +1;10;Reduce la probabilidad de rotura de picos, redes de bichos, bumeranes y cuernos.
+Capricho -1;-10;Aumenta la probabilidad de rotura de picos, redes de bichos, bumeranes y cuernos.
+Capricho -2;-15;Aumenta mucho la probabilidad de rotura de picos, redes de bichos, bumeranes y cuernos.
+Bendición divina;10;A veces reduce el daño recibido.
+Bendic. demoníaca;-10;A veces aumenta el daño recibido.
+Anula hambre;15;Anula el gasto de resistencia máxima.
+Mitad hambre;10;Divide por 2 la velocidad de gasto de resistencia máxima.
+Aumenta hambre;-10;Aumenta la velocidad de gasto de resistencia máxima.
+Doble hambre;-15;Aumenta mucho la velocidad de gasto de resistencia máxima.
+Experto mochilero;10;Aumenta la velocidad al transportar objetos y reduce la probabilidad de soltarlos.
+Trampero;10;Hace que las combinaciones de trampa funcionen y acelera la colocación de trampas y bombas.
+Cazamiel;10;Te permite recoger dos cajas de miel a la vez.
+Anula veneno;10;Previene el veneno.
+Doble veneno;-10;Duplica el daño recibido por veneno.
+Anula parálisis;10;Previene la parálisis.
+Doble parálisis;-10;Dobla la duración de la parálisis.
+Anula sueño;10;Previene el sueño.
+Doble sueño;-10;Dobla la duración del sueño.
+Anula aturdimiento;15;Previene el aturdimiento.
+Mitad aturdimiento;10;Reduce la probabilidad de ser aturdido un 50%.
+Doble aturdimiento;-10;Dificulta la recuperación tras ser aturdido.
+Anula barro/nieve;10;Anula quedar enterrado en la nieve o el barro.
+Resistencia temblor;10;Evita trastabillar por los temblores causados por monstruos grandes.
+Antirrobo;10;Previene el robo de objetos.
+Sigilo;10;Reduce la probabilidad de ser atacado por monstruos.
+Provocación;-10;Aumenta la probabilidad de ser atacado por monstruos.
+Aura llama;10;Los monstruos actúan como si portaras una antorcha, aunque no sea así.
+Autoguardia;10;Permite bloquear ataques automáticamente (si es posible bloquear y el arma está a mano).
+Antivirus;10;Es más difícil que te afecte la cólera y mejora los beneficios cuando la superas.
+Dios del rodeo;15;Facilita permanecer montado en un monstruo hasta derribarlo.
+Maestro de monta;10;Facilita mucho permanecer montado en un monstruo hasta derribarlo.
+Dolor de nalgas;-10;Dificulta permanecer montado en un monstruo hasta derribarlo.
+Crít. elemental;10;Aumenta el daño elemental (fuego, agua, rayo, hielo, draco) de los golpes críticos.
+Crít. estado;10;Ataques de estados anormales (nitro, veneno, parál., sueño) más potentes en golpes críticos.
+Trayectoria;10;Aumenta el tiempo durante el cual ciertas flechas y munición impactan a plena potencia.
+Micólogo;10;Permite consumir setas para obtener ciertos beneficios de ellas.
+Repartidor;10;Te permite reutilizar algunos objetos tras haberlos comido o bebido.
+Anula sangrado;10;Evita el sangrado.
+Sangrado doble;-10;Duplica el daño recibido por sangrado.
+Anula brea;10;Anula los efectos que entorpecen el movimiento de los estados enmarañado y embreado.
+Mano firme;10;Evita que rechacen tus ataques, reduce a la mitad la velocidad a la que disminuye el afilado.
+Estómago fuerte;10;Permite consumir setas, carne cruda... con más beneficios. Comes más rápido.
+Esgrimista sucio;10;Más poder tras desmayarte. Hay acciones que consumen menos resistencia. Mejora al agotarte.
+Espada iluminada;10;Desbloquea elementos latentes en las armas y potencia ataques elementales y de estados anormales.
+Colocaexplosivos;10;Más daño por bombas/ráfaga, pones bombas/trampas más rápido y más combinaciones exitosas.
+Pegando fuerte;10;Aumentan la efectividad de los ataques que fatigan y aturden a los monstruos.
+Bendición;10;Aumenta la eficacia de los objetos que otorgan salud y a veces reduce el daño recibido.
+Clandestino;10;Permite llevar más munición, más combinaciones exitosas, es menos probable recibir ataques.

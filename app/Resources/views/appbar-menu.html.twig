@@ -1,5 +1,20 @@
 <ul class="app-bar-menu">
 	<li onclick="openFileMenu()"><span class="mif-file-empty"></span> {%trans%}File{%endtrans%}</li>
-	<li><span class="mif-lab"></span> {%trans%}Talisman Creator{%endtrans%}</li>
+	<li><a href="{{path('mh4_talisman_creator')}}"><span class="mif-lab"></span> {%trans%}Talisman Creator{%endtrans%}</a></li>
 	<li><span class="mif-wrench"></span> {%trans%}Character customization{%endtrans%}</li>
+	<li>
+		<a href="" class="dropdown-toggle">{%trans%}Change language{%endtrans%}</a>
+		<ul class="d-menu" data-role="dropdown">
+			 {%if app.request.locale=='en'%}
+				<li><a>{%trans%}English{%endtrans%} <span class="mif-spell-check"></span></a></li>
+				<li><a href="{{path('mh4_editor_changelang',{lang:'es'})}}">{%trans%}Spanish{%endtrans%} </a></li>
+			{%else%}
+			{%if app.request.locale=='es'%}
+				<li><a href="{{path('mh4_editor_changelang',{lang:'en'})}}">{%trans%}English{%endtrans%}</a></li>
+				<li><a>{%trans%}Spanish{%endtrans%} <span class="mif-spell-check"></span></a></li>
+			{%endif%}
+			{%endif%}
+		</ul>
+	</li>
+		
 </ul>

@@ -22,6 +22,9 @@ class LoginController extends Controller
 
 	    //$this->denyAccessUnlessGranted('ROLE_USER',null,'You must be logged to access this area.');
 
+	    $user = $this->getUser();
+	    $isBanned = ($user !== null ) ? $user->getIsBanned() : false;
+
 	    if($security->isGranted('ROLE_USER')) {
             return new RedirectResponse($this->get('router')->generate('mh4_editor_homepage'));
         }else{

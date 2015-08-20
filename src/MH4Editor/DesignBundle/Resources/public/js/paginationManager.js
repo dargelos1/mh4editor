@@ -221,7 +221,7 @@
 					var that = this;
 					var current = that.currentPage;
 					var newPage = numPage;
-					var maxPages = that.getNumPages()
+					var maxPages = that.getNumPages();
 					if(numPage >= 1 && numPage <= maxPages && that.currentPage != numPage){
 						$(this).trigger('pageChanged',{
 							changedFrom: current,

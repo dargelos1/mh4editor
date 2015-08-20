@@ -1,6 +1,6 @@
 {%extends 'DesignBundle:Register:base_form.html.twig' %}
 {%block formStyleName%}register-form{%endblock%}
-{%block formName %}Register{%endblock %}
+{%block formName %}{%trans%}Register form{%endtrans%}{%endblock %}
 {%block form %}
 	{{form_start(form , {'attr': {
 		'id' : 'register_form',
@@ -11,11 +11,7 @@
 	} } )}}
 	{{ form_label(form.user.username) }}
 	<div class="input-control text full-size" data-role="input">
-		{{ form_widget(form.user.username, {'attr' : {
-			'data-validate-func' : 'minlength',
-			'data-validate-arg' : '6',
-			'class' : 'required'
-		} }) }}
+		{{ form_widget(form.user.username) }}
 		<button class="button helper-button clear">
 			<span class="mif-cross"></span>
 		</button>
@@ -54,7 +50,7 @@
 	</div>
 	
 	{{form_end(form)}}
-	<button id="register-btn" class="button rounded">Register</button>
+	<button id="register-btn" class="button rounded">{%trans%}Register{%endtrans%}</button>
 	<div id="reg-loader" class="emerald-style fix-pos" style="display:inline-block" data-role="preloader" data-type="ring"></div>
 	
 {%endblock %}
@@ -141,13 +137,15 @@
 					}
 
 
+				}else{
+					window.location.href="{{path('mh4_login_frontend')}}";
 				}
 				
 
 			})
 			.error(function(data,error,xhr){
 				$("div#reg-loader").removeClass("show");
-				alert(data);
+				console.log(data);
 				//If data not in JSON, it means the controller is returning the templae with form errors
 				if(error == "parsererror"){
 

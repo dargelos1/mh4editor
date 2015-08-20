@@ -1,0 +1,324 @@
+{% extends '::frontend.html.twig' %}
+
+{%block userZone %}
+	{%include '::userzone.html.twig' with {'hunterName': hunterName} %}
+{%endblock%}
+{%block container %}
+<div class="page-content">
+	<div class="main-container">
+
+		<div class="main-barside">
+			{%include '::sidebar-menu.html.twig'%}
+		</div>
+
+		<div class="main-content">
+			<h1 class="full-width">Talisman Creator</h1>
+
+			<div class="grid condensed full-width">
+				<div class="row cells5">
+
+					<div class="cell">
+						<div id="talisman-icon" class="image-container bordered">
+							<div class="frame">
+								<img src="{{asset('bundles/design/images/icons_items/Talisman-white.png')}}">
+							</div>
+						</div>
+					</div>
+
+					<div class="cell">
+
+						<label>{%trans%}Talismans{%endtrans%}:</label>
+						<div class="input-control select">
+							<select id="sel-talisman-type" name="sel-talisman-type">
+							</select>
+						</div>
+
+						<label>{%trans%}Slots number{%endtrans%}:</label>
+						<div class="input-control select">
+							<select id="sel-talisman-slots" name="sel-talisman-slots">
+								<option selected="selected" value="0">0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</div>
+
+					</div>
+
+					<div class="cell">
+
+						<label>{%trans%}Ability{%endtrans%} 1:</label>
+						<div class="input-control select">
+							<select id="sel-talisman-ab1" name="sel-talisman-ab1">
+								<option value="0">(Empty)</option>
+							</select>
+						</div>
+
+						<label>{%trans%}Ability{%endtrans%} 2:</label>
+						<div class="input-control select">
+							<select id="sel-talisman-ab2" name="sel-talisman-ab2">
+								<option value="0">(Empty)</option>
+							</select>
+						</div>
+
+					</div>
+
+					<div class="cell">
+
+						<label>{%trans%}Ability{%endtrans%} 1 {%trans%}Amount{%endtrans%}:</label>
+						<div class="input-control select">
+							<select id="sel-talisman-ab1-points" name="sel-talisman-ab1-points">
+								<option value="0">0</option>
+							</select>
+						</div>
+
+						<label>{%trans%}Ability{%endtrans%} 2 {%trans%}Amount{%endtrans%}:</label>
+						<div class="input-control select">
+							<select id="sel-talisman-ab2-points" name="sel-talisman-ab2-points">
+								<option value="0">0</option>
+							</select>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="row cells1">
+					<button id="btn-gen-talisman" class="command-button info block-shadow-info text-shadow">
+					    <span class="icon mif-hammer"></span>
+					    <span class="btn-text">Generate the talisman</span>
+					    <small>Warning: not all talismans could be legit!</small>
+					</button>
+				</div>
+
+				<div class="row cells2">
+					<div class="cell">
+						<h2>Ability description</h2>
+					</div>
+					<div class="cell">
+						<h2>Ability stats</h2>
+					</div>
+				</div>
+
+				<div class="row cells2">
+					<div class="cell">
+						<div id="ab-description">
+							
+						</div>
+					</div>
+					<div class="cell">
+						<div id="ab-list">
+							
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			
+		</div>
+		
+	</div>
+		
+</div>
+<div class="file-menus">
+	{% include '::file-menu.html.twig' %}
+</div>
+{%endblock %}
+
+{%block javascripts%}
+	{{ parent() }}
+	<script type="text/javascript">
+		function openFileMenu(){
+            var  charm = $("#file-menu").data("charm");
+            if (charm.element.data("opened") === true) {
+                charm.close();
+            } else {
+                charm.open();
+            }
+        }
+
+	$(function(){
+		//Pick Color Plugin
+		$('.color-box').each(function(index, el) {
+			
+
+			var color = "";
+			switch($(el).attr("id")){
+
+				case "featuresColor":
+					color = "{{ FeaturesColor | default('#000000')}}";
+					break;
+				case "hairColor":
+					color = "{{ HairColor | default('#000000')}}";
+					break;
+				case "clothColor":
+					color = "{{ ClothColor | default('#000000')}}";
+					break;
+				case "skinColor":
+					color = "{{ SkinColor | default('#000000')}}";
+					break;
+			}
+			color = color.replace("#","");
+			$(this).colpick({
+				colorScheme:'dark',
+				layout:'rgbhex',
+				color: color,
+				onSubmit:function(hsb,hex,rgb,el) {
+					$(el).css('background-color', '#'+hex);
+					$(el).colpickHide();
+				}
+			}).css('background-color', "#"+color);
+
+		});
+
+		mh4app.getData("{{path('mh4_talisman_list')}}",'',function(data){
+
+			$(data.talismans).each(function(i,t){
+
+				$("#sel-talisman-type")
+				.append($("<option></option>")
+		        .attr("value",t.img)
+		        .text(t.name)); 
+		    });
+
+			$("#sel-talisman-type")
+			.off("change")
+			.on("change",function(){
+				$("#talisman-icon img").attr("src",$(this).val());
+			});
+
+		});
+
+		mh4app.getData("{{path('mh4_talisman_ability_list')}}",'',function(data){
+
+			var abs = [];
+
+
+			$(data.abilities).each(function(i,a){
+
+				$("#sel-talisman-ab1")
+				.append($("<option></option>")
+		        .attr("value",a.id)
+		        .text(a.name));
+
+		        $("#sel-talisman-ab2")
+				.append($("<option></option>")
+		        .attr("value",a.id)
+		        .text(a.name));
+
+		        abs.push(a);
+
+		    });
+
+		    mh4app.addCache("abilities",abs);
+
+		    $("#sel-talisman-ab1, #sel-talisman-ab2")
+		    .off("change focus")
+			.on("change focus",function(){
+
+				var that = this;
+				$("#ab-description").html( ($(that).val() == 0 ? "" : mh4app.getCache("abilities")[$(this).val()-1].description));
+
+
+				$("#"+$(that).attr("id")+"-points").html(function(idx,oldHtml){
+
+					var html = "";
+					if($(that).val() == 0)
+						return "<option value='0'>0</option>";
+					var abs = mh4app.getCache("abilities")[$(that).val()-1].activeAbs;
+					var len = abs.length;
+					var arrPoints = [];
+					for(i=0;i<len;i++){
+
+						arrPoints.push(abs[i].points);
+					}
+
+					var max = Math.max.apply(null,arrPoints);
+					var min = Math.min.apply(null,arrPoints);
+
+					var start = (min != max ? (min>0 ? 1 : min) : 1 );
+
+					for(i=start;i<=max;i++){
+
+						if(i!== 0)
+							html += "<option value='"+i+"'>"+i+"</option>";
+					}
+
+					return html;
+
+				});
+				
+				$("#ab-list").html(function(idx,oldHtml){
+
+					if($(that).val() == 0)
+						return "";
+					var html = "<table class='table dataTable striped border bordered'>";
+					var abs = mh4app.getCache("abilities")[$(that).val()-1].activeAbs;
+					var len = abs.length;
+					for(i=0;i<len;i++){
+						html +="<tr><td>"+abs[i].name+"</td><td "+(abs[i].points > 0 ? "class='fg-green'" : "class='fg-red'")+">"+(abs[i].points > 0 ? "+"+abs[i].points : abs[i].points)+"</td><td>"+abs[i].descrip+"</td></tr>";
+					}
+					html += "</table>";
+
+					return html;
+				});
+			});
+
+			$("#sel-talisman-ab1-points")
+		    .off("change")
+		    .on("change",function(){
+
+		    });
+			
+
+		});
+
+		$("#btn-gen-talisman")
+		.off("click")
+		.on("click",function(){
+
+			var data = {};
+			var talisman = parseInt($("#sel-talisman-type option:selected").index())+1;
+			var slots = $("#sel-talisman-slots").val();
+			var ab1 = $("#sel-talisman-ab1").val();
+			var ab2 = $("#sel-talisman-ab2").val();
+			var ab1Points = $("#sel-talisman-ab1-points").val();
+			var ab2Points = $("#sel-talisman-ab2-points").val();
+
+			if(ab1 == ab2 && ab1 != 0 && ab2 != 0){
+
+				alert("{%trans%}You cannot choose the same abilities!{%endtrans%}");
+			}else if(ab1 == 0 && ab2 != 0){
+				alert("{%trans%}You have to set ability 1 first!{%endtrans%}");
+			}else{
+
+				var icon = $(this).find("span.icon");
+				icon.addClass('mif-ani-spanner');
+				var text = $(this).find("span.btn-text");
+				text.text("Generating...");
+				var small = $(this).find("small");
+				small.append('<div data-role="preloader" data-type="metro"></div>');
+				data['talisman'] = talisman;
+				data['slots'] = slots;
+				data['ab1'] = ab1;
+				data['ab2'] = ab2;
+				data['ab1Points'] = ab1Points;
+				data['ab2Points'] = ab2Points;
+
+				mh4app.getData("{{path('mh4_gen_talisman')}}",data,function(data){
+
+					icon.removeClass('mif-ani-spanner');
+					text.text('Generate the talisman');
+					small.find("div").detach('div[data-role]');
+					console.log(data.page0);
+				});
+			}
+
+		});
+
+
+	});
+	
+	</script>
+{%endblock%}

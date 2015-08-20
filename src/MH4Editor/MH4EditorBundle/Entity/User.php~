@@ -4,6 +4,7 @@ namespace MH4Editor\MH4EditorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -18,8 +19,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class User implements UserInterface, \Serializable
 {
 
-    const ADMIN = 0;
-    const USER  = 1;
+    const USER  = 0;
+    const ADMIN = 1;
+
+    const DEFAULT_LOCALE = "en";
+    
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -60,9 +64,19 @@ class User implements UserInterface, \Serializable
     private $isActive;
 
     /**
-     * @ORM\Column(name="role", type="boolean")
+     * @ORM\Column(name="is_banned", type="boolean")
+     */
+    private $isBanned;
+
+    /**
+     * @ORM\Column(name="role", type="integer",options={"default" = "0"})
      */
     private $role;
+
+    /**
+     * @ORM\Column(name="locale", type="string",options={"default" = "en"})
+     */
+    private $locale;
 
 
     private $temp;
@@ -91,7 +105,7 @@ class User implements UserInterface, \Serializable
      */
     public function preUpload(){
 
-        if(null === $this->getMh4File()){
+        if(null !== $this->getMh4File()){
 
             $filename = sha1(uniqid(mt_rand()),true);
             $this->setMh4savePath($filename.'.'.$this->getMh4File()->guessExtension());
@@ -147,17 +161,17 @@ class User implements UserInterface, \Serializable
 
     public function getWebPath(){
 
-        return null === $this->mh4save_path ? null : $this->getUploadDir()."/".$this->mh4save_path;
+        return null === $this->mh4save_path ? null : $this->mh4save_path;
     }
 
     public function getUploadRootDir(){
 
-        return __DIR__."/../../../../web/".$this->getUploadDir();
+        return __DIR__."/../../../../web";
     }
 
     public function getUploadDir(){
 
-        return 'uploads/save_file/'.$this->getUsername();
+        return $this->getUploadRootDir().'/uploads/save_file/'.$this->getUsername();
     }
 
     public function __construct()
@@ -187,10 +201,12 @@ class User implements UserInterface, \Serializable
     public function getRoles()
     {
         $r = $this->getRole();
-        if($r === 1)
+        if($r === self::USER)
             return array('ROLE_USER');
-        else
+        else if($r === self::ADMIN)
             return array('ROLE_SUPER_ADMIN');
+        else
+            return array('IS_AUTHENTICATED_ANONYMOUSLY');
     }
 
     public function eraseCredentials()
@@ -337,4 +353,97 @@ class User implements UserInterface, \Serializable
     {
         return $this->isActive;
     }
+
+    /**
+     * Set isBanned
+     *
+     * @param boolean $isActive
+     * @return User
+     */
+    public function setIsBanned($isBanned)
+    {
+        $this->isBanned = ($isBanned !== null && $isBanned != "") ? $isBanned : false;
+
+        return $this;
+    }
+
+     /**
+     * Get isBanned
+     *
+     * @return boolean 
+     */
+    public function getIsBanned()
+    {
+        return $this->isBanned;
+    }
+
+    /**
+     * Set role
+     *
+     * @param integer $role
+     * @return User
+     */
+    public function setRole()
+    {
+        $this->role = 0;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return integer 
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     * @return User
+     */
+    public function setLocale($locale)
+    {
+        if($locale!== null && $locale !== "")
+            $this->locale = $locale;
+        else
+            $this->locale = DEFAULT_LOCALE;
+
+        return $this;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string 
+     */
+    public function getLocale()
+    {
+        return ($this->locale != null && $this->locale != "") ? $this->locale : DEFAULT_LOCALE;
+    }
+
+    public function isAccountNonExpired(){
+
+    }
+
+    public function isAccountNonLocked(){
+
+    }
+
+    public function isCredentialsNonExpired(){
+
+    }
+
+    public function isEnabled(){
+
+        return $this->getIsBanned();
+
+    }
+
+
+    
 }

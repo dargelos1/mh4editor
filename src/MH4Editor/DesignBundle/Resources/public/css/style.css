@@ -31,14 +31,18 @@ div.register-form.show {
 
 /* Header*/
 .app-bar {
-  /*override some styles*/ }
+  /*override some styles*/
+  /*.app-bar .app-bar-menu > li, .app-bar .app-bar-menu > li > a*/ }
   .app-bar img {
     width: 200px; }
   .app-bar, .app-bar .app-bar-element {
     height: 112px; }
-  .app-bar ul.app-bar-menu, .app-bar ul.app-bar-menu li {
+  .app-bar ul.app-bar-menu, .app-bar ul.app-bar-menu > li {
     height: 112px;
     line-height: 112px; }
+    .app-bar ul.app-bar-menu > a, .app-bar ul.app-bar-menu > li > a {
+      height: 112px;
+      line-height: 112px; }
   .app-bar #user-info span, .app-bar #user-info a {
     font-size: 30px;
     line-height: 112px; }
@@ -154,5 +158,8 @@ div.register-form.show {
 .hide {
   visibility: hidden;
   display: none; }
+
+.full-width {
+  width: 100%; }
 
 /*# sourceMappingURL=style.css.map */

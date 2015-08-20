@@ -2,9 +2,32 @@
 
 	window.mh4app = {
 
+		lang: 'en',
+		cache: {},
+
+		setLanguage: function(lang){
+
+			this.lang = lang;
+			return this;
+		},
+		getLanguage: function(){
+			return this.lang;
+		},
+
+		addCache: function(cacheName,value){
+
+			this.cache[cacheName] = value;
+			return this;
+		},
+
+		getCache: function(cacheName){
+
+			return this.cache[cacheName];
+		},
+
 		loadTemplate : function(tmpGroup){
 
-			var templates = this.templates[tmpGroup], count=0;
+			var templates = this.templates[this.getLanguage()][tmpGroup], count=0;
             
             for (var key in templates) {
                 var tmpString = templates[key];
@@ -13,7 +36,7 @@
                 dust.loadSource(tmp);
                 count++;
             }
-            console.info('Loaded '+count+' templates from "'+tmpGroup+'".');
+            console.info('Loaded '+count+' templates['+this.getLanguage()+'] from "'+tmpGroup+'".');
 
             return this;
 		},

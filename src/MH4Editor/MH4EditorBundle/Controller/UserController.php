@@ -24,6 +24,7 @@ class UserController extends Controller
     	$user = $this->getUser();
     	$response = array();
     	$response["status"] = false;
+        $translator = $this->get("translator");
 
     	if($user && $request->isXMLHttpRequest()){
 
@@ -37,18 +38,18 @@ class UserController extends Controller
 	    			if(file_exists( ($user->getUploadDir().'/'.$file->getClientOriginalName() ) )){
 	    				$response["user"] = $user->getUsername();
 	    				$response["status"] = true;
-	    				$response["fileMessage"] = "The save file has been stored sucessfully.";
+	    				$response["fileMessage"] = $translator->trans("The save file has been stored sucessfully.");
 	    				$mh4Cipher = $this->get("mh4_cipher");
         				$mh4Cipher->MH4Decrypt($user->getUploadDir().'/'.$file->getClientOriginalName() ,$user->getUploadDir()."/decrypted.bin",$this);
 	    			}else{
-	    				$response["fileMessage"] = "The file could not be stored in server. Conntact with the administrator.";
+	    				$response["fileMessage"] = $translator->trans("The file could not be stored in server. Conntact with the administrator.");
 	    			}
     			}else{
-    				$response["fileMessage"] = "An error ocurred while uploading the file...";
+    				$response["fileMessage"] = $translator->trans("An error ocurred while uploading the file...");
     			}
     			
     		}else{
-    			$response["fileMessage"] = "An error ocurred while uploading the file... Maybe the file is corrupted.";
+    			$response["fileMessage"] = $translator->trans("An error ocurred while uploading the file... Maybe the file is corrupted.");
     		}
 
 	    }
@@ -82,7 +83,7 @@ class UserController extends Controller
 	    		$response->setContent($content);
 	    		return $response;
     		}else{
-    			$response['fileMessage'] = "Sorry your userX file doesn't exists in our server. Upload first.";
+    			$response['fileMessage'] = $translator->trans("Sorry your userX file doesn't exists in our server. Upload it first.");
     		}
     		
 

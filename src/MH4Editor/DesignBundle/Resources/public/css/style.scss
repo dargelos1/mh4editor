@@ -74,12 +74,16 @@ div.register-form{
 
   ul.app-bar-menu{
 
-    &,li{
+    &, > li{
       height: 112px;
       line-height: 112px;
+      > a{
+        height: 112px;
+        line-height: 112px;
+      }
     }
   }
-
+/*.app-bar .app-bar-menu > li, .app-bar .app-bar-menu > li > a*/
 
 
   #user-info
@@ -262,4 +266,9 @@ div.register-form{
 .hide{
   visibility: hidden;
   display: none;
+}
+
+.full-width{
+
+  width: 100%;
 }

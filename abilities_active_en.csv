@@ -1,0 +1,278 @@
+Torso Up;
+Honed Blade;Greatly increases Attack, and raises your weapon's Sharpness.
+Silver Bullet;Increases the power of Normal, Pierce and Pellet shots, and Rapid, Pierce and Spread-type arrows.
+Wellness;Prevents Poison, Paralysis, Sleep, and Stun.
+Wrath Awoken;"At higher Health, grants Guts effects; at lower Health, boosts Attack and Defense."
+Bio Master;Increases Dung Bomb efficacy. Prevents item usage blocks and Blastblight. Delays the Frenzy.
+Bio Researcher;Increases Dung Bomb efficacy. Prevents item usage blocks and Blastblight.
+Acrobat;Slows Stamina depletion when blocking, evading, or dive-evading. Increases evasion invulnerability.
+Sheath Control;Grants ability to Stun monsters with draw attacks from cutting weapons. Also allows faster sheathing, etc.
+Iron Wall;Increases your Defense and negates the effects of Defense Down.
+Ruthlessness;Increases damage when attacking enemy weak points, and increases Affinity by 15%.
+Bloodthirst;Speeds up gauges/charged attacks. Can eat Raw Meat, and Steaks temporarily grant unlimited Stamina.
+Shield Bearer;Causes previously unblockable attacks to become blockable, and increases Stamina recovery speed.
+Fleet Feet;Increases evade distance, and also increases Attack when your Health Gauge is full.
+Elementality;Increases the power of elemental attacks and extends the effect time of certain items.
+Pack Rat;Raises number of items that can be gathered at Gathering Points. Allows mining 2 Charms at once... Maybe.
+Bounty Hunter;Increases the likelihood of obtaining more Quest Rewards and more Reward Items for captures.
+Awaken;Skills that release the latent elemental properties in some weapons that don't have elements.
+Mind's Eye;Prevents your attacks from being deflected.
+Blind Eye;Causes your attacks to be deflected more easily.
+Sharpness +1;Increases your weapon's Sharpness.
+Critical Draw;Increases Affinity for all draw attacks by 100%.
+Punishing Draw;Grants ability to Stun monsters with draw attacks from cutting weapons and slightly increases Attack.
+Reload Speed +3;Greatly speeds up Bowgun reloading, and auto-loads Bow coatings.
+Reload Speed +2;Speeds up Bowgun reloading, and auto-loads Bow coatings.
+Reload Speed +1;Slightly speeds up Bowgun reloading, and speeds up Bow-coating loading.
+Reload Speed -1;Slightly slows down Bowgun reloading and Bow-coating loading.
+Reload Speed -2;Slows down Bowgun reloading and Bow-coating loading.
+Reload Speed -3;Greatly slows down Bowgun reloading and Bow-coating loading.
+Recoil Down +3;Greatly reduces Bowgun recoil.
+Recoil Down +2;Reduces Bowgun recoil.
+Recoil Down +1;Slightly reduces Bowgun recoil.
+Recoil Down -1;Slightly increases Bowgun recoil.
+Recoil Down -2;Increases Bowgun recoil.
+Recoil Down -3;Greatly increases Bowgun recoil.
+Bonus Shot;Allows one extra shot to be fired while Rapid Firing.
+Latent Power +2;Greatly empowers you for a limited time when certain conditions are met.
+Latent Power +1;Empowers you for a limited time when certain conditions are met.
+Challenger +2;Greatly increases Attack and Affinity when a large monster in the same area becomes angry.
+Challenger +1;Increases Attack and Affinity when a large monster in the same area becomes angry.
+Rock Steady;Lessens your reaction when attacked.
+Charm God;Allows you to mine two Charms at once, maybe.
+Charm Chaser;Allows you to mine two Charms at once... Maybe.
+Charm Collector;Allows you to mine two Charms at once... Maaaybe.
+Weakness Exploit;Increases damage when striking body parts upon which your attacks are highly effective.
+Blightproof;Negates all elemental blights (Fire, Water, Thunder, Ice, and Dragon).
+Attack Up (XL);Massively increases Attack.
+Attack Up (L);Greatly increases Attack.
+Attack Up (M);Increases Attack.
+Attack Up (S);Slightly increases Attack.
+Attack Down (S);Slightly decreases Attack.
+Attack Down (M);Decreases Attack.
+Attack Down (L);Greatly decreases Attack.
+Defense Up (XL);Massively increases Defense.
+Defense Up (L);Greatly increases Defense.
+Defense Up (M);Increases Defense.
+Defense Up (S);Slightly increases Defense.
+Defense Down (S);Slightly decreases Defense.
+Defense Down (M);Decreases Defense.
+Defense Down (L);Greatly decreases Defense.
+Gathering God;Very often raises the number of times items can be gathered at Gathering Points.
+Gathering +2;Often raises the number of times items can be gathered at Gathering Points.
+Gathering +1;Sometimes raises the number of times items can be gathered at Gathering Points.
+Gathering -1;Sometimes lowers the number of times items can be gathered at Gathering Points.
+Carving God;Increases the number of carving chances by one (maybe more) and prevents knockbacks while carving.
+Carving Celebrity;Increases the number of carving chances by one and prevents knockbacks while carving.
+Carving Pro;Prevents knockbacks from attacks while carving.
+Miraculous Luck;Very often increases the number of Reward Items received at the end of a Quest.
+Great Luck;Often increases the number of Reward Items received at the end of a Quest.
+Good Luck;Sometimes increases the number of Reward Items received at the end of a Quest.
+Bad Luck;Sometimes decreases the number of Reward Items received at the end of a Quest.
+Horrible Luck;Often decreases the number of Reward Items received at the end of a Quest.
+Capture God;Very often increases the number of Reward Items received for captures.
+Capture Master;Often increases the number of Reward Items received for captures.
+Capture Expert;Sometimes increases the number of Reward Items received for captures.
+Critical God;Increases Affinity by 30%.
+Critical Eye +4;Warning: This skill does not exist in the game but is still present in the game data.
+Critical Eye +3;Increases Affinity by 20%.
+Critical Eye +2;Increases Affinity by 15%.
+Critical Eye +1;Increases Affinity by 10%.
+Critical Eye -1;Decreases Affinity by 5%.
+Critical Eye -2;Decreases Affinity by 10%.
+Critical Eye -3;Decreases Affinity by 15%.
+Artillery God;Greatly increases power of Ballista, Cannon, Gunlance, Wyvern's Fire & Crag shots, Impact C. Blade phials.
+Artillery Expert;Increases power of Ballista, Cannon, Gunlance, Wyvern's Fire & Crag shots, Impact C. Blade phials.
+Artillery Novice;Slightly increases power of Ballista, Cannon, Gunlance, Wyvern's Fire & Crag shots, Impact C. Blade phials.
+Evasion +3;Greatly extends the invulnerability period when evading.
+Evasion +2;Extends the invulnerability period when evading.
+Evasion +1;Slightly extends the invulnerability period when evading.
+Evasion Down;Reduces the invulnerability period when evading.
+Health +50;Increases maximum Health by 50.
+Health +20;Increases maximum Health by 20.
+Health -10;Decreases maximum Health by 10.
+Health -30;Decreases maximum Health by 30.
+HG Earplugs;Negates the effects of all large monsters' roars.
+Earplugs;Negates the effects of some large monsters' roars.
+Razor Sharp;Halves the rate at which your weapon loses Sharpness.
+Blunt Edge;Doubles the rate at which your weapon loses Sharpness.
+Guard +2;Greatly increases the likelihood of standing your ground when blocking an attack.
+Guard +1;Increases the likelihood of standing your ground when blocking an attack.
+Guard -1;Decreases the likelihood of standing your ground when blocking an attack.
+Guard Boost;Causes previously unblockable attacks to become blockable.
+Speed Sharpening;Speeds up weapon sharpening.
+Slow Sharpening;Slows down weapon sharpening.
+Adrenaline +2;Greatly increases Attack and Defense when Health is below 40% of the maximum amount.
+Adrenaline +1;Greatly increases Defense when Health is below 40% of the maximum amount.
+Worrywart;Decreases Defense boost and Attack when Health is below 40% of the maximum amount.
+Bombardier;Increases bomb damage, and raises the Combination success rate for all bombs to 100%.
+Status Atk +2;Increases the potency of abnormal status attacks.
+Status Atk +1;Slightly increases the potency of abnormal status attacks.
+Status Atk Down;Decreases the potency of abnormal status attacks.
+Marathon Runner;Slows down Stamina depletion for actions which continuously drain Stamina (such as dashing).
+Short Sprinter;Speeds up Stamina depletion for actions which continuously drain Stamina (such as dashing).
+Partbreaker;Makes it easier to break or sever parts of large monsters.
+Evade Extender;Increases evade distance.
+Quick Sheath;Increases weapon-sheathing speed.
+Focus;Speeds charge of L. Sword/S. Axe/ D. Blades gauges, C. Blade phials, Bow/G. Sword/Hammer charge atks.
+Distraction;Slows charge of L. Sword/S. Axe/ D. Blades gauges, C. Blade phials, Bow/G. Sword/Hammer charge atks.
+Stamina Thief;Increases certain attacks' ability to Exhaust monsters.
+Peak Performance;Increases Attack when your Health Gauge is full.
+Guts;Prevents fainting a single time if struck with a lethal blow when a certain amount of Health remains.
+Load Up;Increases Bowguns and Gunlance ammo capacity, C. Blade phials, and charge attack capacity of Bows.
+Normal/Rapid Up;Increases the power of Normal shots (Normal S) and Rapid-type arrows.
+Pierce/Pierce Up;Increases the power of Pierce shots (Pierce S) and Pierce-type arrows.
+Pellet/Spread Up;Increases the power of Pellet shots (Pellet S) and Spread-type arrows.
+Knockout King;Makes it easier to Stun monsters.
+Iron Skin;Negates the effects of Defense Down.
+Item Use Up;Increases the effect time of certain items.
+Item Use Down;Decreases the effect time of certain items.
+Use Any Normal S;Allows all levels of Normal shots (Normal S) to be loaded.
+Use Any Pierce S;Allows all levels of Pierce shots (Pierce S) to be loaded.
+Use Lv1 Pierce S;Allows Lv1 Pierce shots (Pierce S) to be loaded.
+Use Any Pellet S;Allows all levels of Pellet shots (Pellet S) to be loaded.
+Use Lv1 Pellet S;Allows Lv1 Pellet shots (Pellet S) to be loaded.
+Use Any Crag S;Allows all levels of Crag shots (Crag S) to be loaded.
+Use Lv1 Crag S;Allows Lv1 Crag shots (Crag S) to be loaded.
+Use Any Clust S;Allows all levels of Cluster shots (Clust S) to be loaded.
+Use Lv1 Clust S;Allows Lv1 Cluster shots (Clust S) to be loaded.
+Use Slicing S;Allows Slicing shots (Slicing S) to be loaded.
+Use Blast S;Allows Blast shots (Blast S) to be loaded.
+Use Poison Coat;Allows Poison coatings to be set when equipped with a Bow.
+Use Para Coat;Allows Paralysis coatings to be set when equipped with a Bow.
+Use Sleep Coat;Allows Sleep coatings to be set when equipped with a Bow.
+Use Power Coat;Allows Power coatings to be set when equipped with a Bow.
+Use C.Range Coat;Allows Close-range coatings to be set when equipped with a Bow.
+Use Exhaust Coat;Allows Exhaust coatings to be set when equipped with a Bow.
+Use Blast Coat;Allows Blast coatings to be set when equipped with a Bow.
+Steadiness +2;Greatly decreases Deviation when firing.
+Steadiness +1;Decreases Deviation when firing.
+Steadiness -1;Increases Deviation when firing.
+Steadiness -2;Greatly increases Deviation when firing.
+Fire Atk +3;Massively increases the power of Fire attacks and Flaming shots (Flaming S).
+Fire Atk +2;Greatly increases the power of Fire attacks and Flaming shots (Flaming S).
+Fire Atk +1;Increases the power of Fire attacks and Flaming shots (Flaming S).
+Fire Atk Down;Decreases the power of Fire attacks and Flaming shots (Flaming S).
+Water Atk +3;Massively increases the power of Water attacks and Water shots (Water S).
+Water Atk +2;Greatly increases the power of Water attacks and Water shots (Water S).
+Water Atk +1;Increases the power of Water attacks and Water shots (Water S).
+Water Atk Down;Decreases the power of Water attacks and Water shots (Water S).
+Thunder Atk +3;Massively increases the power of Thunder attacks and Thunder shots (Thunder S).
+Thunder Atk +2;Greatly increases the power of Thunder attacks and Thunder shots (Thunder S).
+Thunder Atk +1;Increases the power of Thunder attacks and Thunder shots (Thunder S).
+Thunder Atk Down;Decreases the power of Thunder attacks and Thunder shots (Thunder S).
+Ice Atk +3;Massively increases the power of Ice attacks and Freeze shots (Freeze S).
+Ice Atk +2;Greatly increases the power of Ice attacks and Freeze shots (Freeze S).
+Ice Atk +1;Increases the power of Ice attacks and Freeze shots (Freeze S).
+Ice Atk Down;Decreases the power of Ice attacks and Freeze shots (Freeze S).
+Dragon Atk +3;Massively increases the power of Dragon attacks and Dragon shots (Dragon S).
+Dragon Atk +2;Greatly increases the power of Dragon attacks and Dragon shots (Dragon S).
+Dragon Atk +1;Increases the power of Dragon attacks and Dragon shots (Dragon S).
+Dragon Atk Down;Decreases the power of Dragon attacks and Dragon shots (Dragon S).
+Element Atk Up;Increases the power of elemental attacks.
+Element Atk Down;Decreases the power of elemental attacks.
+Fire Res +20;Increases Fire resistance by 20.
+Fire Res +15;Increases Fire resistance by 15.
+Fire Res -20;Decreases Fire resistance by 20.
+Water Res +20;Increases Water resistance by 20.
+Water Res +15;Increases Water resistance by 15.
+Water Res -20;Decreases Water resistance by 20.
+Thunder Res +20;Increases Thunder resistance by 20.
+Thunder Res +15;Increases Thunder resistance by 15.
+Thunder Res -20;Decreases Thunder resistance by 20.
+Ice Res +20;Increases Ice resistance by 20.
+Ice Res +15;Increases Ice resistance by 15.
+Ice Res -20;Decreases Ice resistance by 20.
+Dragon Res +20;Increases Dragon resistance by 20.
+Dragon Res +15;Increases Dragon resistance by 15.
+Dragon Res -20;Decreases Dragon resistance by 20.
+Speed Gatherer;Increases carving, gathering, bug catching, and mining speed.
+Autotracker;Always displays large monsters on the Map, as if they were marked.
+Detect;Increases the information displayed on the Map when large monsters are marked.
+Capture Guru;Grants knowledge of when a large marked monster can be captured.
+Recovery Up;Increases the efficacy of Health recovery items.
+Recovery Down;Decreases the efficacy of Health recovery items.
+Wide-Range +2;Transfers the effects of certain items to companions in the same area.
+Wide-Range +1;Transfers a portion of the effects of certain items to companions in the same area.
+Horn Maestro;Decreases the likelihood of Horn items breaking, and increases the effect time of Hunting Horn melodies.
+Fortify;Increases your Attack and Defense every time you fall in battle.
+Meat Lover;Allows consumption of Raw Meat, plus Rare and Well-done Steaks temporarily grant unlimited Stamina.
+Scavenger;Gives any item you eat or drink the potential to also raise your maximum Stamina.
+Gourmand;Increases the efficacy of meat that raises maximum Stamina.
+Constitution +2;Greatly slows Stamina depletion when evading/blocking. Enables dive-evade in any direction.
+Constitution +1;Slows Stamina depletion when evading/blocking. Enables dive-evade in any direction.
+Constitution -1;Speeds up Stamina depletion when evading, blocking, etc.
+Constitution -2;Greatly speeds up Stamina depletion when evading, blocking, etc.
+Stam Recov Up;Increases Stamina recovery speed.
+Stam Recov Down;Decreases Stamina recovery speed.
+Windproof (Hi);Negates Wind Pressure from almost all monsters.
+Windproof (Lo);Lessens almost all Wind Pressure.
+Speed Eating +2;Increases meat-eating and item-consuming speed.
+Speed Eating +1;Increases meat-eating speed.
+Slow Eater;Decreases meat-eating speed.
+Combination +45%;Increases your Combination success rate by 45%.
+Combination +20%;Increases your Combination success rate by 20%.
+Combination -10%;Decreases your Combination success rate by 10%.
+Combination -20%;Decreases your Combination success rate by 20%.
+Combination Pro;Guarantees maximum results with Combinations that can produce more than one item at a time.
+Outdoorsman;Improves fishing and cooking results during quests, and always displays the Map, even without the Map item.
+Heat Cancel;Negates the damage incurred from heat and lava.
+Heat Surge;Increases the damage incurred from heat and lava.
+Cold Cancel;Negates all cold.
+Cold Surge;Increases the speed at which your maximum Stamina depletes from cold.
+Palico Hero;"Allows ""Fist Pump"" gesture to call back fainted/recovering Palicoes. Cannot be used repeatedly."
+Palico Rally;Increases the Attack and Defense of Palicoes.
+Palico Cheer;"Allows ""Fist Pump"" gesture to call back fainted/recovering Palicoes. Cannot be used repeatedly."
+Recovery Spd +2;Greatly speeds recovery from temporary damage (the red portion of the Health Gauge).
+Recovery Spd +1;Speeds recovery from temporary damage (the red portion of the Health Gauge).
+Recovery Spd -1;Slows recovery from temporary damage (the red portion of the Health Gauge).
+Recovery Spd -2;Greatly slows recovery from temporary damage (the red portion of the Health Gauge).
+Divine Whim;Greatly decreases the likelihood of Pickaxes, Bug Nets, Boomerangs, and Horns breaking.
+Spirit's Whim;Decreases the likelihood of Pickaxes, Bug Nets, Boomerangs and Horns breaking.
+Spectre's Whim;Increases the likelihood of Pickaxes, Bug Nets, Boomerangs and Horns breaking.
+Devil's Whim;Greatly increases the likelihood of Pickaxes, Bug Nets, Boomerangs and Horns breaking.
+Divine Blessing;Sometimes decreases damage taken.
+Demonic Blessing;Sometimes increases damage taken.
+Negate Hunger;Negates maximum Stamina depletion.
+Halve Hunger;Halves maximum Stamina depletion speed.
+Raise Hunger;Increases maximum Stamina depletion speed.
+Double Hunger;Greatly increases maximum Stamina depletion speed.
+Pro Transporter;Increases your speed while transporting items and decreases the likelihood of dropping them.
+Trap Master;Guarantees trap Combinations will succeed, and speeds up trap- and bomb-setting time.
+Honey Hunter;Allows you to gather two Honeys at once.
+Negate Poison;Prevents Poison.
+Double Poison;Doubles the damage received from Poison.
+Negate Paralysis;Prevents Paralysis.
+Double Paralysis;Doubles the duration of Paralysis.
+Negate Sleep;Prevents Sleep.
+Double Sleep;Doubles the duration of Sleep.
+Negate Stun;Prevents Stun.
+Halve Stun;Reduces the likelihood of being Stunned by 50%.
+Double Stun;Makes it harder to recover from being Stunned.
+Negate Mud/Snow;Negates being coated in snow or mud.
+Tremor Res;Prevents staggering from tremors created by large monsters.
+Anti-Theft;Prevents item theft.
+Sneak;Decreases the likelihood of being targeted by monsters.
+Taunt;Increases the likelihood of being targeted by monsters.
+Flame Aura;Causes monsters to react as if you are carrying a Torch, even when you aren't.
+Auto-Guard;Enables the ability to automatically block attacks (when blocking is possible and your weapon is drawn).
+Antivirus;Makes it harder to catch the Frenzy and enhances the benefits once you Overcome it.
+Rodeo God;Makes it easier to mount and successfully topple a monster.
+Mounting Master;Makes it much easier to mount and successfully topple a monster.
+Saddle Sore;Makes it harder to mount and successfully topple a monster.
+Elemental Crit;Increases elemental damage (Fire, Water, Thunder, Ice, Dragon) of your critical hits.
+Status Crit;Increases abnormal status attack potency (Sleep, Blast, Poison, Paralysis) of your critical hits.
+Trajectory;Prolongs the time window certain ammo and arrows can hit at maximum power.
+Mushromancer;Allows consumption of mushrooms and grants certain benefits as a result.
+Rationer;Sometimes allows you to reuse items after you eat and drink them.
+Negate Bleeding;Prevents Bleeding.
+Double Bleeding;Doubles the damage received from Bleeding.
+Negate Tar;Negates the movement-hindering effects of the Webbed and Tarred statuses.
+Steady Hand;Prevents your attacks from being deflected and halves the rate at which Sharpness decreases.
+Alloy Stomach;Allows consumption of mushrooms, Raw Meat, etc., with added benefits. Also increases eating speed.
+Pro Dirty Fencer;Ups power every time you faint. Lowers certain actions' stamina cost. Boosts Exhaust effects.
+Enlightened Blade;Unlocks latent weapon elements, and powers up elemental and abnormal status attacks.
+Explosive Trapper;Increases bomb/Blast damage, bomb- and trap-setting speed, and Combination success rate.
+Heavy Hitter;Increases the effectiveness of attacks that Exhaust and Stun monsters.
+Benediction;Increases the efficacy of Health recovery items and may decrease damage taken.
+Clandestine;Increases ammo capacity, Combination success rate, and chances of not being targeted.

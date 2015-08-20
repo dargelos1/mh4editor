@@ -4,16 +4,18 @@
 		<a class="dropdown-toggle fg-white">{{app.user.username}}</a>
 		<div class="app-bar-drop-container bg-white fg-black place-right " data-role="dropdown">
 			<div id="user-info-details" class="padding20">
-				Hunter name: <span id="user-hunter-name">{{hunterName | default("__HunteName__")}}</span><br>
-				HR: <span id="user-hr">{{ hunterRank | default(0)}}</span><br>
-				Zenies: <span id="user-zenies">{{ zenies | default(0)}}</span><br>
-				Caravan Points: <span id="user-caravan-points">{{ caravanPoints | default(0)}}</span><br>
-				Gender: <span id="user-gender">{{ sex | default('M')}}</span><br>
+				<a href="{{path('mh4_logout_frontend')}}"><span class="icon mif-exit"></span> {%trans%}Logout{%endtrans%}</a>
 				<hr>
-				Feat. Color: <div id="featuresColor" class="color-box"></div><br>
-				Hair Color: <div id="hairColor" class="color-box"></div><br>
-				Cloth Color: <div id="clothColor" class="color-box"></div><br>
-				Skin Color: <div id="skinColor" class="color-box"></div><br>
+				{%trans%}Hunter name{%endtrans%}: <span id="user-hunter-name">{{hunterName | default("__HunteName__")}}</span><br>
+				{%trans%}HR{%endtrans%}: <span id="user-hr">{{ hunterRank | default(0)}}</span><br>
+				Zenies: <span id="user-zenies">{{ zenies | default(0)}}</span><br>
+				{%trans%}Caravan Points{%endtrans%}: <span id="user-caravan-points">{{ caravanPoints | default(0)}}</span><br>
+				{%trans%}Gender{%endtrans%}: <span id="user-gender">{{ sex | default('M')}}</span><br>
+				<hr>
+				{%trans%}Feat. Color{%endtrans%}: <div id="featuresColor" class="color-box"></div><br>
+				{%trans%}Hair Color{%endtrans%}: <div id="hairColor" class="color-box"></div><br>
+				{%trans%}Cloth Color{%endtrans%}: <div id="clothColor" class="color-box"></div><br>
+				{%trans%}Skin Color{%endtrans%}: <div id="skinColor" class="color-box"></div><br>
 			</div>
 		</div>
 	{%endif%}
