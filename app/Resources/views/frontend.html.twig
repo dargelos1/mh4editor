@@ -20,6 +20,60 @@
 			mh4app.setLanguage('{{app.user.getLocale}}');
 			{%endif%}
 			mh4app.loadTemplate('general');
+
+			$('#a-file').on('click', function(e) {
+			    console.log('click');
+			    $('#lab-file', $(this)).trigger('click');
+			});
+
+			$('#a-file #lab-file').on('click', function(e) {
+			    e.stopPropagation();
+			});
+
+			//File Manager init
+			var alertId = "alert_dialog_mh4-user-file";
+			//console.log("OPTIONS",options);
+			mh4app.dialogManager.addDialog(
+				{
+					id: alertId,
+					template: 'size-error-alert',
+					templateOptions: {
+						alertMessage: "{%trans%}File size incorrect!{%endtrans%}",
+					}
+				}
+			);
+			mh4app.dialogManager.getDialog(alertId).init();
+			mh4app.dialogManager.registerButtons(alertId);
+
+
+			mh4app.fileManager.registerEvents({
+
+				serverSide: true,
+				uploadUrl: '{{path('mh4_file_upload')}}',
+				onLoadFile: function(file){
+
+					var size = file.getSize();
+					if(size !== 81408){
+						
+						var a = mh4app.dialogManager.getDialog(alertId);
+						a.openDialog();
+					}else{
+						file.sendToServer();
+					}
+
+				},
+				onSendProgress: function(progressEvent){
+
+					console.log(progressEvent.loaded,progressEvent.total);
+					console.log((progressEvent.loaded*100/progressEvent.total)+"%")
+				},
+				onSendSuccess: function(data){
+					console.log(data);
+				},
+				onSendError: function(xhr,errStatus,errThrown){
+
+				}
+			});
 		});
 	</script>
 	
