@@ -12,6 +12,12 @@
 	<script src="{{ asset('bundles/design/js/fileManager.js') }}"></script>
 	<script src="{{ asset('bundles/design/js/colpick.js') }}"></script>
 	<script src="{{ asset('bundles/design/js/jquery-throttle-debounce.min.js') }}"></script>
+	<script src="{{ asset('bundles/design/js/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('bundles/design/js/dataTables.bootstrap.js') }}"></script>
+	<script src="{{ asset('bundles/design/js/dataTables.responsive.js') }}"></script>
+	<script src="{{ asset('bundles/design/js/dataTables.tableTools.min.js') }}"></script>
+	
+
 	
 	<script type="text/javascript">
 		$(function(){
@@ -45,11 +51,42 @@
 			mh4app.dialogManager.getDialog(alertId).init();
 			mh4app.dialogManager.registerButtons(alertId);
 
+			var alert2Id = "alert_dialog_mh4-talisman-quota";
+			mh4app.dialogManager.addDialog(
+				{
+					id: alert2Id,
+					template: 'size-error-alert',
+					templateOptions: {
+						alertMessage: 'You have reach your talisman quota',
+					}
+				}
+			);
+			mh4app.dialogManager.getDialog(alert2Id).init();
+			mh4app.dialogManager.registerButtons(alert2Id);
+
+			var progressId = "progress_dialog_mh4-user-file"
+			mh4app.dialogManager.addDialog(
+				{
+					id: progressId,
+					template: 'progress',
+					templateOptions: {
+						progressTitle: "{%trans%}File upload progress{%endtrans%}",
+						progressMessage: "{%trans%}Uploaded: {%endtrans%}"
+					}
+				}
+			);
+			mh4app.dialogManager.getDialog(progressId).init();
+			mh4app.dialogManager.registerButtons(progressId);
+
 
 			mh4app.fileManager.registerEvents({
 
 				serverSide: true,
 				uploadUrl: '{{path('mh4_file_upload')}}',
+				_pb: null,
+				_pbVal: 0,
+				_pbLabel: null,
+				_statusLabel: null,
 				onLoadFile: function(file){
 
 					var size = file.getSize();
@@ -58,20 +95,53 @@
 						var a = mh4app.dialogManager.getDialog(alertId);
 						a.openDialog();
 					}else{
+						var p = mh4app.dialogManager.getDialog(progressId);
+						p.openDialog();
+						_pb = $("#pb_"+progressId);
+						_pbLabel = $("#progress_"+progressId);
+						_statusLabel = $("#pb_"+progressId+"_statusMessage");
+
+						if(_statusLabel)
+							_statusLabel.html('{%trans%}Uploading to server... <span class="mif-spinner5 mif-ani-spin"></span>{%endtrans%}');
 						file.sendToServer();
 					}
 
 				},
 				onSendProgress: function(progressEvent){
 
-					console.log(progressEvent.loaded,progressEvent.total);
-					console.log((progressEvent.loaded*100/progressEvent.total)+"%")
+					_pbVal = progressEvent.loaded*100/progressEvent.total;
+                    _pb.progressBar('progress', _pbVal);
+                    _pbLabel.html((_pbVal)+"%");
+                    if(_pbVal == 100)
+                    	_statusLabel.html('{%trans%}Waiting server response... <span class="mif-spinner5 mif-ani-spin"></span>{%endtrans%}');
+
 				},
 				onSendSuccess: function(data){
 					console.log(data);
+					_statusLabel = $("#pb_"+progressId+"_statusMessage");
+					if(data.status){
+						_statusLabel.html(data.fileMessage);
+						setTimeout(
+							function(){
+								_statusLabel.html("{%trans%}Redirecting{%endtrans%}...");
+							},
+							500
+						);
+						setTimeout(
+							function(){
+								window.location.href="{{path('mh4_editor_homepage')}}";
+							},
+							1000
+						);
+
+					}
+					else{
+						_statusLabel.html("{%trans%}There was an error uploading the file to server{%endtrans%}");
+					}
+
 				},
 				onSendError: function(xhr,errStatus,errThrown){
-
+					_statusLabel.html("{%trans%}Error while contacting with the server. Check your internet connection. If the problem persist maybe the server is down.{%endtrans%}");
 				}
 			});
 		});

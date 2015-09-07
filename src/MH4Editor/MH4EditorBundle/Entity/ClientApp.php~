@@ -1,0 +1,178 @@
+<?php
+// /src/MH4Editor/MH4EditorBundle/Entity/ClientApp.php
+namespace MH4Editor\MH4EditorBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * @ORM\Entity
+ * @UniqueEntity("name")
+ * @ORM\Table(name="clients")
+ */
+class ClientApp
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $token;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true,name="last_api_access")
+     */
+    private $lastApiAccess;
+
+    /**
+     * @ORM\Column(type="string",name="app_username")
+     */
+    private $appUsername;
+
+    /**
+     * @ORM\Column(type="string",name="app_serial")
+     */
+    private $appSerial;
+
+    /**
+     * @ORM\Column(type="string",name="client_upload_save_path")
+     */
+    private $clientUploadSavePath;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return ClientApp
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     * @return ClientApp
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string 
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set lastApiAccess
+     *
+     * @param \DateTime $lastApiAccess
+     * @return ClientApp
+     */
+    public function setLastApiAccess($lastApiAccess)
+    {
+        $this->lastApiAccess = $lastApiAccess;
+
+        return $this;
+    }
+
+    /**
+     * Get lastApiAccess
+     *
+     * @return \DateTime 
+     */
+    public function getLastApiAccess()
+    {
+        return $this->lastApiAccess;
+    }
+
+    /**
+     * Set appUsername
+     *
+     * @param string $appUsername
+     * @return ClientApp
+     */
+    public function setAppUsername($appUsername)
+    {
+        $this->appUsername = $appUsername;
+
+        return $this;
+    }
+
+    /**
+     * Get appUsername
+     *
+     * @return string 
+     */
+    public function getAppUsername()
+    {
+        return $this->appUsername;
+    }
+
+    /**
+     * Set appSerial
+     *
+     * @param string $appSerial
+     * @return ClientApp
+     */
+    public function setAppSerial($appSerial)
+    {
+        $this->appSerial = $appSerial;
+
+        return $this;
+    }
+
+    /**
+     * Get appSerial
+     *
+     * @return string 
+     */
+    public function getAppSerial()
+    {
+        return $this->appSerial;
+    }
+}

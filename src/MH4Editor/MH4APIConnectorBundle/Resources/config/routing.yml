@@ -1,0 +1,7 @@
+mh4_api_connector_upload:
+    path:     /connector/upload
+    defaults: { _controller: MH4APIConnectorBundle:Connector:upload }
+
+mh4_api_connector_download:
+    path:     /connector/download
+    defaults: { _controller: MH4APIConnectorBundle:Connector:download }

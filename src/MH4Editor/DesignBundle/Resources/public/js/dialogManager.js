@@ -79,8 +79,8 @@
 				fromTemplate: true,
 				openDialog: function(){
 					//console.log(this.dialog);
-					console.log(this.dialogId);
-					console.log($('#'+this.dialogId));
+					//console.log(this.dialogId);
+					//console.log($('#'+this.dialogId));
 					var d =  $('#'+this.dialogId).data("dialog");
 					d.open();
 					
@@ -97,6 +97,18 @@
 				},
 				getTemplate : function(){
 					return this.template;
+				},
+				reloadTemplateOptions : function(templateOptions,buttons){
+
+					var that = this;
+					dust.render(this.template,templateOptions,function(err,out){
+
+						that.setDialog(out);
+						
+					});
+					$('#'+this.dialogId).html(this.getDialog().html());
+					mh4app.dialogManager.registerButtons(options.id,buttons);
+					return this;
 				},
 				getDialog : function(){
 					return this.dialog;

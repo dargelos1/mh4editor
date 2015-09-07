@@ -6,6 +6,7 @@ use MH4Editor\MH4CipherBundle\Utils\Blowfish;
 class MH4CipherService extends Controller{
 
 	const EQUIP_BOX_OFFSET		= 0x173E;
+	const ITEM_POUCH_OFFSET		= 0xCB14; //Offset de la bolsa 4 páginas de 8 items
 	const EQUIP_ARMOR			= 1;
 	const EQUIP_BRACELET		= 2;
 	const EQUIP_PANTS			= 3;
@@ -57,6 +58,8 @@ class MH4CipherService extends Controller{
 
     public function getHunterName($user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return "NO_NAME";
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	fseek($decryptedFile,0x00);
 		$name = fread($decryptedFile,10);
@@ -67,6 +70,8 @@ class MH4CipherService extends Controller{
 
     public function getSex($user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return "F";
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	fseek($decryptedFile,0x18);
 		$sex = fread($decryptedFile,1);
@@ -78,6 +83,8 @@ class MH4CipherService extends Controller{
 
     public function setSex($user,$sex){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
@@ -106,6 +113,8 @@ class MH4CipherService extends Controller{
     }
 
     public function getColor($user,$section){
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return "#000000";
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
 
     	switch ($section) {
@@ -153,6 +162,8 @@ class MH4CipherService extends Controller{
 
     public function getZenies($user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	fseek($decryptedFile,0x34);
 		$zenies = fread($decryptedFile,4);
@@ -165,6 +176,8 @@ class MH4CipherService extends Controller{
 
     public function setZenies($zenies,$user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
 		$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
@@ -194,6 +207,8 @@ class MH4CipherService extends Controller{
 
     public function getHunterRanking($user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	fseek($decryptedFile,0x2C);
 		$HR = fread($decryptedFile,2);
@@ -206,6 +221,8 @@ class MH4CipherService extends Controller{
 
     public function setHunterRanking($HR,$user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
@@ -235,6 +252,8 @@ class MH4CipherService extends Controller{
 
     public function getRCTotalPoints($user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	fseek($decryptedFile,0x30);
 		$RCPoints = fread($decryptedFile,4);
@@ -247,6 +266,8 @@ class MH4CipherService extends Controller{
 
     public function setRCTotalPoints($RCPoints,$user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
@@ -276,6 +297,9 @@ class MH4CipherService extends Controller{
 
     public function getCaravanPoints($user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return 0;
+
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	fseek($decryptedFile,0xE8A0);
 		$CPoints = fread($decryptedFile,4);
@@ -287,6 +311,9 @@ class MH4CipherService extends Controller{
     }
 
     public function setCaravanPoints($CP,$user){
+
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
 
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
@@ -318,6 +345,8 @@ class MH4CipherService extends Controller{
     public function getItemBox($user){
 
     	$box = array();
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $box;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	fseek($decryptedFile,0x15E);
 
@@ -360,6 +389,8 @@ class MH4CipherService extends Controller{
     public function cheatSetAllBoxItems($user){
 
     	$box = array();
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $box;
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
@@ -404,6 +435,8 @@ class MH4CipherService extends Controller{
 
     public function setItemList($user,$itemList,$startAtSlot=false,$startSlot=null){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
@@ -479,6 +512,8 @@ class MH4CipherService extends Controller{
     public function setRangeItems($user,$itemIdFrom,$itemIdTo){
 
     	$box = array();
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
@@ -524,6 +559,8 @@ class MH4CipherService extends Controller{
 
     public function getItemBoxAtSlot($slot,$user,$toJSON=false){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return ($toJSON) ? json_encode(array()) : 0;
     	$box = $this->getItemBox($user);
     	$box =json_decode($box);
     	$page = floor($slot/100);
@@ -541,6 +578,8 @@ class MH4CipherService extends Controller{
 
     public function setItemBoxAtSlot($itemId,$uds,$slot,$user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
@@ -572,6 +611,8 @@ class MH4CipherService extends Controller{
     public function getEquipmentBox($user){
 
     	$box = array();
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $box;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	fseek($decryptedFile,self::EQUIP_BOX_OFFSET);
 
@@ -607,29 +648,19 @@ class MH4CipherService extends Controller{
 					$unk2 = unpack("C",$unk2);
 					$unk2 = $unk2[1];
 
-					$unk3 = fread($decryptedFile,1);
-					$unk3 = unpack("C",$unk3);
-					$unk3 = $unk3[1];
+					$jewel1 = fread($decryptedFile,2);
+					$jewel1 = unpack("S",$jewel1);
+					$jewel1 = $jewel1[1];
 
-					$unk4 = fread($decryptedFile,1);
-					$unk4 = unpack("C",$unk4);
-					$unk4 = $unk4[1];
+					$jewel2 = fread($decryptedFile,2);
+					$jewel2 = unpack("S",$jewel2);
+					$jewel2 = $jewel2[1];
 
-					$unk5 = fread($decryptedFile,1);
-					$unk5 = unpack("C",$unk5);
-					$unk5 = $unk5[1];
 
-					$unk6 = fread($decryptedFile,1);
-					$unk6 = unpack("C",$unk6);
-					$unk6 = $unk6[1];
+					$jewel3 = fread($decryptedFile,1);
+					$jewel3 = unpack("S",$jewel3);
+					$jewel3 = $jewel3[1];
 
-					$unk7 = fread($decryptedFile,1);
-					$unk7 = unpack("C",$unk7);
-					$unk7 = $unk7[1];
-
-					$unk8 = fread($decryptedFile,1);
-					$unk8 = unpack("C",$unk8);
-					$unk8 = $unk8[1];
 
 					$skill1Id = fread($decryptedFile,2);
 					$skill1Id = unpack("S",$skill1Id);
@@ -660,22 +691,25 @@ class MH4CipherService extends Controller{
 					$cell['slots'] = $slots; 					//1 byte
 					$cell['equipId'] = $equipId;				//2 byte
 
-					$cell['unk1'] = $unk1;						//1 byte
-					$cell['unk2'] = $unk2;						//1 byte
-					$cell['unk3'] = $unk3;						//1 byte
-					$cell['unk4'] = $unk4;						//1 byte
-					$cell['unk5'] = $unk5;						//1 byte
-					$cell['unk6'] = $unk6;						//1 byte
-					$cell['unk7'] = $unk7;						//1 byte
-					$cell['unk8'] = $unk8;						//1 byte
+					$cell['unk1'] = $unk1;						//1 byte }
+																//       } Id de subset de arma legendaria ???
+					$cell['unk2'] = $unk2;						//1 byte }
+																//Subset: Estadísticas preparadas para las
+																// armas y armaduras oxidadas
+																//Cada subset puede variar en afilado, PH, elemento,etc...
+
+					$cell['jewel1'] = $jewel1;					//2 byte
+					$cell['jewel2'] = $jewel2;					//2 byte
+					$cell['jewel3'] = $jewel3;					//2 byte
 
 					$cell['skill1Id'] = $skill1Id;				//2 byte
-					$cell['skill1Points'] = $skill1Points;	//2 byte
+					$cell['skill1Points'] = $skill1Points;		//2 byte
 
 					$cell['skill2Id'] = $skill2Id;				//2 byte
-					$cell['skill2Points'] = $skill2Points;	//2 byte
+					$cell['skill2Points'] = $skill2Points;		//2 byte
 
-					$cell['unk9'] = $unk9;						//4 byte
+					$cell['unk9'] = $unk9;						//4 byte => byte 0x20 Mejora? 0x0C => Salud
+																//							  0x04 => Ataque
 					$cell['unk10'] = $unk10;					//4 byte
 
 					$row['col'.$k] = $cell;
@@ -697,9 +731,18 @@ class MH4CipherService extends Controller{
 
     public function setEquipmentBoxAtSlot($equipment,$slot,$user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
+
+    	$jewels = array(
+
+    		"jewel1" => 0,
+    		"jewel2" => 0,
+    		"jewel3" => 0,
+    	);
 
     	$data1 = fread($decryptedFile, self::EQUIP_BOX_OFFSET+(28*$slot));
     	$readed+= strlen($data1);
@@ -708,7 +751,10 @@ class MH4CipherService extends Controller{
     	fwrite($editFile, pack("C",$equipment['itemType']));
     	fwrite($editFile, pack("C",$equipment['slots']));
     	fwrite($editFile, pack("S",$equipment['equipId']));
-    	fwrite($editFile, pack("C8",0,0,0,0,0,0,0,0));
+    	fwrite($editFile, pack("C2",0,0));
+    	foreach ($jewels as $jewel => $id) {
+    		fwrite($editFile, pack("S",$id));
+    	}
     	fwrite($editFile, pack("S",$equipment['skill1Id']));
     	fwrite($editFile, pack("S",$equipment['skill1Points']));
     	fwrite($editFile, pack("S",$equipment['skill2Id']));
@@ -732,8 +778,101 @@ class MH4CipherService extends Controller{
 		return $readed;
     }
 
+    public function getItemPouch(){
+
+    	$puch = array();
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $puch;
+    	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
+    	fseek($decryptedFile,self::ITEM_POUCH_OFFSET);
+
+    	for($i=0;$i<4;$i++){
+
+
+    		$page = array();
+    		
+    		for($j=0;$j<8;$j++){
+    			
+				$cell = array();
+	    		$itemId = fread($decryptedFile,2);
+				$itemId = unpack("v",$itemId);
+				$itemId = $itemId[1];
+
+				$itemUnits = fread($decryptedFile,2);
+				$itemUnits = unpack("v",$itemUnits);
+				$itemUnits = $itemUnits[1];
+
+				$cell['itemId'] = $itemId;
+				$cell['units'] = $itemUnits;
+				$row['cell'.$j] = $cell;
+
+			
+    		}
+
+    		$puch['page'.$i] = $page;
+    		
+    	}
+
+		$puch = json_encode($puch);
+		//echo "HunterName: ".$name;
+		fclose($decryptedFile);
+		return $puch;
+    }
+
+    public function getItemPouchAtSlot($slot,$user,$toJSON=false){
+
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return ($toJSON) ? json_encode(array()) : 0;
+    	$puch = $this->getItemPuch($user);
+    	$puch =json_decode($box);
+    	$page = floor($slot/4);
+    	$cell = $slot%8;
+
+    	$i = $puch->{"page".$page}->{"cell".$cell};
+
+    	$item = array();
+    	$item['id'] = $i->itemId;
+    	$item['uds'] = $i->units;
+
+		return ($toJSON) ? json_encode($item) : $i;
+    }
+
+    public function setItemPouchAtSlot($itemId,$uds,$slot,$user){
+
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
+    	$readed = 0;
+    	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
+    	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
+
+    	$data1 = fread($decryptedFile, self::ITEM_POUCH_OFFSET+(4*$slot));
+    	$readed+= strlen($data1);
+    	fwrite($editFile, $data1);
+    	
+    	fwrite($editFile, pack("S",$itemId));
+    	fwrite($editFile, pack("S",$uds));
+
+    	fseek($decryptedFile,(self::ITEM_POUCH_OFFSET+(4*$slot)+4));
+    	$readed+= 4;
+
+    	$data1 = fread($decryptedFile, (filesize($user->getUploadDir()."/decrypted.bin")-(self::ITEM_POUCH_OFFSET+(4*$slot)+4) ) );
+		fwrite($editFile, $data1);
+		$readed+= strlen($data1);
+		//$box = json_encode($box);
+		//echo "HunterName: ".$name;
+		fclose($decryptedFile);
+		fclose($editFile);
+
+		unlink($user->getUploadDir()."/decrypted.bin");
+		rename($user->getUploadDir()."/decrypted_edit.bin", $user->getUploadDir()."/decrypted.bin");
+
+		return $readed;
+    }
+
     public function cheatSetAllEquipment($user){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
@@ -793,6 +932,8 @@ class MH4CipherService extends Controller{
 
     public function setAllArmors($user,$type){
 
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");

@@ -1,0 +1,11 @@
+mh4_api1_buy:
+    path:     /api/v1/item/buy
+    defaults: { _controller: MH4API1Bundle:Item:buy }
+
+mh4_api1_upload:
+    path:     /api/v1/user/uploadsave
+    defaults: { _controller: MH4API1Bundle:User:upload }
+
+mh4_api1_download:
+    path:     /api/v1/user/download
+    defaults: { _controller: MH4API1Bundle:User:download }

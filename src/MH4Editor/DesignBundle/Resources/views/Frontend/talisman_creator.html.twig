@@ -50,14 +50,12 @@
 						<label>{%trans%}Ability{%endtrans%} 1:</label>
 						<div class="input-control select">
 							<select id="sel-talisman-ab1" name="sel-talisman-ab1">
-								<option value="0">(Empty)</option>
 							</select>
 						</div>
 
 						<label>{%trans%}Ability{%endtrans%} 2:</label>
 						<div class="input-control select">
 							<select id="sel-talisman-ab2" name="sel-talisman-ab2">
-								<option value="0">(Empty)</option>
 							</select>
 						</div>
 
@@ -218,7 +216,8 @@
 			.on("change focus",function(){
 
 				var that = this;
-				$("#ab-description").html( ($(that).val() == 0 ? "" : mh4app.getCache("abilities")[$(this).val()-1].description));
+				/*$("#ab-description").html( ($(that).val() == 0 ? "" : mh4app.getCache("abilities")[$(this).val()-1].description));*/
+				$("#ab-description").html( mh4app.getCache("abilities")[$(this).val()].description);
 
 
 				$("#"+$(that).attr("id")+"-points").html(function(idx,oldHtml){
@@ -226,7 +225,7 @@
 					var html = "";
 					if($(that).val() == 0)
 						return "<option value='0'>0</option>";
-					var abs = mh4app.getCache("abilities")[$(that).val()-1].activeAbs;
+					var abs = mh4app.getCache("abilities")[$(that).val()].activeAbs;
 					var len = abs.length;
 					var arrPoints = [];
 					for(i=0;i<len;i++){
@@ -251,10 +250,10 @@
 				
 				$("#ab-list").html(function(idx,oldHtml){
 
-					if($(that).val() == 0)
-						return "";
+					/*if($(that).val() == 0)
+						return "";*/
 					var html = "<table class='table dataTable striped border bordered'>";
-					var abs = mh4app.getCache("abilities")[$(that).val()-1].activeAbs;
+					var abs = mh4app.getCache("abilities")[$(that).val()].activeAbs;
 					var len = abs.length;
 					for(i=0;i<len;i++){
 						html +="<tr><td>"+abs[i].name+"</td><td "+(abs[i].points > 0 ? "class='fg-green'" : "class='fg-red'")+">"+(abs[i].points > 0 ? "+"+abs[i].points : abs[i].points)+"</td><td>"+abs[i].descrip+"</td></tr>";
@@ -273,7 +272,8 @@
 			
 
 		});
-
+		
+		var a;
 		$("#btn-gen-talisman")
 		.off("click")
 		.on("click",function(){
@@ -311,7 +311,33 @@
 					icon.removeClass('mif-ani-spanner');
 					text.text('Generate the talisman');
 					small.find("div").detach('div[data-role]');
-					console.log(data.page0);
+					
+					//console.log("OPTIONS",options);
+					var talisQuota = data.quota*100/data.maxQuota;
+					var hint = "Talismans Quota|"+data.quota+"/"+data.maxQuota;
+
+					var hTq = $('#hint-talisman-quota');
+					var pbTq = $('#pb-talisman-quota');
+					pbTq.data('value',talisQuota);
+					pbTq.attr('data-value',talisQuota);
+					pbTq.children("div.bar").css("width",talisQuota+"%");
+
+					hTq.data('hint',hint);
+					hTq.attr('data-hint',hint);
+
+					
+
+					if(!data.status){
+						
+						var alertId = "alert_dialog_mh4-talisman-quota";
+						mh4app.dialogManager.getDialog(alertId).reloadTemplateOptions({
+							alertMessage: data.message
+						});
+						mh4app.dialogManager.getDialog(alertId).openDialog();
+						
+					}
+
+
 				});
 			}
 

@@ -1,0 +1,3 @@
+fort42_homepage:
+    path:     /test
+    defaults: { _controller: Fort42Bundle:Default:test }

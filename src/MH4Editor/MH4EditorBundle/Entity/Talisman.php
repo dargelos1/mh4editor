@@ -5,7 +5,7 @@ namespace MH4Editor\MH4EditorBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="MH4Editor\MH4EditorBundle\Entity\TalismanRepository")
  * @ORM\Table(name="talismans")
  */
 class Talisman

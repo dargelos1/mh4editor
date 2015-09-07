@@ -19,3 +19,9 @@ services:
     app.user_logout_success_listener:
         class: MH4Editor\MH4EditorBundle\EventListener\LogoutSuccessListener
         arguments: [@security.context,@translator,@session,@service_container]
+
+    login_listener:
+        class: MH4Editor\MH4EditorBundle\EventListener\LoginListener
+        arguments: [@security.context, @doctrine, @mh4_cipher]
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }

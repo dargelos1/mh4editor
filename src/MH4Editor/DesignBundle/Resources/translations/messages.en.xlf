@@ -8,15 +8,15 @@
       </trans-unit>
       <trans-unit id="d56a1e3ff65232c65eebcae2524e31db" resname="You have been banned due to suspicious actions.">
         <source>You have been banned due to suspicious actions.</source>
-        <target>__You have been banned due to suspicious actions.</target>
+        <target>You have been banned due to suspicious actions.</target>
       </trans-unit>
       <trans-unit id="f6039d44b29456b20f8f373155ae4973" resname="Username">
         <source>Username</source>
-        <target>__Username</target>
+        <target>Username</target>
       </trans-unit>
       <trans-unit id="dc647eb65e6711e155375218212b3964" resname="Password">
         <source>Password</source>
-        <target>__Password</target>
+        <target>Password</target>
       </trans-unit>
       <trans-unit id="63889cfb9d3cbe05d1bd2be5cc9953fd" resname="Male">
         <source>Male</source>
@@ -56,11 +56,11 @@
       </trans-unit>
       <trans-unit id="bffe9a3c9a7e00ba00a11749e022d911" resname="Log in">
         <source>Log in</source>
-        <target>__Log in</target>
+        <target>Log in</target>
       </trans-unit>
       <trans-unit id="0ba7583639a274c434bbe6ef797115a4" resname="Register">
         <source>Register</source>
-        <target>__Register</target>
+        <target>Register</target>
       </trans-unit>
       <trans-unit id="1" resname="Banned">
         <source>Banned</source>

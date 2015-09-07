@@ -21,6 +21,9 @@ class AppKernel extends Kernel
             new MH4Editor\MH4EditorBundle\MH4EditorBundle(),
             new MH4Editor\DesignBundle\DesignBundle(),
             new MH4Editor\MH4CipherBundle\MH4CipherBundle(),
+            new MH4Editor\MH4API1Bundle\MH4API1Bundle(),
+            new MH4Editor\MH4APIConnectorBundle\MH4APIConnectorBundle(),
+            new MH4Editor\Fort42Bundle\Fort42Bundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

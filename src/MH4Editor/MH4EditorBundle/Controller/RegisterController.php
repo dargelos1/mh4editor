@@ -14,6 +14,10 @@ class RegisterController extends Controller
 {
     public function showFormAction()
     {
+        $user = $this->getUser();
+        if($user){
+            return new RedirectResponse($this->generateUrl('mh4_login_frontend'));
+        }
     	$userForm = new UserForm();
     	$form = $this->createForm(new UserRegistrationType(),$userForm);
         
@@ -46,11 +50,57 @@ class RegisterController extends Controller
         	$user2 = $em->getRepository("MH4EditorBundle:User")->findBy(array("email" => $user->getEmail()));
 
         	if(count($user2) == 0){
+
+                $mh4Cipher = $this->get("mh4_cipher");
+
                 $user->setRole(); //By default sets to 0. Change it in DDBB
                 $user->setIsBanned(false);
                 $user->setLocale("en");
-        		$em->persist($user);
-        		$em->flush();
+                $UA = $request->headers->get('User-Agent');
+                $IP = $this->container->get('request_stack')->getCurrentRequest()->getClientIp();
+                $user->setLastIP($IP);
+                $user->setRegisterDate(new \DateTime());
+                $user->setLastUserAgent($UA);
+
+                $user->setMaxTalismansQuota(0);
+                $user->setMaxItemsQuota(0);
+                $user->setTalismansQuota(0);
+                $user->setItemsQuota(0);
+                $user->setHunterHR(0);
+
+                $em->persist($user);
+                $em->flush();
+
+                if($user->getMH4FilePath() !== null && file_exists($user->getUploadRootDir()."/".$user->getMH4FilePath())){
+
+                    
+                    if(!file_exists($user->getUploadRootDir()."/".$user->getUploadDir()."/decrypted.bin")){
+
+                        $status = $mh4Cipher->MH4Decrypt($user->getAbsolutePath() ,$user->getUploadDir()."/decrypted.bin",$this);
+                        if($status){
+
+                            $HR = $mh4Cipher->getHunterRanking($user);
+                            $user->setHunterHR($HR);
+                            $user->setMaxTalismansQuota(intval(($HR * 0.1) + User::TALISMAN_QUOTA_BASE));
+                            $user->setMaxItemsQuota(intval(($HR * 5) + User::ITEM_QUOTA_BASE));
+                            $user->setTalismansQuota($user->getMaxTalismansQuota());
+                            $user->setItemsQuota($user->getMaxItemsQuota());
+                        }
+
+                    }else{
+                            $HR = $mh4Cipher->getHunterRanking($user);
+                            $user->setHunterHR($HR);
+                            $user->setMaxTalismansQuota(intval(($HR * 0.1) + User::TALISMAN_QUOTA_BASE));
+                            $user->setMaxItemsQuota(intval(($HR * 5) + User::ITEM_QUOTA_BASE));
+                            $user->setTalismansQuota($user->getMaxTalismansQuota());
+                            $user->setItemsQuota($user->getMaxItemsQuota());
+                    }
+                }
+                
+                $em->persist($user);
+                $em->flush();
+                //
+        		
         		$message = "user ".$user->getUsername()." registered!";
         		$status = true;
                 $this->get("session")->getFlashBag()->set("reg_success","Your accout has been created! You can now login.");

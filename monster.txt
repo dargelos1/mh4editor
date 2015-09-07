@@ -1,0 +1,124 @@
+(No enemy)
+(reinforcement)
+Akantor
+Altaroth
+Apceros
+Apex Deviljho
+Apex Diablos
+Apex Gravios
+Apex Rajang
+Apex Seregios
+Apex Tidal Najarala
+Apex Tigrex
+Apex Zinogre
+Aptonoth
+Ash Kecha Wacha
+Azure Rathalos
+Basarios
+Berserk Tetsucabra
+Black Diablos
+Black Gravios
+Blue Yian Kut-Ku
+Bnahabra (Blue wings)
+Bnahabra (Yellow wings)
+Bnahabra (Green wings)
+Bnahabra (Red wings)
+Brachydios
+Brute Tigrex
+Cephadrome
+Cephalos
+Chameleos
+Chaos Magala
+Conga
+Congalala
+Crimson Fatalis
+Dah'ren Mohran
+Daimyo Hermitaur
+Dalamadur (Head)
+Dalamadur (Tail)
+Delex
+Desert Seltas
+Desert Seltas Queen
+Deviljho
+Diablos
+Emerald Congalala
+Fatalis
+Felyne
+Furious Rajang
+Gargwa
+Gendrome
+Genprey
+Gogmazios
+Gold Rathian
+Gore Magala
+Gravios
+Great Jaggi
+Gypceros
+Hermitaur
+Hot Fatalis
+Iodrome
+Ioprey
+Jaggi
+Jaggia
+Kecha Wacha
+Kelbi
+Khezu
+Kirin
+Konchu (Yellow shell)
+Konchu (Green shell)
+Konchu (Blue shell)
+Konchu (Red shell)
+Kushala Daora
+Lagombi
+Melynx
+Molten Tigrex
+Monoblos
+Najarala
+Nerscylla
+Oroshi Kirin
+Pink Rathian
+Plum D.Hermitaur
+Popo
+Purple Gypceros
+Raging Brachydios
+Rajang
+Rathalos
+Rathian
+Red Khezu
+Remobra
+Rhenoplos
+Rock (Brown)
+Rock (Grey/green)
+Rock (Dark/Dirty)
+Rock (Black)
+Rock (Icy 1)
+Rock (Icy 2)
+Ruby Basarios
+Rusted Kushala Daora
+Savage Deviljho
+Seltas
+Seltas Queen
+Seregios
+Shagaru Magala
+Shah Dalamadur (Head)
+Shah Dalamadur (Tail)
+Shrouded Nerscylla
+Silver Rathalos
+Slagtoth (Green)
+Slagtoth (Red)
+Stygian Zinogre
+Teostra
+Tetsucabra
+Tidal Najarala
+Tigerstripe Zamtrios
+Tigrex
+Ukanlos
+Velocidrome
+Velociprey
+White Fatalis
+White Monoblos
+Yian Garuga
+Yian Kut-Ku
+Zamite
+Zamtrios
+Zinogre

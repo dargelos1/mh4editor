@@ -187,7 +187,6 @@
 		registerEvents: function(options){
 
 			var that = this;
-
 			$('input[type=file]').each(function(i,e){
 
 
@@ -211,6 +210,20 @@
 
 			return this;
 			
+		},
+
+		destroyEvents: function(){
+
+			var that = this;
+			$('input[type=file]').each(function(i,e){
+
+				$(this)
+				.off('change');
+
+			});
+
+			return this;
+
 		},
 
 

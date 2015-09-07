@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="MH4Editor\MH4EditorBundle\Entity\ItemRepository")
  * @ORM\Table(name="items")
  */
 class Item
@@ -123,6 +123,10 @@ class Item
      */
     private $timesBought;
 
+    /**
+     * @ORM\Column(type="boolean",name="locked")
+     */
+    private $locked;
 
 
     /**
@@ -555,6 +559,27 @@ class Item
         return $this->timesBought;
     }
 
+    /**
+     * Set locked
+     * 
+     * @param boolean $locked
+     * @return Item 
+     */
+    public function setIsLocked($locked)
+    {
+        $this->locked = $locked;
+        return $this;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return boolean 
+     */
+    public function getIsLocked()
+    {
+        return $this->locked;
+    }
 
     /**
      * Set nameEn

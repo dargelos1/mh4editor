@@ -1,7 +1,24 @@
 <?php
-
+error_reporting(~E_ALL);
 use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\HttpFoundation\Request;
+
+//APIs (Do not modify) Fort42
+if(
+	file_exists(__DIR__."/../include/config.php") &&
+	file_exists(__DIR__."/../include/functions.php") &&
+	file_exists(__DIR__."/../include/mysql_control.php") &&
+	file_exists(__DIR__."/../include/login_control.php")
+){
+include(__DIR__."/../include/config.php");
+include(__DIR__."/../include/functions.php");
+include(__DIR__."/../include/mysql_control.php");
+//include(__DIR__."../include/session_control.php"); //REMOVE THIS LINE IF SESSION_START() ALREADY EXIST AND INClUDE THE APIs UNDER THE FUNCTION
+include(__DIR__."/../include/login_control.php");
+include(__DIR__."/../fort42API/api.php");
+
+}
+
 
 $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 
@@ -18,8 +35,8 @@ $apcLoader->register(true);
 require_once __DIR__.'/../app/AppKernel.php';
 //require_once __DIR__.'/../app/AppCache.php';
 
-//$kernel = new AppKernel('prod', false);
 $kernel = new AppKernel('dev', true);
+//$kernel = new AppKernel('dev', false);
 $kernel->loadClassCache();
 //$kernel = new AppCache($kernel);
 

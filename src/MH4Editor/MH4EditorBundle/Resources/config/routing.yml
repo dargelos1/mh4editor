@@ -1,3 +1,7 @@
+mh4_editor_cron:
+    path:    /admin/cron/add
+    defaults: { _controller: MH4EditorBundle:CronTask:cron }
+
 mh4_editor_homepage:
     path:    /
     defaults: { _controller: MH4EditorBundle:Home:index }
@@ -29,6 +33,14 @@ mh4_item_list:
     path:   /item/list
     defaults: { _controller: MH4EditorBundle:Item:list }
 
+mh4_item_topbuyedlist:
+    path:   /admin/item/topbuyedlist
+    defaults: { _controller: MH4EditorBundle:Home:showTopListItem }
+
+mh4_item_boughtlist:
+    path:   /admin/item/user/boughtlist
+    defaults: { _controller: MH4EditorBundle:Home:showBoughtUserList }
+
 mh4_item_edit:
     path:   /item/edit/{item_id}
     defaults: { _controller: MH4EditorBundle:Item:edit }
@@ -36,7 +48,7 @@ mh4_item_edit:
 mh4_item_buy:
     path:   /item/buy/{item_name}
     defaults: { _controller: MH4EditorBundle:Item:buy }
-    requirements: { item_name: "^(?!\d)([\wáéíóúÁÉÍÓÚ\.\+]+)( |[\wáéíóúÁÉÍÓÚ\.\+]+|')*" }
+    requirements: { item_name: "([a-f0-9\wáéíóúÁÉÍÓÚ\.\+]+)( |[a-f0-9\d\wáéíóúÁÉÍÓÚ\.\+]+|')*" }
     methods: [PUT]
 
 mh4_item_sell:
@@ -51,9 +63,17 @@ mh4_file_download:
     path:   /user/savefile/download
     defaults: { _controller: MH4EditorBundle:User:fileDownload }
 
+mh4_user_accesslist:
+    path:   /admin/user/accesslist
+    defaults: { _controller: MH4EditorBundle:Home:showUserAccessList }
+
 mh4_talisman_creator:
     path:   /talismancreator
     defaults: { _controller: MH4EditorBundle:Home:showTalismanCreator}
+
+mh4_talisman_generatedlist:
+    path:   /admin/talisman/generated
+    defaults: { _controller: MH4EditorBundle:Home:showTalismanGenerated}
 
 mh4_talisman_list:
     path:   /talismancreator/list
@@ -66,3 +86,7 @@ mh4_talisman_ability_list:
 mh4_gen_talisman:
     path:   /talismancreator/gentalisman
     defaults: { _controller: MH4EditorBundle:Talisman:genTalisman}
+
+mh4_debug:
+    path:    /debug
+    defaults: { _controller: MH4EditorBundle:Home:debug}

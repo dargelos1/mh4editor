@@ -1,0 +1,46 @@
+<?php
+// /src/MH4Editor/MH4EditorBundle/Entity/ItemBought.php
+namespace MH4Editor\MH4EditorBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="items_bought")
+ */
+class ItemBought
+{
+	/**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Item")
+     * @ORM\JoinColumn(name="item_id", referencedColumnName="id")
+     **/
+    private $item;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="itemsBought")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @ORM\Column(type="datetime",name="purchase_date")
+     */
+    private $purchaseDate;
+
+    /**
+     * @ORM\Column(type="integer",name="units")
+     */
+    private $units;
+
+    /**
+     * @ORM\Column(type="integer",name="money_wasted")
+     */
+    private $moneyWasted;
+}

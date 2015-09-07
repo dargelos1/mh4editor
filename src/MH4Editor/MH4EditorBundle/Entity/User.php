@@ -8,9 +8,10 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="MH4Editor\MH4EditorBundle\Entity\UserRepository")
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("username")
  * @UniqueEntity("email")
@@ -23,6 +24,8 @@ class User implements UserInterface, \Serializable
     const ADMIN = 1;
 
     const DEFAULT_LOCALE = "en";
+    const ITEM_QUOTA_BASE = 500;
+    const TALISMAN_QUOTA_BASE = 10;
     
     /**
      * @ORM\Column(type="integer")
@@ -78,13 +81,87 @@ class User implements UserInterface, \Serializable
      */
     private $locale;
 
+    /**
+     * @ORM\Column(name="register_date",type="datetime")
+     */
+    private $registerDate;
+
+    /**
+     * @ORM\Column(name="last_login",type="datetime")
+     */
+    private $lastLogin;
+
+    /**
+     * @ORM\Column(name="last_download_request",type="datetime")
+     */
+    private $lastDownloadRequest;
+
+    /**
+     * @ORM\Column(name="last_ua",type="text")
+     */
+    private $lastUserAgent;
+
+    /**
+     * @ORM\Column(name="last_ip",type="string")
+     */
+    private $lastIp;
+
 
     private $temp;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TalismanGenerated", mappedBy="user")
+     */
+    protected $talismansGenerated;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ItemBought", mappedBy="user")
+     */
+    protected $itemsBought;
+
+    /**
+     * @ORM\Column(name="items_quota",type="integer")
+     */
+    protected $itemsQuota;
+
+    /**
+     * @ORM\Column(name="max_items_quota",type="integer")
+     */
+    protected $maxItemsQuota;
+
+    /**
+     * @ORM\Column(name="talismans_quota",type="integer")
+     */
+    protected $talismansQuota;
+
+    /**
+     * @ORM\Column(name="max_talismans_quota",type="integer")
+     */
+    protected $maxTalismansQuota;
+
+    /**
+     * @ORM\Column(name="hunter_name",type="string")
+     */
+    protected $hunterName;
+
+    /**
+     * @ORM\Column(name="hunter_hr",type="integer")
+     */
+    protected $hunterHr;
 
     /**
      * @Assert\File(maxSize=81408, mimeTypes = "application/octet-stream")
      */
     private $mh4File;
+
+    public function setMH4FilePath($path){
+        $this->mh4save_path = $path;
+        return $this;
+    }
+
+    public function getMH4FilePath(){
+        return  $this->mh4save_path;
+    }
 
     public function setMh4File(UploadedFile $file = null){
 
@@ -107,8 +184,9 @@ class User implements UserInterface, \Serializable
 
         if(null !== $this->getMh4File()){
 
-            $filename = sha1(uniqid(mt_rand()),true);
-            $this->setMh4savePath($filename.'.'.$this->getMh4File()->guessExtension());
+            //$filename = sha1(uniqid(mt_rand()),true);
+            //$this->setMh4savePath($filename.'.'.$this->getMh4File()->guessExtension());
+            $this->mh4save_path = "uploads/save_file/".$this->getUsername()."/".$this->getMh4File()->getClientOriginalName();
         }
     }
 
@@ -123,15 +201,18 @@ class User implements UserInterface, \Serializable
      */
     public function upload(){
 
-        if(null === $this->getMh4File())
+        if(null === $this->getMh4File()){
             return;
+        }
 
-        $this->getMh4File()->move(
-            $this->getUploadRootDir(),
+        $file = $this->getMh4File()->move(
+            $this->getUploadDir(),
             $this->getMh4File()->getClientOriginalName()
         );
-
+        
         if(isset($this->temp)){
+
+            //echo "Removing...".$this->getUploadRootDir().'/'.$this->temp;die;
             unlink($this->getUploadRootDir().'/'.$this->temp);
 
             $this->temp = null;
@@ -169,6 +250,11 @@ class User implements UserInterface, \Serializable
         return __DIR__."/../../../../web";
     }
 
+    public function getDefaultSavePath(){
+
+        return 'uploads/save_file/'.$this->getUsername();
+    }
+
     public function getUploadDir(){
 
         return $this->getUploadRootDir().'/uploads/save_file/'.$this->getUsername();
@@ -177,6 +263,9 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
+        $this->talismansGenerated = new ArrayCollection();
+        $this->itemsBought = new ArrayCollection();
+
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid(null, true));
     }
@@ -424,6 +513,250 @@ class User implements UserInterface, \Serializable
     public function getLocale()
     {
         return ($this->locale != null && $this->locale != "") ? $this->locale : DEFAULT_LOCALE;
+    }
+
+
+    /**
+     * Set registerDate
+     *
+     * @param \DateTime $registerDate
+     * @return User
+     */
+    public function setRegisterDate($registerDate){
+
+        $this->registerDate = $registerDate;
+        return $this;
+    }
+
+    /**
+     * Get registerDate
+     *
+     * @return datetime 
+     */
+    public function getRegisterDate(){
+
+        return $this->registerDate;
+    }
+
+    /**
+     * Set lastLogin
+     *
+     * @param \DateTime $lastLogin
+     * @return User
+     */
+    public function setLastLogin($lastLogin){
+
+        $this->lastLogin = $lastLogin;
+        return $this;
+    }
+
+    /**
+     * Get lastLogin
+     *
+     * @return datetime 
+     */
+    public function getLastLogin(){
+
+        return $this->lastLogin;
+    }
+
+    /**
+     * Set lastDownloadRequest
+     *
+     * @param \DateTime $lastDownloadRequest
+     * @return User
+     */
+    public function setLastDownloadRequest($lastDownloadRequest){
+
+        $this->lastDownloadRequest = $lastDownloadRequest;
+        return $this;
+    }
+
+    /**
+     * Get lastDownloadRequest
+     *
+     * @return \DateTime
+     */
+    public function getLastDownloadRequest(){
+
+        return $this->lastDownloadRequest;
+    }
+
+    /**
+     * Set lastUserAgent
+     *
+     * @param string $lastUserAgent
+     * @return User
+     */
+    public function setLastUserAgent($lastUserAgent){
+
+        $this->lastUserAgent = $lastUserAgent;
+        return $this;
+    }
+
+    /**
+     * Get lastUserAgent
+     *
+     * @return string 
+     */
+    public function getLastUserAgent(){
+
+        return $this->lastUserAgent;
+    }
+
+    /**
+     * Set lastIp
+     *
+     * @param string $lastIp
+     * @return User
+     */
+    public function setLastIP($lastIp){
+
+        $this->lastIp = $lastIp;
+        return $this;
+    }
+
+    /**
+     * Get lastIp
+     *
+     * @return string 
+     */
+    public function getLastIP(){
+
+        return $this->lastIp;
+    }
+
+    /**
+     * Set itemsQuota
+     *
+     * @param integer $itemsQuota
+     * @return User
+     */
+    public function setItemsQuota($itemsQuota){
+
+        $this->itemsQuota = $itemsQuota;
+        return $this;
+    }
+
+    /**
+     * Get itemsQuota
+     *
+     * @return integer 
+     */
+    public function getItemsQuota(){
+
+        return $this->itemsQuota;
+    }
+
+    /**
+     * Set maxItemsQuota
+     *
+     * @param integer $maxItemsQuota
+     * @return User
+     */
+    public function setMaxItemsQuota($maxItemsQuota){
+
+        $this->maxItemsQuota = $maxItemsQuota;
+        return $this;
+    }
+
+    /**
+     * Get maxItemsQuota
+     *
+     * @return integer 
+     */
+    public function getMaxItemsQuota(){
+
+        return $this->maxItemsQuota;
+    }
+
+    /**
+     * Set talismansQuota
+     *
+     * @param integer $talismansQuota
+     * @return User
+     */
+    public function setTalismansQuota($talismansQuota){
+
+        $this->talismansQuota = $talismansQuota;
+        return $this;
+    }
+
+    /**
+     * Get talismansQuota
+     *
+     * @return integer 
+     */
+    public function getTalismansQuota(){
+
+        return $this->talismansQuota;
+    }
+
+    //
+    /**
+     * Set maxTalismansQuota
+     *
+     * @param integer $maxTalismansQuota
+     * @return User
+     */
+    public function setMaxTalismansQuota($maxTalismansQuota){
+
+        $this->maxTalismansQuota = $maxTalismansQuota;
+        return $this;
+    }
+
+    /**
+     * Get maxTalismansQuota
+     *
+     * @return integer 
+     */
+    public function getMaxTalismansQuota(){
+
+        return $this->maxTalismansQuota;
+    }
+
+    /**
+     * Set hunterName
+     *
+     * @param string $hunterName
+     * @return User
+     */
+    public function setHunterName($hunterName){
+
+        $this->hunterName = $hunterName;
+        return $this;
+    }
+
+    /**
+     * Get hunterName
+     *
+     * @return string 
+     */
+    public function getHunterName(){
+
+        return $this->hunterName;
+    }
+
+    /**
+     * Set hunterHr
+     *
+     * @param integer $hunterHr
+     * @return User
+     */
+    public function setHunterHR($hunterHr){
+
+        $this->hunterHr = $hunterHr;
+        return $this;
+    }
+
+    /**
+     * Get hunterHr
+     *
+     * @return integer 
+     */
+    public function getHunterHR(){
+
+        return $this->hunterHr;
     }
 
     public function isAccountNonExpired(){

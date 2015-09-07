@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use MH4Editor\MH4EditorBundle\Entity\Item;
+use MH4Editor\MH4EditorBundle\Entity\ItemBought;
 
 class ItemController extends Controller
 {
@@ -23,13 +24,17 @@ class ItemController extends Controller
         $search     = (isset($vars['search']) && !empty($vars['search'])) ? $vars['search'] : '';
         $offset     = (isset($vars['offset']) && !empty($vars['offset'])) ? $vars['offset'] : 1;
 
+        //echo "OFF:".$offset;die;
+
         $response = array();
         $response['status'] = true;
     	$user = $this->getUser();
-        $locale = $user->getLocale();
+        $locale = $user->getLocale() !== null ? $user->getLocale() : "en";
         $em = $this->getDoctrine()->getManager();
 
-        $fName = ($locale == "es") ? "name" : "nameEn";
+
+
+        $fName = ($locale == "en") ? "nameEn" : "name";
 
         $query = null;
         if(trim($search) !== ''){
@@ -146,11 +151,21 @@ class ItemController extends Controller
         $user = $this->getUser();
         $response = array();
         $response["status"] = false;
+
         if($user && $request->isXMLHttpRequest()){
             
+            $translator = $this->get('translator');
             $em = $this->getDoctrine()->getManager();
 
-            $item = $em->getRepository("MH4EditorBundle:Item")->findBy(array("name" => $item_name));
+            $itemQuota = $user->getItemsQuota();
+            $response['maxQuota'] = $user->getMaxItemsQuota();
+            if($itemQuota <= 0){
+
+                $response["errMsg"] = $translator->trans("You have reach your daily item quota!");
+                return new Response(json_encode($response),200);
+            }
+
+            $item = $em->getRepository("MH4EditorBundle:Item")->findBy(array("canonicalName" => $item_name));
             
             if(count($item) > 0 && $item[0] && $item[0] instanceof Item){
                 
@@ -162,13 +177,18 @@ class ItemController extends Controller
                 $itemPriceCP = isset($vars["item-price-cp"]) ? $vars["item-price-cp"] : 0;
                 $itemUnits = isset($vars["item-units"]) ? $vars["item-units"] : 0;
                 //First, check if there are some client price manipulation. If there are, then bann the user.
+                $isLocked = $item->getIsLocked();
 
-                if($item->getBuyPrice() != $itemPriceZ){
+                if( !$isLocked && $item->getBuyPrice() != $itemPriceZ){
                     $user->setIsBanned(true);
                     $em->persist($user);
                     $em->flush();
                     $response["banned"] = true;
                     return new Response(json_encode($response),200);
+                }else if($isLocked){
+                    $item = $em->getRepository("MH4EditorBundle:Item")->findBy(array("canonicalName" => $item_name));
+                    $item = $item[0];
+                    $itemPriceZ = $item->getBuyPrice();
                 }
 
                 $mh4Cipher = $this->get("mh4_cipher");
@@ -178,6 +198,12 @@ class ItemController extends Controller
 
                 $zenies = $mh4Cipher->getZenies($user);
                 $CP = $mh4Cipher->getCaravanPoints($user);
+
+                //Recalc item units able to buy
+                if($itemUnits > $itemQuota){
+
+                    $itemUnits = $itemQuota;
+                }
 
                 $newZenies = $zenies - ($itemPriceZ*$itemUnits); //Save into an other var for future bugs setting the items
                 //and recover the transaction
@@ -192,6 +218,21 @@ class ItemController extends Controller
 
                 $item->setTimesBought($item->getTimesBought()+$itemUnits);
                 $em->persist($item);
+
+                $newQuota = $itemQuota - $itemUnits;
+                $user->setItemsQuota($newQuota);
+                $response['quota'] = $newQuota;
+                $em->persist($user);
+                $em->flush();
+
+                $ib = new ItemBought();
+                $ib->setPurchaseDate(new \DateTime());
+                $ib->setItem($item);
+                $ib->setUnits($itemUnits);
+                $ib->setUser($user);
+                $ib->setMoneyWasted($zenies-$newZenies);
+
+                $em->persist($ib);
                 $em->flush();
 
                 $itemList = array();
@@ -297,5 +338,77 @@ class ItemController extends Controller
             }
         }
         return ($toJSON) ? json_encode($box) : $box;
+    }
+
+    private function distributeItemsInPouch($itemList = array(),$toJSON = true){
+
+        $mh4Cipher = $this->get("mh4_cipher");
+        $user = $this->getUser();
+        $pouch = $mh4Cipher->getItemPouch($user);
+        $pouch = json_decode($pouch);
+        
+        foreach($pouch as $page){
+
+            foreach ($page as $cell => $item) {
+               
+                $iPage = str_replace("page","",$page);
+                $iCell = str_replace("cell","",$cell);
+                $slot = ($iPage*4)+($iCell%8); //From table format to int
+                $currItem = array_key_exists($item->itemId ,$itemList) ? key($itemList) : FALSE;
+                /*if($currItem)
+                    var_dump("KEY: ".$currItem);
+                reset($itemList);*/
+                
+                if( $currItem !== FALSE){
+
+                    $em = $this->getDoctrine()->getManager();
+                    $itemEntity = $em->getRepository("MH4EditorBundle:Item")->find($item->itemId);
+                    $itemMaxUnits = $itemEntity->getCarryCapacity();
+                    //Check each cell. If found an item, get that item and check if the slot has its max units.
+                    $units = $item->units;
+                    //var_dump("ITEM=>".$item->itemId);
+                    //var_dump("ITEM_UNITS: ".$item->units);
+                    //var_dump(" AT SLOT:".$slot);
+                    
+                    if ($units< $itemMaxUnits) {
+                        
+                        $item->units += $itemList[$currItem];
+                         
+                        if($item->units > $itemMaxUnits){
+                            
+                            $item->units = $itemMaxUnits;
+                            $units = $item->units;
+                            
+                        }else{
+                            $itemList[$currItem] = 0;
+                            $units = $item->units;
+                            
+                        }
+                        array_shift($itemList);
+
+                        //Now set item back to box jsonyfied and binary
+                        //var_dump($itemList[$currItem]);
+                        $pouch->{$page}->{$cell} = $item;
+                        $mh4Cipher->setItemPouchAtSlot($item->itemId,$item->units,$slot,$user);
+                        $len = count($itemList);
+                        if($len === 0) break 3;
+                    }
+
+                }else if($item->itemId === 0 && count($itemList) > 0 ){
+                   
+                    //var_dump($box->{$pageIndex}->{$rowIndex}->{$cell});
+                    $itemId = key($itemList);
+                    $units =  array_shift($itemList);
+                    $pouch->{$page}->{$cell}->itemId = $itemId;
+                    $pouch->{$page}->{$cell}->units = $units;
+                    $mh4Cipher->setItemPouchAtSlot($itemId,$units,$slot,$user);
+                    $len = count($itemList);
+                    if($len === 0) break 3;
+                }else {
+                    //break 3;
+                }
+            }
+        }
+        return ($toJSON) ? json_encode($pouch) : $pouch;
     }
 }

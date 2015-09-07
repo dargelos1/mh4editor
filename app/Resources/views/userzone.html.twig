@@ -6,6 +6,20 @@
 			<div id="user-info-details" class="padding20">
 				<a href="{{path('mh4_logout_frontend')}}"><span class="icon mif-exit"></span> {%trans%}Logout{%endtrans%}</a>
 				<hr>
+				{%trans%}Items Quota{%endtrans%}:
+
+				<div id="hint-item-quota" data-role="hint" data-hint-background="bg-blue" data-hint-color="fg-white" data-hint-mode="2" data-hint="Items Quota|{{itemQuota}}/{{maxItemQuota}}" data-hint-position="top">
+					<div id="pb-item-quota" class="progress small" data-value="{{itemQuota*100/maxItemQuota}}" data-role="progressBar">
+						<div class="bar default" style="width: {{itemQuota*100/maxItemQuota}}%;"></div>
+					</div>
+				</div>
+				{%trans%}Talismans Quota{%endtrans%}:
+				<div id="hint-talisman-quota" data-role="hint" data-hint-background="bg-blue" data-hint-color="fg-white" data-hint-mode="2" data-hint="Talismans Quota|{{talismanQuota}}/{{maxTalismanQuota}}" data-hint-position="top">
+					<div id="pb-talisman-quota" class="progress small" data-value="{{talismanQuota*100/maxTalismanQuota}}%" data-role="progressBar">
+						<div class="bar default" style="width: {{talismanQuota*100/maxTalismanQuota}}%;" ></div>
+					</div>
+				</div>
+				<hr>
 				{%trans%}Hunter name{%endtrans%}: <span id="user-hunter-name">{{hunterName | default("__HunteName__")}}</span><br>
 				{%trans%}HR{%endtrans%}: <span id="user-hr">{{ hunterRank | default(0)}}</span><br>
 				Zenies: <span id="user-zenies">{{ zenies | default(0)}}</span><br>

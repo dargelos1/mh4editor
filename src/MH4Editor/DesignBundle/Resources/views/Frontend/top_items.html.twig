@@ -1,0 +1,110 @@
+{% extends '::frontend.html.twig' %}
+
+{%block userZone %}
+	{%include '::userzone.html.twig' with {'hunterName': hunterName} %}
+{%endblock%}
+{%block container %}
+<div class="page-content">
+	<div class="main-container">
+
+		<div class="main-barside">
+			{%include '::sidebar-menu.html.twig'%}
+		</div>
+
+		<div class="main-content">
+			<h1 class="full-width">{%trans%}Top items list{%endtrans%}</h1>
+
+			<div class="grid condensed full-width">
+				<table id="item_list" class="dataTable table striped hovered border bordered">
+					<thead>
+						{%for col in table_cols %}
+							<td>{{col}}</td>
+						{%endfor%}
+					</thead>
+					<tbody>
+						{%for row in rows %}
+
+							<tr>
+								{%for cols in row %}
+									<td>{{cols}}</td>
+								{%endfor%}
+							</tr>
+						{%endfor%}
+					</tbody>
+				</table>
+			</div>
+			
+			
+		</div>
+		
+	</div>
+		
+</div>
+<div class="file-menus">
+	{% include '::file-menu.html.twig' %}
+</div>
+{%endblock %}
+
+{%block javascripts%}
+	{{ parent() }}
+	<script type="text/javascript">
+		function openFileMenu(){
+            var  charm = $("#file-menu").data("charm");
+            if (charm.element.data("opened") === true) {
+                charm.close();
+            } else {
+                charm.open();
+            }
+        }
+
+	$(function(){
+
+		$('#item_list').dataTable( {
+
+			"searching" : false,
+		    "order": [[ 1, 'desc' ]],
+		    "columns": [
+    			
+		    {%for col in table_cols %}
+				{ "orderable": false },
+			{%endfor%}
+			],
+		    
+		} );
+		//Pick Color Plugin
+		$('.color-box').each(function(index, el) {
+			
+
+			var color = "";
+			switch($(el).attr("id")){
+
+				case "featuresColor":
+					color = "{{ FeaturesColor | default('#000000')}}";
+					break;
+				case "hairColor":
+					color = "{{ HairColor | default('#000000')}}";
+					break;
+				case "clothColor":
+					color = "{{ ClothColor | default('#000000')}}";
+					break;
+				case "skinColor":
+					color = "{{ SkinColor | default('#000000')}}";
+					break;
+			}
+			color = color.replace("#","");
+			$(this).colpick({
+				colorScheme:'dark',
+				layout:'rgbhex',
+				color: color,
+				onSubmit:function(hsb,hex,rgb,el) {
+					$(el).css('background-color', '#'+hex);
+					$(el).colpickHide();
+				}
+			}).css('background-color', "#"+color);
+
+		});
+
+	});
+	
+	</script>
+{%endblock%}

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use MH4Editor\MH4EditorBundle\Entity\TalismanGenerated;
 
 class TalismanController extends Controller
 {
@@ -110,6 +111,7 @@ class TalismanController extends Controller
         }
 
         $vars  = $request->request->all();
+        $response['status'] = false;
 
         $talisman   = (isset($vars['talisman']) && !empty($vars['talisman'])) ? $vars['talisman'] : 1;
         $slots      = (isset($vars['slots']) && !empty($vars['slots'])) ? $vars['slots'] : 0;
@@ -118,15 +120,25 @@ class TalismanController extends Controller
         $ab1Points  = (isset($vars['ab1Points']) && !empty($vars['ab1Points'])) ? $vars['ab1Points'] : 0;
         $ab2Points  = (isset($vars['ab2Points']) && !empty($vars['ab2Points'])) ? $vars['ab2Points'] : 0;
 
-        $response = array($vars);
+        //$response = array($vars);
         
         $user = $this->getUser();
         $locale = $user->getLocale();
         $em = $this->getDoctrine()->getManager();
+        $translator = $this->get("translator");
+
+        $talismanQuota = $user->getTalismansQuota();
+        if($talismanQuota <= 0){
+
+            $response['message'] = $translator->trans("You have reach your talisman daily quota!");
+            $response['quota'] = $talismanQuota;
+            $response['maxQuota'] = $user->getMaxTalismansQuota();
+            return new Response(json_encode($response),200);
+        }
 
         $query = null;
 
-        $response['status'] = true;
+        
 
         $mh4Cipher = $this->get("mh4_cipher");
         $box = $mh4Cipher->getEquipmentBox($user);
@@ -146,9 +158,34 @@ class TalismanController extends Controller
             $equipment
         );
 
-        $this->distributeEquipmentInBox($equipmentList);
+        //Update DataBase
 
-        return new Response($box,200);
+        $a1 = $em->getRepository("MH4EditorBundle:Ability")->find($ab1);
+        $a2 = $em->getRepository("MH4EditorBundle:Ability")->find($ab2);
+        $t =  $em->getRepository("MH4EditorBundle:Talisman")->find($talisman);
+        $talisGen = new TalismanGenerated();
+        $talisGen->setCreationDate(new \DateTime());
+        $talisGen->setUser($user);
+        $talisGen->setTalisman($t);
+        $talisGen->setSlots($slots);
+        $talisGen->setAbility1($a1);
+        $talisGen->setAbility1Amount($ab1Points);
+        $talisGen->setAbility2($a2);
+        $talisGen->setAbility2Amount($ab2Points);
+        $em->persist($talisGen);
+        $em->flush();
+        $user->setTalismansQuota(--$talismanQuota);
+        $em->persist($user);
+        $em->flush();
+
+        $this->distributeEquipmentInBox($equipmentList);
+        $response['message'] = $translator->trans("The talisman has been generated sucessfully!");
+        $response['quota'] = $talismanQuota;
+        $response['maxQuota'] = $user->getMaxTalismansQuota();
+        $response['status'] = true;
+
+        //return new Response($box,200);
+        return new Response(json_encode($response),200);
 
     }
 

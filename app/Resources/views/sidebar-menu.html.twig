@@ -5,4 +5,11 @@
 	<li><a href="#">{%trans%}Armors{%endtrans%}</a></li>
 	<li><a href="#">{%trans%}Items{%endtrans%}</a></li>
 	<li><a href="#">{%trans%}Jewels{%endtrans%}</a></li>
+	{%if is_granted('ROLE_SUPER_ADMIN') %}
+	<li class="title">{%trans%}Admin panel{%endtrans%}</li>
+	<li><a href="{{path('mh4_item_topbuyedlist')}}">{%trans%}Top items{%endtrans%}</a></li>
+	<li><a href="{{path('mh4_talisman_generatedlist')}}">{%trans%}Talismans generated{%endtrans%}</a></li>
+	<li><a href="{{path('mh4_item_boughtlist')}}">{%trans%}Items buyed{%endtrans%}</a></li>
+	<li><a href="{{path('mh4_user_accesslist')}}">{%trans%}User access{%endtrans%}</a></li>
+	{%endif%}
 </ul>

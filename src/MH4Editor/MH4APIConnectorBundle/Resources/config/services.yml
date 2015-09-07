@@ -1,0 +1,4 @@
+services:
+#    mh4_api_connector.example:
+#        class: MH4Editor\MH4APIConnectorBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

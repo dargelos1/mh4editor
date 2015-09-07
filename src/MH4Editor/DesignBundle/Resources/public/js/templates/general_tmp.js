@@ -94,6 +94,17 @@
 								'<button data-action="cancel" class="button danger block-shadow-danger text-shadow">Aceptar</button>'+
 							'</p>'+
 						'</div>',
+		  'progress':   '<div data-role="dialog" data-id="{id}" id="{id}" data-overlay="true" data-overlay-color="op-dark" class="padding20">'+
+							'<h1>{progressTitle}</h1>'+
+							'<p> {progressMessage} <span id="progress_{id}"></span></p>'+
+							'<p>'+
+								'<div class="progress small" id="pb_{id}" data-parts="true" data-role="progressBar" data-value="0" data-colors="{&quot;bg-red&quot;: 33, &quot;bg-yellow&quot;: 66, &quot;bg-cyan&quot;: 90, &quot;bg-green&quot;: 100}">'+
+								'</div>'+
+							'</p>'+
+							'<p>'+
+								'<div id="pb_{id}_statusMessage"></div>'+
+							'</p>'+
+						'</div>',
 	};
 
 	window.mh4app.templates.en.general = {
@@ -182,6 +193,17 @@
 							'<p> {alertMessage} </p>'+
 							'<p>'+
 								'<button data-action="cancel" class="button danger block-shadow-danger text-shadow">OK</button>'+
+							'</p>'+
+						'</div>',
+		   'progress':   '<div data-role="dialog" data-id="{id}" id="{id}" data-overlay="true" data-overlay-color="op-dark" class="padding20">'+
+							'<h1>{progressTitle}</h1>'+
+							'<p> {progressMessage} <span id="progress_{id}"></span></p>'+
+							'<p>'+
+								'<div class="progress small" id="pb_{id}" data-parts="true" data-role="progressBar" data-value="0" data-colors="{&quot;bg-red&quot;: 33, &quot;bg-yellow&quot;: 66, &quot;bg-cyan&quot;: 90, &quot;bg-green&quot;: 100}">'+
+								'</div>'+
+							'</p>'+
+							'<p>'+
+								'<div id="pb_{id}_statusMessage"></div>'+
 							'</p>'+
 						'</div>',
 	};

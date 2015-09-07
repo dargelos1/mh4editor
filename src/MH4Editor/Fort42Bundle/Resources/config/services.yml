@@ -1,0 +1,4 @@
+services:
+#    fort42.example:
+#        class: MH4Editor\Fort42Bundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
