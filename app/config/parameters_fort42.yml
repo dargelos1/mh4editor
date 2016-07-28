@@ -6,7 +6,7 @@ parameters:
     database_port: null
     database_name: didix
     database_user: mh4editor
-    database_password: 1Didix123!
+    database_password: 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null
