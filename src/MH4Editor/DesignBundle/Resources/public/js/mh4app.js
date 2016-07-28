@@ -41,7 +41,7 @@
             return this;
 		},
 
-		getData : function(dataUrl,data,callback,type){
+		getData : function(dataUrl,data,callback,type,errorCallback){
 
 			$.ajax({
 				type: type ? type : 'POST',
@@ -51,8 +51,11 @@
 				success: function(data){
 
 					callback(data);
+
 				},
-				error: function(){
+				error: function(xhr,status,text){
+					
+					errorCallback(status);
 					return "There was an error contacting with the server...";
 				}
 			});

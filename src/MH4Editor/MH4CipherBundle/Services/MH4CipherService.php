@@ -13,25 +13,42 @@ class MH4CipherService extends Controller{
 	const EQUIP_BOOTS			= 4;
 	const EQUIP_HELM			= 5;
 	const EQUIP_TALISMAN		= 6;
-	const EQUIP_GREATSWORD 		= 7;
+	const EQUIP_GREATSWORD 		= 7; //Las armas reliquias con igual nombre, tienen diferentes texturas ( diff id)
 	const EQUIP_S_AND_S			= 8;
 	const EQUIP_HAMMER			= 9;
 	const EQUIP_SPEAR			= 10;
 	const EQUIP_LIGHT_XBOW		= 11;
 	const EQUIP_HEAVY_XBOW		= 12;
 	const EQUIP_LONG_SWORD		= 13;
-	const EQUIP_AXE				= 14;
+	const EQUIP_AXE				= 14; //hacha espada
 	const EQUIP_SPEAR_GUN		= 15;
 	const EQUIP_BOW				= 16;
 	const EQUIP_DUAL_SWORD		= 17;
 	const EQUIP_CORNAMUSA		= 18;
 	const EQUIP_GLAIVE			= 19;
-	const EQUIP_SWORD_AXE		= 20;
+	const EQUIP_SWORD_AXE		= 20; //hacha cargada
 
 	const EQUIP_ARMOR_IDS		= 887; //Total differents Ids
 	const EQUIP_BRACELET_IDS	= 871; //Total differents Ids
 	const EQUIP_PANTS_IDS		= 871; //Total differents Ids
 	const EQUIP_BOOTS_IDS		= 879; //Total differents Ids
+	const EQUIP_HELMS_IDS		= 902; //Total differents Ids
+	const EQUIP_TALISMAN_IDS	= 14;  //Total differents Ids
+	const EQUIP_GREATSWORD_IDS	= 245; //Total differents Ids
+	const EQUIP_S_AND_S_IDS		= 246; //Total differents Ids
+	const EQUIP_HAMMER_IDS		= 246; //Total differents Ids
+	const EQUIP_SPEAR_IDS		= 215; //Total differents Ids
+	const EQUIP_LIGHT_XBOW_IDS	= 184; //Total differents Ids
+	const EQUIP_HEAVY_XBOW_IDS	= 156; //Total differents Ids
+	const EQUIP_LONG_SWORD_IDS	= 226; //Total differents Ids
+	const EQUIP_AXE_IDS			= 197; //Total differents Ids
+	const EQUIP_SPEAR_GUN_IDS	= 220; //Total differents Ids
+	const EQUIP_BOW_IDS 		= 205; //Total differents Ids
+	const EQUIP_DUAL_SWORD_IDS	= 228; //Total differents Ids
+	const EQUIP_CORNAMUSA_IDS	= 184; //Total differents Ids
+	const EQUIP_GLAIVE_IDS 		= 159; //Total differents Ids
+	const EQUIP_SWORD_AXE_IDS	= 124; //Total differents Ids
+
 
 	
 	//28bytes per equipment
@@ -62,11 +79,73 @@ class MH4CipherService extends Controller{
     		return "NO_NAME";
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	fseek($decryptedFile,0x00);
-		$name = fread($decryptedFile,10);
+		$name = fread($decryptedFile,0x18);
 		//echo "HunterName: ".$name;
 		fclose($decryptedFile);
-		return $name;
+
+		return trim($this->fixNick($name));
     }
+
+    public function setHunterName($user,$charName){
+
+    	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
+    		return $this;
+    	$readed = 0;
+    	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
+    	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");
+    	
+    	//Write the CharName in UTF8. Max 12 (24 bytes)
+
+    	$charName = mb_convert_encoding($charName,"UTF-8","auto");
+		//ladybug_dump(strlen($charName));die;
+
+    	$charLen = strlen($charName);
+    	for($i = 0;$i<12;$i++){ //Assuming that charName has maximum 12 chars in ASCII
+
+    		if($i<$charLen){
+    			fwrite($editFile, pack("C",ord($charName[$i])));
+    			fwrite($editFile, pack("C",0));
+    		}else{
+    			fwrite($editFile, pack("C2",0,0));
+    		}
+    		
+    	}
+    	
+
+    	fseek($decryptedFile,0x18);
+    	$readed+= 24;
+
+    	$data1 = fread($decryptedFile, (filesize($user->getUploadDir()."/decrypted.bin")-(0x18) ) );
+		fwrite($editFile, $data1);
+		$readed+= strlen($data1);
+		fclose($decryptedFile);
+		fclose($editFile);
+		unlink($user->getUploadDir()."/decrypted.bin");
+		rename($user->getUploadDir()."/decrypted_edit.bin", $user->getUploadDir()."/decrypted.bin");
+
+		//return $readed;
+		return $this;
+    }
+
+    private function fixNick($nickname){
+		if(strlen($nickname)>24) //Si la cantidad de caracteres es mayor de 10 significa que el nick no viene del juego
+			return $nickname;
+		$fixNick ="";
+		$i=0;
+		$strlen = strlen($nickname);
+		$unicode = (ord($nickname[$i+1]) << 8)+ord($nickname[$i]);
+		while($i<$strlen and  $unicode>0){
+			$i=$i+2;
+			$fixNick.=mb_convert_encoding('&#'.$unicode, 'UTF-8', 'HTML-ENTITIES');
+			$unicode = (ord($nickname[$i+1]) << 8)+ord($nickname[$i]);
+		}
+		
+		return $fixNick;
+	}
+
+	private function isInteger($input){
+	    return(ctype_digit(strval($input)));
+	}
 
     public function getSex($user){
 
@@ -85,6 +164,20 @@ class MH4CipherService extends Controller{
 
     	if(!file_exists($user->getUploadDir()."/decrypted.bin"))
     		return $this;
+
+    	switch ($sex) {
+    		case 'm':
+    			$sex = 0;
+    			break;
+    		case 'f':
+    			$sex = 1;
+    			break;
+    	}
+
+    	if(!($this->isInteger($sex) && ($sex === 0 || $sex===1)) ){
+
+    		$sex = 1; //Force default women
+    	}
     	$readed = 0;
     	$decryptedFile = fopen($user->getUploadDir()."/decrypted.bin", "rb");
     	$editFile = fopen($user->getUploadDir()."/decrypted_edit.bin", "w+b");

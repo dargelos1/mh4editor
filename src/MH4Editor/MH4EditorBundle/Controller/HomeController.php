@@ -10,10 +10,33 @@ class HomeController extends Controller
 {
     public function debugAction()
     {
-        echo phpinfo();die;
+        
+        $mail = new \PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = 'xo6.x10hosting.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'support@mh4editor.x10host.com';
+        $mail->Password = 'support@mh4editor';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+
+        $mail->setFrom('support@mh4editor.x10host.com','MH4Editor');
+        $mail->addAddress('drodriguez816@gmail.com');
+        $mail->isHTML(true);
+
+        $mail->Subject = "HOLA!!";
+        $mail->Body = "<h1>Hola</h1> jejejeje";
+
+        if(!$mail->send()){
+            return new Response("Error. Not sended",200);
+        }else{
+            return new Response("Message sended",200);
+        }
+
     }
     public function indexAction()
     {
+
     	$user = $this->getUser();
         //wvar_dump($this->get('request')->getSession()->get('_locale'));die;
 
@@ -91,7 +114,7 @@ class HomeController extends Controller
         );*/
         //$mh4Cipher->setCaravanPoints(1000000,$user);
         //$mh4Cipher->cheatSetAllEquipment($user);
-        //$mh4Cipher->setAllArmors($user,$mh4Cipher::EQUIP_TALISMAN);
+        ///$mh4Cipher->setAllArmors($user,$mh4Cipher::EQUIP_SWORD_AXE);
         //$readed = $mh4Cipher->setItemBoxAtSlot(15,99,878,$user); //megazumos
         /*$readed = $mh4Cipher->setItemBoxAtSlot(1318,99,900,$user); //garra d. velocidrome*/
         /*$mh4Cipher->setItemBoxAtSlot(1643,99,910,$user); //esf. armadura fuerte
@@ -211,6 +234,87 @@ class HomeController extends Controller
                     "itemBox"           => $itemBox,
                     "caravanPoints"     => $CP,
                     "sex"               => $sex == "M" ? $translator->trans("Male") : $translator->trans("Female"),
+                    "FeaturesColor"     => $featuresColor,
+                    "HairColor"         => $hairColor,
+                    "ClothColor"        => $clothColor,
+                    "SkinColor"         => $skinColor
+                )
+            );
+    }
+
+    public function showCharacterCustomAction()
+    {
+
+        $user = $this->getUser();
+        $translator = $this->get("translator");
+        //wvar_dump($this->get('request')->getSession()->get('_locale'));die;
+
+        $hunterName = "NO_NAME";
+        $sex = "NO_GENDER";
+
+        $featuresColor = "000000";
+        $hairColor = "000000";
+        $clothColor = "000000";
+        $skinColor = "000000";
+
+        $zenies = 0;
+        $HR = 0;
+        $CP = 0;
+        $itemBox = null;
+
+        $mh4Cipher = $this->get("mh4_cipher");
+        if(!file_exists($user->getUploadDir()."/decrypted.bin")){
+            $status = $mh4Cipher->MH4Decrypt($user->getAbsolutePath() ,$user->getUploadDir()."/decrypted.bin",$this);
+            if($status){
+                $hunterName = $mh4Cipher->getHunterName($user);
+                $sex = $mh4Cipher->getSex($user);
+
+                $featuresColor = $mh4Cipher->getColor($user,"features");
+                $hairColor = $mh4Cipher->getColor($user,"hair");
+                $clothColor = $mh4Cipher->getColor($user,"cloth");
+                $skinColor = $mh4Cipher->getColor($user,"skin");
+
+                $zenies = $mh4Cipher->getZenies($user);
+                $HR = $mh4Cipher->getHunterRanking($user);
+                $CP = $mh4Cipher->getCaravanPoints($user);
+                $itemBox = null;
+            }
+        }else{
+            $hunterName = $mh4Cipher->getHunterName($user);
+            $sex = $mh4Cipher->getSex($user);
+
+            $featuresColor = $mh4Cipher->getColor($user,"features");
+            $hairColor = $mh4Cipher->getColor($user,"hair");
+            $clothColor = $mh4Cipher->getColor($user,"cloth");
+            $skinColor = $mh4Cipher->getColor($user,"skin");
+
+            $zenies = $mh4Cipher->getZenies($user);
+            $HR = $mh4Cipher->getHunterRanking($user);
+            $CP = $mh4Cipher->getCaravanPoints($user);
+            $itemBox = null;
+        }
+        
+        $RCTotal = $mh4Cipher->getRCTotalPoints($user);
+
+        $talismanQuota =    $user->getTalismansQuota();
+        $maxTalismanQuota = $user->getMaxTalismansQuota();
+        $itemQuota =        $user->getItemsQuota();
+        $maxItemQuota =      $user->getMaxItemsQuota();
+        
+        return $this->render(
+                'DesignBundle:Frontend:character_custom.html.twig',
+                array(
+                    "itemQuota"         => $itemQuota,
+                    "talismanQuota"     => $talismanQuota,
+                    "maxTalismanQuota"  => $maxTalismanQuota,
+                    "maxItemQuota"      => $maxItemQuota,
+                    "hunterName"        => $hunterName,
+                    "zenies"            => $zenies,
+                    "hunterRank"        => $HR,
+                    "itemBox"           => $itemBox,
+                    "caravanPoints"     => $CP,
+                    "sex"               => $sex == "M" ? $translator->trans("Male") : $translator->trans("Female"),
+                    "sexVal"            => $sex == "M" ? 0 : 1,
                     "FeaturesColor"     => $featuresColor,
                     "HairColor"         => $hairColor,
                     "ClothColor"        => $clothColor,

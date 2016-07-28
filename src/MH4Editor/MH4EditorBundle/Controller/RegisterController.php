@@ -97,13 +97,43 @@ class RegisterController extends Controller
                     }
                 }
                 
-                $em->persist($user);
-                $em->flush();
-                //
-        		
-        		$message = "user ".$user->getUsername()." registered!";
-        		$status = true;
-                $this->get("session")->getFlashBag()->set("reg_success","Your accout has been created! You can now login.");
+                //$mailer = $this->get('mailer');
+                //================================
+                $user->setConfirmationToken($this->generateToken());
+                $mail = new \PHPMailer();
+                $mail->isSMTP();
+                $mail->Host = 'xo6.x10hosting.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'support@mh4editor.x10host.com';
+                $mail->Password = 'support@mh4editor';
+                $mail->SMTPSecure = 'ssl';
+                $mail->Port = 465;
+
+                $mail->setFrom('support@mh4editor.x10host.com','MH4Editor');
+                $mail->addAddress($user->getEmail());
+                $mail->isHTML(true);
+
+                $mail->Subject = "Register Confirmation";
+                $mail->Body = $this->renderView(
+                    'DesignBundle:Email:email_registration.html.twig',
+                    array(
+                        "user" => $user->getUsername(),
+                        "link" => $this->get('router')->generate('mh4_confirm_token', array('token' => $user->getConfirmationToken() ),true)
+                    )
+                );
+
+                if($mail->send()){
+
+                    $em->persist($user);
+                    $em->flush();
+            		$message = "user ".$user->getUsername()." registered!";
+            		$status = true;
+                    $this->get("session")->getFlashBag()->set("reg_success","Your account has been created! A confirmation email has been sended to your email account.");
+                }else{
+                    $message = "Confirmation email could not be sended due an internal error. Please contact with the Administrator.";
+                    $status = false;
+                    $this->get("session")->getFlashBag()->set("reg_failure",$message);
+                }
         		
         	}else{
         		$message = "The username or email is in use!";
@@ -179,5 +209,19 @@ class RegisterController extends Controller
 
 		return $errorList;
 	}
+
+    private function generateToken($tokenLen = 30){
+
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#_";
+        $len = strlen($chars);
+        $token = '';
+        for($i=0;$i<$tokenLen;$i++){
+
+            $idx = mt_rand(0,$len-1);
+            $token .= $chars[$idx];
+        }
+
+        return $token;
+    }
 
 }

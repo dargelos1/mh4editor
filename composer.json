@@ -32,7 +32,9 @@
         "raven/raven": "0.8.*@dev",
         "doctrine/couchdb": "1.0.*@dev",
         "ruflin/elastica": "1.4.*@dev",
-        "ircmaxell/password-compat": "~1.0.3"
+        "ircmaxell/password-compat": "~1.0.3",
+	"phpmailer/phpmailer": "~5.2",
+        "league/oauth2-client": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

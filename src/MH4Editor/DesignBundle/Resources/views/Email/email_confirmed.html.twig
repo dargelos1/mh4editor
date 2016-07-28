@@ -1,0 +1,70 @@
+{% extends '::frontend.html.twig' %}
+{%block container%}
+<img class="reg_complete" src="{{ asset( 'bundles/design/images/email/registration_complete_1.jpg')}}">
+<div class="arrow animated fadeInUp"></div>
+
+{%endblock%}
+
+{%block stylesheets%}
+
+{{ parent() }}
+<style type="text/css">
+
+	.reg_complete {
+
+		min-width: 417px;
+		max-width: 50%;
+		margin: 0 auto;
+		display: block;
+	}
+
+	.arrow{
+		position: absolute;
+		top:140px;
+		left: 50px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 50px 86.6px 50px;
+		border-color: transparent transparent #0022ff transparent;
+		line-height: 0px;
+		_border-color: #000000 #000000 #0022ff #000000;
+		_filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+	}
+	.animated { 
+	    -webkit-animation-duration: 1s; 
+	    animation-duration: 1s; 
+	    -webkit-animation-fill-mode: both; 
+	    animation-fill-mode: both; 
+	    animation-iteration-count:infinite; 
+	    -webkit-animation-iteration-count:infinite; 
+	} 
+
+	@-webkit-keyframes fadeInUp { 
+	    0% { 
+	        opacity: 0; 
+	        -webkit-transform: translateY(20px); 
+	    } 
+	    100% { 
+	        opacity: 1; 
+	        -webkit-transform: translateY(0); 
+	    } 
+	} 
+
+	@keyframes fadeInUp { 
+	    0% { 
+	        opacity: 0; 
+	        transform: translateY(20px); 
+	    } 
+	    100% { 
+	        opacity: 1; 
+	        transform: translateY(0); 
+	    } 
+	} 
+
+	.fadeInUp { 
+	    -webkit-animation-name: fadeInUp; 
+	    animation-name: fadeInUp; 
+	}
+</style>
+{%endblock%}

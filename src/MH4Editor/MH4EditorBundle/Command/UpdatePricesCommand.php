@@ -34,18 +34,20 @@ class UpdatePricesCommand extends ContainerAwareCommand
                 $em->persist($item);
                 $em->flush();
                 $price = $item->getBuyPrice();
-                $rarity = $item->getRarity();
-                $tb =  $item->getTimesBought();
-
-                if(($rarity * $tb + 10) > $price){
-                    $output->writeln(sprintf('Updating item <comment>%s</comment>...', $item->getName()));
-                    $item->setBuyPrice($rarity * $tb + 10);
-                    $item->setIsLocked(false);
-                    $em->persist($item);
-                    $em->flush();
-                    $output->writeln('=> Updated!');
-                }
                 
+                if($price < 100000){
+                    $rarity = $item->getRarity();
+                    $tb =  $item->getTimesBought();
+
+                    if(($rarity * $tb + 10) > $price){
+                        $output->writeln(sprintf('Updating item <comment>%s</comment>...', $item->getName()));
+                        $item->setBuyPrice($rarity * $tb + 10);
+                        $item->setIsLocked(false);
+                        $em->persist($item);
+                        $em->flush();
+                        $output->writeln('=> Updated!');
+                    }
+                }
                 
             }
             

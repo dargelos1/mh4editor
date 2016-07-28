@@ -52,8 +52,16 @@ class KernelListener
                 $user = $this->securityContext->getToken()->getUser();
                 if ( $user instanceof User) {
                     //ladybug_dump($this->securityContext->getToken());die;
+
+                    //If user does not confirmed the token, return a message to confirm it
+                    if($user->getConfirmationToken() !== null){
+                        $this->session->set("_locale",$user->getLocale());
+                        $message = $this->translator->trans("Your account isn't confirmed yet. Confirm to log in.");
+                        $this->session->getFlashBag()->set("confirm_account",$message);
+                        $responseEvent->setResponse(new RedirectResponse($this->router->generate('mh4_logout_frontend')));
+                    }
                     //If is banned, redirect to logout url with flashbag message
-                    if($user->getIsBanned()){
+                    else if($user->getIsBanned()){
                         $this->session->set("_locale",$user->getLocale());
                         $message = $this->translator->trans("Your account have been banned.");
                         $this->session->getFlashBag()->set("banned",$message);

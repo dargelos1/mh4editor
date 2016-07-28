@@ -122,4 +122,67 @@ class UserController extends Controller
     	return  $this->redirect($this->generateUrl('mh4_login_frontend'));
 
     }
+
+    public function confirmTokenAction(Request $request, $token){
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository("MH4EditorBundle:User")->findBy(array("confirmationToken" => $token));
+        $response = array(
+            "status" => false,
+            "message"=> "Invalid token"
+        );
+
+        if(count($user) > 0 && $user[0] instanceof User){
+
+            $user = $user[0];
+            $user->setConfirmationToken(null);
+            $em->persist($user);
+            $em->flush();
+            
+            return $this->render(
+                'DesignBundle:Email:email_confirmed.html.twig',
+                array(
+                    "status" => true,
+                    "message" => "Confirmation success!",
+                    "user" => $user->getUsername(),
+                )
+            );
+
+        }else{
+
+        }
+
+        return new Response(json_encode($response),200);
+
+    }
+
+    public function saveCharacterInfoAction(Request $request)
+    {
+
+        $response = array("status" => false);
+
+        if($request->isXMLHttpRequest()){
+
+            try{
+
+                $data = $request->request->all();
+
+                $user = $this->getUser();
+                $mh4Cipher = $this->get("mh4_cipher");
+
+                $mh4Cipher->setHunterName($user,$data['charName']);
+                $mh4Cipher->setSex($user,$data['charGen']);
+
+                $response['status'] = true;
+                $response['msg'] = 'Done';
+                $response['newName'] = $data['charName'];
+            }catch(\Exception $e){
+
+                $response['msg'] = 'Internal Server Error';
+            }
+            
+        }
+
+        return new Response(json_encode($response),200);
+    }
 }

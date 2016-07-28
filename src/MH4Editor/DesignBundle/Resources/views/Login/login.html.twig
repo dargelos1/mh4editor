@@ -27,6 +27,28 @@
 								<div class="content">{{ flashMessage }}</div>
 							</div>
 						    
+						{% endfor %}
+						{% for flashMessage in app.session.flashbag.get('reg_failure') %}
+
+							<div class="panel alert collapsible collapsed" data-role="panel">
+								<div class="heading">
+									<span class="icon mif-cross"></span>
+									<span class="title">{%trans%}Registration failure{%endtrans%}</span>
+								</div>
+								<div class="content">{{ flashMessage }}</div>
+							</div>
+						    
+						{% endfor %}
+						{% for flashMessage in app.session.flashbag.get('confirm_account') %}
+
+							<div class="panel alert collapsible" data-role="panel">
+								<div class="heading">
+									<span class="icon mif-cross"></span>
+									<span class="title">{%trans%}Confirm Account{%endtrans%}</span>
+								</div>
+								<div class="content">{{ flashMessage }}</div>
+							</div>
+						    
 
 						{% endfor %}
 						{% for flashMessage in app.session.flashbag.get('reg_success') %}

@@ -87,6 +87,18 @@ mh4_gen_talisman:
     path:   /talismancreator/gentalisman
     defaults: { _controller: MH4EditorBundle:Talisman:genTalisman}
 
+mh4_char_custom:
+    path: /character/custom
+    defaults: { _controller: MH4EditorBundle:Home:showCharacterCustom}
+
+mh4_char_custom_save:
+    path: /character/custom/save
+    defaults: { _controller: MH4EditorBundle:User:saveCharacterInfo}
+
 mh4_debug:
     path:    /debug
     defaults: { _controller: MH4EditorBundle:Home:debug}
+
+mh4_confirm_token:
+    path:   /user/confirm/token/{token}
+    defaults: { _controller: MH4EditorBundle:User:confirmToken}

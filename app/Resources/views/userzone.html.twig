@@ -20,7 +20,7 @@
 					</div>
 				</div>
 				<hr>
-				{%trans%}Hunter name{%endtrans%}: <span id="user-hunter-name">{{hunterName | default("__HunteName__")}}</span><br>
+				{%trans%}Hunter name{%endtrans%}: <span id="user-hunter-name">{{hunterName | default("__HunteName__") | raw}}</span><br>
 				{%trans%}HR{%endtrans%}: <span id="user-hr">{{ hunterRank | default(0)}}</span><br>
 				Zenies: <span id="user-zenies">{{ zenies | default(0)}}</span><br>
 				{%trans%}Caravan Points{%endtrans%}: <span id="user-caravan-points">{{ caravanPoints | default(0)}}</span><br>

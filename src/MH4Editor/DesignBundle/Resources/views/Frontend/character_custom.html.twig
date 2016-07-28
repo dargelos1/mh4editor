@@ -1,0 +1,197 @@
+{% extends '::frontend.html.twig' %}
+
+{%block userZone %}
+	{%include '::userzone.html.twig' with {'hunterName': hunterName} %}
+{%endblock%}
+{%block container %}
+<div class="page-content">
+	<div class="main-container">
+
+		<div class="main-barside">
+			{%include '::sidebar-menu.html.twig'%}
+		</div>
+
+		<div class="main-content no-flex">
+			<h1 class="full-width">{%trans%}Character Customization{%endtrans%}</h1>
+
+			<div class="grid condensed full-width">
+				<div class="row cells1">
+					<div class="cell">
+						<div class="panel">
+						    <div class="heading">
+						        <span class="title">Character - Basic Info</span>
+						    </div>
+						    <div class="content">
+						    	<div class="row cells2">
+						    		<div class="cell">
+						    			<label>{%trans%}Hunter Name{%endtrans%}: </label>
+								        <div class="input-control text" data-role="input">
+								    		<input data-role="hint" data-hint-background="bg-red" data-hint-color="fg-white" data-hint-mode="2" data-hint="Warning|The charname must be (at the moment) in ASCII. Avoid insert chars like €, ç Ð otherwise you will get unexpected results!" data-hint-position="top" type="text" name="in-hunter-name" id="in-hunter-name" value="{{hunterName | raw}}">
+								    		<button id="btn-show-keyboard" class="button"><span class="mif-pencil"></span></button>
+								    		
+										</div>
+										<span class="mif-warning mif-ani-flash" style="
+										    font-weight: bold;
+										    font-size: 30px;
+										    color: red;
+										"></span>
+										<p>
+							    			<a target="_blank" href='http://unicode-table.com/en/#basic-latin'>Check the first 255 chars at Unicode Table</a><span class="mif-link"></span>
+							    		</p>
+						    		</div>
+
+
+						    		<div class="cell">
+						    			<label>{%trans%}Gender{%endtrans%}: </label>
+										<label class="input-control radio">
+
+										    <input type="radio" name="r-hunter-gender" value="m" {%if sexVal == 0 %} checked {%endif%}>
+										    <span class="check"></span>
+										    <span class="caption">{%trans%}Male{%endtrans%}</span>
+										</label>
+
+										<label class="input-control radio">
+										    <input type="radio" name="r-hunter-gender" value="f" {%if sexVal == 1 %} checked {%endif%}>
+										    <span class="check"></span>
+										    <span class="caption">{%trans%}Female{%endtrans%}</span>
+										</label>
+						    		</div>
+								</div>
+
+							</div>
+						</div>
+						
+					</div>
+				</div>
+
+				<div class="row cells1">
+					<div class="cell">
+						<button id="btn-save-info" type="button" class="command-button">
+							<span class="icon mif-floppy-disk"></span>
+							<text>{%trans%}Save Changes{%endtrans%}</text>
+							<small>
+								{%trans%}Save the basic info of the character{%endtrans%}
+							</small>
+						</button>
+					</div>
+				</div>
+				
+			</div>
+			
+			
+		</div>
+		
+	</div>
+		
+</div>
+<div class="file-menus">
+	{% include '::file-menu.html.twig' %}
+</div>
+{%endblock %}
+
+{%block javascripts%}
+	{{ parent() }}
+	<script type="text/javascript">
+		function openFileMenu(){
+            var  charm = $("#file-menu").data("charm");
+            if (charm.element.data("opened") === true) {
+                charm.close();
+            } else {
+                charm.open();
+            }
+        }
+
+	$(function(){
+
+		//Pick Color Plugin
+		$('.color-box').each(function(index, el) {
+			
+
+			var color = "";
+			switch($(el).attr("id")){
+
+				case "featuresColor":
+					color = "{{ FeaturesColor | default('#000000')}}";
+					break;
+				case "hairColor":
+					color = "{{ HairColor | default('#000000')}}";
+					break;
+				case "clothColor":
+					color = "{{ ClothColor | default('#000000')}}";
+					break;
+				case "skinColor":
+					color = "{{ SkinColor | default('#000000')}}";
+					break;
+			}
+			color = color.replace("#","");
+			$(this).colpick({
+				colorScheme:'dark',
+				layout:'rgbhex',
+				color: color,
+				onSubmit:function(hsb,hex,rgb,el) {
+					$(el).css('background-color', '#'+hex);
+					$(el).colpickHide();
+				}
+			}).css('background-color', "#"+color);
+
+		});
+
+		$("#btn-show-keyboard")
+		.off('click')
+		.on('click',function(e){
+
+			alert("Not implemented yet!");
+		});
+
+		$('#btn-save-info')
+		.off('click')
+		.on('click',function(e){
+
+
+			//Prepare the data
+			var that = $(this);
+			var span = $(this).children('span');
+			var bText = $(this).children('text');
+			var small = $(this).children('small');
+			that.removeClass("danger block-shadow-danger text-shadow");
+			small.text('{%trans%}Save the basic info of the character{%endtrans%}');
+
+			
+			span.addClass('mif-ani-spin');
+			bText.text('{%trans%}Saving Changes{%endtrans%}...');
+			var data = {};
+
+			data['charName'] = $('#in-hunter-name').val();
+			data['charGen'] = $('input[name=r-hunter-gender]:checked').val();
+
+			mh4app.getData('{{ path('mh4_char_custom_save')}}',data,function(data){
+
+				span.removeClass('mif-ani-spin');
+				bText.text('{%trans%}Save Changes{%endtrans%}');
+
+				if(data.status){
+					$("#user-hunter-name").text(data.newName);
+				}else{
+					that.addClass("danger block-shadow-danger text-shadow");
+					bText.text('{%trans%}Save Changes{%endtrans%}');
+					small.text('{%trans%}Has occurred an error saving the info...{%endtrans%}');
+				}
+
+			},'',function(status){
+
+				if(status === "parsererror"){
+					console.error("JSON DATA PARSER ERROR");
+				}
+				span.removeClass('mif-ani-spin');
+				that.addClass("danger block-shadow-danger text-shadow");
+				bText.text('{%trans%}Save Changes{%endtrans%}');
+				small.text('{%trans%}Has occurred an error saving the info...{%endtrans%}')
+			});
+		});
+		
+
+
+	});
+	
+	</script>
+{%endblock%}

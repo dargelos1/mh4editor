@@ -46,10 +46,13 @@ class LoginListener
 			// user has just logged in
 			$user = $event->getAuthenticationToken()->getUser();
 			if($user !== null){
+				if($user->getConfirmationToken() !== null)
+					return;
 				$mh4Cipher = $this->mh4Cipher;
 				$UA = $this->request->headers->get('User-Agent');
 		    	$IP = $this->request->getClientIp();
 		    	$user->setLastIP($IP);
+
 		    	$user->setLastLogin(new \DateTime());
 		    	$user->setLastUserAgent($UA);
 		    	if($user->getMH4FilePath() !== null && file_exists($user->getUploadRootDir()."/".$user->getMH4FilePath())){

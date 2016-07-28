@@ -150,6 +150,11 @@ class User implements UserInterface, \Serializable
     protected $hunterHr;
 
     /**
+     * @ORM\Column(name="confirmation_token",type="string")
+     */
+    protected $confirmationToken;
+
+    /**
      * @Assert\File(maxSize=81408, mimeTypes = "application/octet-stream")
      */
     private $mh4File;
@@ -757,6 +762,28 @@ class User implements UserInterface, \Serializable
     public function getHunterHR(){
 
         return $this->hunterHr;
+    }
+
+    /**
+     * Set confirmationToken
+     *
+     * @param string $confirmationToken
+     * @return User
+     */
+    public function setConfirmationToken($confirmationToken){
+
+        $this->confirmationToken = $confirmationToken;
+        return $this;
+    }
+
+    /**
+     * Get confirmationToken
+     *
+     * @return string 
+     */
+    public function getConfirmationToken(){
+
+        return $this->confirmationToken;
     }
 
     public function isAccountNonExpired(){

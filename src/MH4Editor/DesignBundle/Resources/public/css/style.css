@@ -162,4 +162,7 @@ div.register-form.show {
 .full-width {
   width: 100%; }
 
+.no-flex {
+  display: initial; }
+
 /*# sourceMappingURL=style.css.map */
