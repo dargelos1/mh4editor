@@ -6,7 +6,7 @@ ini_set('safe_mode', 'Off');
 ini_set('open_basedir', 'none');
 
 $mega = new MEGA();
-//$mega->user_login_session("drodriguez816@gmail.com", "didacyeva2304");
+//$mega->user_login_session("username", "password");
 
 
 $file_info = $mega->public_file_info_from_link("https://mega.nz/#F!tN8DmKZK!MMURoVAkhjgeLqAXAHANXQ");
